@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#B82D00</color>
+    <color name="red_second">#E0A997</color>
+    <color name="gradient_red">#B80000</color>
+    <color name="gradient_orange">#B86300</color>
+    <color name="bg_fragment">#EFEFEF</color>
+    <color name="tab_selected">#CB550D</color>
+    <color name="text_item_primari_color">#272727</color>
+    <color name="text_item_location_color">#939393</color>
+    <color name="text_buatlaporan">#BCBCBC</color>
 </resources>
