@@ -10,6 +10,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalorieIntakeApps">
         <activity
+            android:name=".feature_scanner.presentation.ScanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_reporting.presentation.ReportingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_reportdetails.presentation.ReportDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_profile.presentation.ProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_merchantmenu.presentation.MerchantMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_merchantlist.presentation.MerchantsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_homepage.HomepageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature_fooddetails.presentation.FoodDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:exported="true"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".feature_auth.presentation.login.LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
