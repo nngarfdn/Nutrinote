@@ -28,7 +28,7 @@
             android:name=".feature_merchantlist.presentation.MerchantsActivity"
             android:exported="true" />
         <activity
-            android:name=".feature_homepage.HomepageActivity"
+            android:name=".feature_homepage.presentation.HomepageActivity"
             android:exported="true" />
         <activity
             android:name=".feature_fooddetails.presentation.FoodDetailActivity"
