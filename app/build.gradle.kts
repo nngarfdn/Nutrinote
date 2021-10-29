@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
@@ -5,6 +8,15 @@ plugins {
     id(Plugins.KOTLIN_PARCELIZE)
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
+}
+
+val keysPropertiesFile = file("keys.properties")
+val keysProperties = Properties()
+if (keysPropertiesFile.canRead()) {
+    keysProperties.load(FileInputStream(keysPropertiesFile))
+}
+fun getKeyProperty(key: String): String {
+    return "\"${System.getenv(key) ?: keysProperties[key]}\""
 }
 
 android {
@@ -18,6 +30,14 @@ android {
         versionName = Configs.VERSION_NAME
 
         testInstrumentationRunner = Configs.TEST_INSTRUMENTATION_RUNNER
+
+        buildConfigField("String", "DATABASE_PASSPHRASE", getKeyProperty("DATABASE_PASSPHRASE"))
+        buildConfigField("String", "GIZI_BASE_URL", getKeyProperty("GIZI_BASE_URL"))
+        buildConfigField("String", "GIZI_PUBLIC_KEY_1", getKeyProperty("GIZI_PUBLIC_KEY_1"))
+        buildConfigField("String", "GIZI_PUBLIC_KEY_2", getKeyProperty("GIZI_PUBLIC_KEY_2"))
+        buildConfigField("String", "GIZI_PUBLIC_KEY_3", getKeyProperty("GIZI_PUBLIC_KEY_3"))
+        buildConfigField("String", "GIZI_PUBLIC_KEY_4", getKeyProperty("GIZI_PUBLIC_KEY_4"))
+        buildConfigField("String", "GIZI_SECRET_KEY", getKeyProperty("GIZI_SECRET_KEY"))
     }
 
     buildTypes {
