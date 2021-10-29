@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_food_details.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_homepage.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_splash.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_completed_reports.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_history.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_home.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_pending_reports.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/item_history.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/layout_sky.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/menu/bottomnavmenu.xml" value="0.115625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

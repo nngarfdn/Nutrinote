@@ -1,11 +1,11 @@
-package com.sv.calorieintakeapps.feature_home.di
+package com.sv.calorieintakeapps.feature_homepage.di
 
-import com.sv.calorieintakeapps.feature_home.data.repository.HomepageRepository
-import com.sv.calorieintakeapps.feature_home.domain.repository.IHomepageRepository
-import com.sv.calorieintakeapps.feature_home.domain.usecase.HomepageInteractor
-import com.sv.calorieintakeapps.feature_home.domain.usecase.HomepageUseCase
-import com.sv.calorieintakeapps.feature_home.presentation.history.HistoryViewModel
-import com.sv.calorieintakeapps.feature_home.presentation.home.HomeViewModel
+import com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryViewModel
+import com.sv.calorieintakeapps.feature_homepage.presentation.home.HomeViewModel
+import com.sv.calorieintakeapps.feature_homepage.data.repository.HomepageRepository
+import com.sv.calorieintakeapps.feature_homepage.domain.repository.IHomepageRepository
+import com.sv.calorieintakeapps.feature_homepage.domain.usecase.HomepageInteractor
+import com.sv.calorieintakeapps.feature_homepage.domain.usecase.HomepageUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules

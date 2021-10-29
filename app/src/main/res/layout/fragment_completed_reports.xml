@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_fragment"
+    android:paddingHorizontal="24dp"
+    tools:context="com.sv.calorieintakeapps.feature_homepage.presentation.history.CompletedReportsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_fragment"
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/edt_search_riwayat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_white_rounded"
+            android:closeIcon="@drawable/ic_clear_search"
+            android:commitIcon="@drawable/ic_clear_search"
+            android:searchHintIcon="@null"
+            android:searchIcon="@drawable/ic_right_search" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_proses_riwayat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_history" />
+    </LinearLayout>
+
+</FrameLayout>
