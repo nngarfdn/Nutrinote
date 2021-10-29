@@ -14,6 +14,7 @@
     <string name="title_feature_reportdetails">Hasil Laporan</string>
     <string name="title_feature_reporting">Buat Laporan</string>
     <string name="title_feature_scanner">Pindai Kode QR</string>
+    <string name="title_register">Register</string>
     <string-array name="gender">
         <item>Laki-laki</item>
         <item>Perempuan</item>

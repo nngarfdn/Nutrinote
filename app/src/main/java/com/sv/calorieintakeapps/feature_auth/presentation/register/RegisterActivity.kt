@@ -1,9 +1,12 @@
 package com.sv.calorieintakeapps.feature_auth.presentation.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.sv.calorieintakeapps.core.common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityRegisterBinding
 import com.sv.calorieintakeapps.feature_auth.di.AuthModule
+import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,10 +28,10 @@ class RegisterActivity : AppCompatActivity() {
                 if (name.isEmpty() || email.isEmpty() ||
                     pass.isEmpty() || passConf.isEmpty()
                 ) {
-//                    showToast("Lengkapi semua data")
+                    showToast("Lengkapi semua data")
                 } else {
                     if (pass == passConf) viewModel.register(name, email, pass)
-//                    else showToast("Konfirmasi Password Tidak Sama")
+                    else showToast("Konfirmasi Password Tidak Sama")
                 }
             }
         }
@@ -43,13 +46,13 @@ class RegisterActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-//                        startActivity(
-//                            Actions.openHomepageIntent()
-//                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        )
+                        startActivity(
+                            Actions.openHomepageIntent(this)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
                     }
                     is Resource.Error -> {
-//                        showToast(result.message)
+                        showToast(result.message)
                     }
                 }
             }

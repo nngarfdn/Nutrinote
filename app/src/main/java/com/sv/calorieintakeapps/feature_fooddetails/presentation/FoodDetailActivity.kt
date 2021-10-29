@@ -3,8 +3,11 @@ package com.sv.calorieintakeapps.feature_fooddetails.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sv.calorieintakeapps.core.common.util.loadImage
+import com.sv.calorieintakeapps.core.common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityFoodDetailsBinding
 import com.sv.calorieintakeapps.feature_fooddetails.di.FoodDetailsModule
+import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutrientAdapter
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,19 +25,19 @@ class FoodDetailActivity : AppCompatActivity() {
 
         FoodDetailsModule.load()
 
-//        val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
-//        val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
-//        val foodImage = intent.getStringExtra(Actions.EXTRA_FOOD_IMAGE).orEmpty()
+        val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
+        val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
+        val foodImage = intent.getStringExtra(Actions.EXTRA_FOOD_IMAGE).orEmpty()
 
         binding.apply {
             btnLaporkan.setOnClickListener {
-//                startActivity(Actions.openReportingIntent(foodId, foodName))
+                startActivity(Actions.openReportingIntent(applicationContext, foodId, foodName))
             }
-//            imgDetailFood.loadImage(foodImage)
-//            judul.text = foodName
+            imgDetailFood.loadImage(foodImage)
+            judul.text = foodName
         }
 
-//        viewModel.setFoodId(foodId)
+        viewModel.setFoodId(foodId)
         observeFoodNutrients()
     }
 
@@ -59,7 +62,7 @@ class FoodDetailActivity : AppCompatActivity() {
                         }
                     }
                     is Resource.Error -> {
-//                        showToast(result.message)
+                        showToast(result.message)
                     }
                 }
             }

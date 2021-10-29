@@ -23,9 +23,7 @@
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${isCrashlyticsEnabled}" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+
 
         <activity
             android:name="com.sv.calorieintakeapps.app.splash.SplashActivity"
@@ -45,7 +43,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".feature_reportdetails.presentation.ReportDetailsActivity"
+            android:name=".feature.reportdetails.presentation.ReportDetailsActivity"
             android:exported="true" />
 
         <activity
@@ -69,9 +67,9 @@
             android:exported="true" />
 
         <activity
-            android:name=".ui.login.RegisterActivity"
+            android:name=".feature_auth.presentation.register.RegisterActivity"
             android:exported="true"
-            android:label="@string/title_activity_register" />
+            android:label="@string/title_register" />
 
         <activity
             android:name=".feature_auth.presentation.login.LoginActivity"

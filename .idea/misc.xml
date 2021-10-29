@@ -5,12 +5,19 @@
       <map>
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_food_details.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_homepage.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_merchant_menu.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_merchants.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_profile.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_report_details.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_scan.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/activity_splash.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_completed_reports.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_history.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_home.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_merchant_list.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/fragment_pending_reports.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/item_history.xml" value="0.115625" />
+        <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/item_merchants.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/layout_sky.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/menu/bottomnavmenu.xml" value="0.115625" />
       </map>

@@ -10,6 +10,7 @@ import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityHomepageBinding
 import com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryFragment
 import com.sv.calorieintakeapps.feature_homepage.presentation.home.HomeFragment
+import com.sv.calorieintakeapps.library_common.action.Actions
 
 class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     View.OnClickListener {
@@ -49,7 +50,7 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
 
     override fun onClick(v: View?) {
         when (v?.id) {
-//            R.id.scan -> startActivity(Actions.openScannerIntent())
+            R.id.scan -> startActivity(Actions.openScannerIntent(this))
         }
     }
 }

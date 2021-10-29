@@ -1,10 +1,10 @@
 package com.sv.calorieintakeapps.feature_profile.di
 
+import com.sv.calorieintakeapps.feature.profile.presentation.ProfileViewModel
 import com.sv.calorieintakeapps.feature_profile.data.repository.ProfileRepository
 import com.sv.calorieintakeapps.feature_profile.domain.repository.IProfileRepository
 import com.sv.calorieintakeapps.feature_profile.domain.usecase.ProfileInteractor
 import com.sv.calorieintakeapps.feature_profile.domain.usecase.ProfileUseCase
-import com.sv.calorieintakeapps.feature_profile.presentation.ProfileViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules

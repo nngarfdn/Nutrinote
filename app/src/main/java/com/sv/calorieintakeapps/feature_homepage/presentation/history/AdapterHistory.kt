@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.sv.calorieintakeapps.core.common.util.loadImage
 import com.sv.calorieintakeapps.databinding.ItemHistoryBinding
+import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,13 +50,14 @@ class AdapterHistory(
         val item = countryFilterList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
-//            activity.startActivity(
-//                Actions.openReportDetailsIntent(
-//                    item.id,
-//                    item.foodId,
-//                    item.foodName
-//                )
-//            )
+            activity.startActivity(
+                Actions.openReportDetailsIntent(
+                    holder.itemView.context,
+                    item.id,
+                    item.foodId,
+                    item.foodName
+                )
+            )
         }
     }
 
@@ -70,18 +73,19 @@ class AdapterHistory(
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Report) {
             binding.apply {
-//                imgItemRiwayat.loadImage(item.preImage)
+                imgItemRiwayat.loadImage(item.preImage)
                 txtTitleRiwayat.text = item.foodName
                 txtLocationRiwayat.text = item.date
                 if (isPendingReport) imgEditRiwayat.visibility = View.INVISIBLE
                 else {
                     imgEditRiwayat.setOnClickListener {
-//                        it.context.startActivity(
-//                            Actions.openReportEditingIntent(
-//                                item.id,
-//                                item.foodName
-//                            )
-//                        )
+                        it.context.startActivity(
+                            Actions.openReportEditingIntent(
+                                itemView.context,
+                                item.id,
+                                item.foodName
+                            )
+                        )
                     }
                 }
             }
