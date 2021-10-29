@@ -1,19 +1,20 @@
 package com.sv.calorieintakeapps.feature_reporting.presentation
 
-import android.annotation.TargetApi
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.sv.calorieintakeapps.core.common.util.loadImage
-import com.sv.calorieintakeapps.core.common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,6 +23,7 @@ import java.util.*
 
 private const val RC_PICK_PRE_IMAGE = 100
 private const val RC_PICK_POST_IMAGE = 101
+private const val RC_READ_EXTERNAL_STORAGE_PERMISSION = 200
 
 private const val DATE_PICKER_TAG = "DatePicker"
 private const val TIME_PICKER_TAG = "TimePicker"
@@ -48,7 +50,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
         ReportingModule.load()
 
-        if (shouldAskPermissions()) askPermissions()
+        shouldAskStoragePermission(RC_READ_EXTERNAL_STORAGE_PERMISSION)
 
         isUpdate = intent.hasExtra(Actions.EXTRA_REPORT_ID)
         reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
@@ -244,68 +246,33 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun shouldAskPermissions(): Boolean {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-    }
-
-    @TargetApi(23)
-    private fun askPermissions() {
-        val permissions = arrayOf(
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
-        )
-        val requestCode = 200
-        requestPermissions(permissions, requestCode)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         ReportingModule.unload()
     }
-}
 
-/*
-    private fun storeImageToLocal(tag: Int, imageUrl: String) {
-        Picasso.get()
-            .load(imageUrl)
-            .into(object : Target {
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    val cw = ContextWrapper(applicationContext)
-                    val directory: File = cw.getDir("report_editing", Context.MODE_PRIVATE)
-                    val file = File(directory, "$tag.jpeg")
-                    try {
-                        val fos = FileOutputStream(file)
-                        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-                        fos.flush()
-                        fos.close()
-
-                        val imageUri = file.path
-                        when (tag) {
-                            RC_PICK_PRE_IMAGE -> {
-                                this@ReportingActivity.preImageUri = imageUri
-                                binding.imgPreImage.loadImage(imageUri)
-                                showToast(preImageUri)
-                            }
-                            RC_PICK_POST_IMAGE -> {
-                                this@ReportingActivity.postImageUri = imageUri
-                                binding.imgPostImage.loadImage(imageUri)
-                                showToast(postImageUri)
-                            }
-                        }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                        showToast(e.message)
-                    }
-                }
-
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                    e?.printStackTrace()
-                    showToast(e?.message)
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-
-                }
-            })
+    @Suppress("SameParameterValue")
+    private fun shouldAskStoragePermission(requestCode: Int): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), requestCode)
+                false
+            } else {
+                true
+            }
+        } else {
+            true
+        }
     }
-*/
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (requestCode == RC_READ_EXTERNAL_STORAGE_PERMISSION) recreate()
+        }
+    }
+}

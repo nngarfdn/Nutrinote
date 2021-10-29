@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.FragmentCompletedReportsBinding
 import com.sv.calorieintakeapps.feature_homepage.di.HomepageModule
 import com.sv.calorieintakeapps.library_database.domain.model.Report
@@ -53,7 +53,6 @@ class CompletedReportsFragment : Fragment() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d("onViewCreated: ${result.data}")
                         adapterHistory = AdapterHistory(
                             requireActivity(),
                             true,

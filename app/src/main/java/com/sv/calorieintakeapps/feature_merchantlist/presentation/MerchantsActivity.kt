@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.FragmentMerchantListBinding
 import com.sv.calorieintakeapps.feature_merchantlist.di.MerchantListModule
 import com.sv.calorieintakeapps.library_database.vo.Resource
@@ -32,7 +32,6 @@ class MerchantsActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d("onViewCreated: ${result.data}")
                         adapterMerchant = AdapterMerchant(this)
                         binding.apply {
                             rvRestauranList.apply {

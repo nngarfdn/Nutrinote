@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.loadImage
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityReportDetailsBinding
 import com.sv.calorieintakeapps.feature_reportdetails.di.ReportDetailsModule
 import com.sv.calorieintakeapps.feature_reportdetails.presentation.ReportDetailViewModel
@@ -48,7 +48,6 @@ class ReportDetailsActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d("onViewCreated: ${result.data}")
                         binding.apply {
                             txtDateTime.text = "${result.data?.date}"
                             val percentage = result.data?.percentage ?: 0
@@ -75,7 +74,6 @@ class ReportDetailsActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d("onViewCreated: ${result.data}")
                         binding.apply {
                             binding.apply {
                                 rvFoodNutrition.apply {

@@ -3,8 +3,8 @@ package com.sv.calorieintakeapps.feature_fooddetails.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.loadImage
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityFoodDetailsBinding
 import com.sv.calorieintakeapps.feature_fooddetails.di.FoodDetailsModule
 import com.sv.calorieintakeapps.library_common.action.Actions

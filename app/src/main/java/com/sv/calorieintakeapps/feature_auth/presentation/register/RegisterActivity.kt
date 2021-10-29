@@ -3,7 +3,7 @@ package com.sv.calorieintakeapps.feature_auth.presentation.register
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityRegisterBinding
 import com.sv.calorieintakeapps.feature_auth.di.AuthModule
 import com.sv.calorieintakeapps.library_common.action.Actions

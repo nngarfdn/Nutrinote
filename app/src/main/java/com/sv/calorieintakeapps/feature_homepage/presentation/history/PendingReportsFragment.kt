@@ -1,4 +1,4 @@
-package com.sv.calorieintakeapps.feature.home.presentation.history
+package com.sv.calorieintakeapps.feature_homepage.presentation.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.FragmentPendingReportsBinding
 import com.sv.calorieintakeapps.feature_homepage.di.HomepageModule
-import com.sv.calorieintakeapps.feature_homepage.presentation.history.AdapterHistory
-import com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryAdapterListener
-import com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryViewModel
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,7 +43,6 @@ class PendingReportsFragment : Fragment() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d("onViewCreated: ${result.data}")
                         adapterHistory = AdapterHistory(
                             requireActivity(),
                             false,

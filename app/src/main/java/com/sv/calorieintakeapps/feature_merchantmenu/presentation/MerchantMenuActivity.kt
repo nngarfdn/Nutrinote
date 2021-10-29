@@ -3,8 +3,8 @@ package com.sv.calorieintakeapps.feature_merchantmenu.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.core.common.util.loadImage
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityMerchantMenuBinding
 import com.sv.calorieintakeapps.feature_merchantmenu.di.MerchantMenuModule
 import com.sv.calorieintakeapps.library_common.action.Actions

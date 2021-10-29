@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sv.calorieintakeapps.core.common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.databinding.ItemMerchantsBinding
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant

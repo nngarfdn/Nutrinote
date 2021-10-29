@@ -6,8 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.sv.calorieintakeapps.core.common.util.loadImage
-import com.sv.calorieintakeapps.core.common.util.showToast
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
 import com.sv.calorieintakeapps.feature.profile.presentation.ProfileViewModel
 import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
@@ -90,7 +90,6 @@ class ProfileActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-//                        Timber.tag(TAG).d(result.data.toString())
                         binding.apply {
                             val data = result.data
                             id = data?.id!!

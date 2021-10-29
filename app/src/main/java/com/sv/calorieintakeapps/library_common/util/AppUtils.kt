@@ -1,4 +1,4 @@
-package com.sv.calorieintakeapps.core.common.util
+package com.sv.calorieintakeapps.library_common.util
 
 import android.app.Activity
 import android.net.Uri
