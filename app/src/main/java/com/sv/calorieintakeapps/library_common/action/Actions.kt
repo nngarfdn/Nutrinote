@@ -26,7 +26,7 @@
 //        foodName: String,
 //        foodImage: String,
 //    ): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.fooddetails")
+//        return internalIntent("com.sv.calorieintakeapps.feature_fooddetails")
 //            .putExtra(EXTRA_MERCHANT_NAME, merchantName)
 //            .putExtra(EXTRA_FOOD_ID, foodId)
 //            .putExtra(EXTRA_FOOD_NAME, foodName)
@@ -34,50 +34,50 @@
 //    }
 //
 //    fun openHomepageIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.homepage")
+//        return internalIntent("com.sv.calorieintakeapps.feature_homepage")
 //    }
 //
 //    fun openLoginIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.auth.login")
+//        return internalIntent("com.sv.calorieintakeapps.feature_auth.login")
 //    }
 //
 //    fun openMerchantListIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.merchantlist")
+//        return internalIntent("com.sv.calorieintakeapps.feature_merchantlist")
 //    }
 //
 //    fun openMerchantMenuIntent(merchantId: Int): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.merchantmenu")
+//        return internalIntent("com.sv.calorieintakeapps.feature_merchantmenu")
 //            .putExtra(EXTRA_MERCHANT_ID, merchantId)
 //    }
 //
 //    fun openProfileIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.profile")
+//        return internalIntent("com.sv.calorieintakeapps.feature_profile")
 //    }
 //
 //    fun openRegisterIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.auth.register")
+//        return internalIntent("com.sv.calorieintakeapps.feature_auth.register")
 //    }
 //
 //    fun openReportingIntent(foodId: Int, foodName: String): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.reporting")
+//        return internalIntent("com.sv.calorieintakeapps.feature_reporting")
 //            .putExtra(EXTRA_FOOD_ID, foodId)
 //            .putExtra(EXTRA_FOOD_NAME, foodName)
 //    }
 //
 //    fun openReportEditingIntent(reportId: Int, foodName: String): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.reporting")
+//        return internalIntent("com.sv.calorieintakeapps.feature_reporting")
 //            .putExtra(EXTRA_REPORT_ID, reportId)
 //            .putExtra(EXTRA_FOOD_NAME, foodName)
 //    }
 //
 //    fun openReportDetailsIntent(reportId: Int, foodId: Int, foodName: String): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.reportdetails")
+//        return internalIntent("com.sv.calorieintakeapps.feature_reportdetails")
 //            .putExtra(EXTRA_REPORT_ID, reportId)
 //            .putExtra(EXTRA_FOOD_ID, foodId)
 //            .putExtra(EXTRA_FOOD_NAME, foodName)
 //    }
 //
 //    fun openScannerIntent(): Intent {
-//        return internalIntent("com.sv.calorieintakeapps.feature.scanner")
+//        return internalIntent("com.sv.calorieintakeapps.feature_scanner")
 //    }
 //}

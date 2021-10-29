@@ -1,4 +1,4 @@
-//package com.sv.calorieintakeapps.feature.home.presentation.history
+//package com.sv.calorieintakeapps.feature_home.presentation.history
 //
 //import android.annotation.SuppressLint
 //import android.os.Bundle
@@ -9,8 +9,8 @@
 //import androidx.recyclerview.widget.LinearLayoutManager
 //import com.sv.calorieintakeapps.core.common.util.TAG
 //import com.sv.calorieintakeapps.core.common.util.showToast
-//import com.sv.calorieintakeapps.feature.home.databinding.FragmentCompletedReportsBinding
-//import com.sv.calorieintakeapps.feature.home.di.HomepageModule
+//import com.sv.calorieintakeapps.feature_home.databinding.FragmentCompletedReportsBinding
+//import com.sv.calorieintakeapps.feature_home.di.HomepageModule
 //import com.sv.calorieintakeapps.library_database.domain.model.Report
 //import com.sv.calorieintakeapps.library_database.vo.Resource
 //import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -1,4 +1,4 @@
-//package com.sv.calorieintakeapps.feature.home.presentation.home
+//package com.sv.calorieintakeapps.feature_home.presentation.home
 //
 //import android.content.Intent
 //import android.os.Bundle
@@ -13,9 +13,9 @@
 //import com.skydoves.balloon.*
 //import com.sv.calorieintakeapps.core.common.action.Actions
 //import com.sv.calorieintakeapps.R as AppR
-//import com.sv.calorieintakeapps.feature.home.R as HomepageR
-//import com.sv.calorieintakeapps.feature.home.databinding.FragmentHomeBinding
-//import com.sv.calorieintakeapps.feature.home.di.HomepageModule
+//import com.sv.calorieintakeapps.feature_home.R as HomepageR
+//import com.sv.calorieintakeapps.feature_home.databinding.FragmentHomeBinding
+//import com.sv.calorieintakeapps.feature_home.di.HomepageModule
 //import org.koin.androidx.viewmodel.ext.android.viewModel
 //
 //class HomeFragment : Fragment() {

@@ -1,4 +1,4 @@
-//package com.sv.calorieintakeapps.feature.home.presentation.history
+//package com.sv.calorieintakeapps.feature_home.presentation.history
 //
 //import android.annotation.SuppressLint
 //import android.app.Activity
@@ -10,7 +10,7 @@
 //import androidx.recyclerview.widget.RecyclerView
 //import com.sv.calorieintakeapps.core.common.action.Actions
 //import com.sv.calorieintakeapps.core.common.util.loadImage
-//import com.sv.calorieintakeapps.feature.home.databinding.ItemHistoryBinding
+//import com.sv.calorieintakeapps.feature_home.databinding.ItemHistoryBinding
 //import com.sv.calorieintakeapps.library_database.domain.model.Report
 //import java.util.*
 //import kotlin.collections.ArrayList
