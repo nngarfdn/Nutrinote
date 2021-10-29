@@ -28,6 +28,15 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
+            android:name="com.sv.calorieintakeapps.app.splash.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".feature_scanner.presentation.ScanActivity"
             android:exported="true" />
 
@@ -67,15 +76,6 @@
         <activity
             android:name=".feature_auth.presentation.login.LoginActivity"
             android:exported="true" />
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
