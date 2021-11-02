@@ -1,6 +1,7 @@
 package com.sv.calorieintakeapps.feature_homepage.presentation.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
 
     private fun FragmentHomeBinding.setName() {
         viewModel.userName.observe(viewLifecycleOwner) {
-//            txtNameUser.text = "Halo, $it"
+            txtNameUser.text = "Halo, $it"
         }
     }
 
@@ -109,4 +110,7 @@ class HomeFragment : Fragment() {
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
+
+
+
 }

@@ -35,6 +35,7 @@ class FoodDetailActivity : AppCompatActivity() {
             }
             imgDetailFood.loadImage(foodImage)
             judul.text = foodName
+            btnBack.setOnClickListener { onBackPressed() }
         }
 
         viewModel.setFoodId(foodId)

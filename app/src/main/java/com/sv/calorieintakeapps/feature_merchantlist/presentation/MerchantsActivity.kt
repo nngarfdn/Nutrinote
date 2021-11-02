@@ -21,6 +21,7 @@ class MerchantsActivity : AppCompatActivity() {
         setContentView(binding.root)
         MerchantListModule.load()
         observe()
+        binding.btnBack.setOnClickListener { onBackPressed() }
     }
 
     @SuppressLint("NotifyDataSetChanged")

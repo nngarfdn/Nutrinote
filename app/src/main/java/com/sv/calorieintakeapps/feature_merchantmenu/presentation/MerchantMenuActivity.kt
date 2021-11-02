@@ -30,7 +30,10 @@ class MerchantMenuActivity : AppCompatActivity() {
 
         merchantMenuAdapter = MerchantMenuAdapter()
 
-        binding.imgCover.loadImage("https://i.imgur.com/Isc5ySZ.png")
+        binding.apply {
+            imgCover.loadImage("https://i.imgur.com/Isc5ySZ.png")
+            imgBack.setOnClickListener { onBackPressed() }
+        }
 
         observeMerchantName()
         observeMerchantMenu()

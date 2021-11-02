@@ -45,7 +45,7 @@ class ProfileActivity : AppCompatActivity() {
                 val age = edtAge.text.toString()
                 actionEdit(name, gender, age, pass, profileImageUri)
             }
-
+            btnBack.setOnClickListener{ onBackPressed() }
             imageButton.setOnClickListener { chooseImage(RC_PICK_PROFILE_IMAGE) }
         }
     }

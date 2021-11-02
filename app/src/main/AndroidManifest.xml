@@ -44,6 +44,7 @@
             android:exported="true" />
 
         <activity
+            android:requestLegacyExternalStorage="true"
             android:name=".feature_reporting.presentation.ReportingActivity"
             android:exported="true" />
 

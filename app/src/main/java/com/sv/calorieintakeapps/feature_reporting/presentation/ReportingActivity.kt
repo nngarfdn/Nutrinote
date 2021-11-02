@@ -3,8 +3,10 @@ package com.sv.calorieintakeapps.feature_reporting.presentation
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,6 +68,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             btnPostImage.setOnClickListener(this@ReportingActivity)
             btnSave.setOnClickListener(this@ReportingActivity)
             btnDelete.setOnClickListener(this@ReportingActivity)
+            btnBack.setOnClickListener { onBackPressed() }
 
             if (isUpdate) {
                 tvTitle.text = "Edit Laporan"
@@ -235,15 +239,32 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             val imageUri = data?.data
             when (requestCode) {
                 RC_PICK_PRE_IMAGE -> {
-                    this.preImageUri = imageUri?.path?.drop(4).orEmpty()
+                    val file = File(imageUri?.path)
+                    val dir = getRealPathFromURI(imageUri)
+                    if (dir != null) {
+                        this.preImageUri = dir
+                    }
                     binding.imgPreImage.loadImage(imageUri)
                 }
                 RC_PICK_POST_IMAGE -> {
-                    this.postImageUri = imageUri?.path?.drop(4).orEmpty()
+//                    this.postImageUri = imageUri?.path?.drop(4).orEmpty()
+                    val file = File(imageUri?.path)
+                    val dir = getRealPathFromURI(imageUri)
+                    if (dir != null) {
+                        this.postImageUri = dir
+                    }
                     binding.imgPostImage.loadImage(imageUri)
                 }
             }
         }
+    }
+
+    fun getRealPathFromURI(contentUri: Uri?): String? {
+        val proj = arrayOf<String>(MediaStore.Audio.Media.DATA)
+        val cursor = managedQuery(contentUri, proj, null, null, null)
+        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(column_index)
     }
 
     override fun onDestroy() {

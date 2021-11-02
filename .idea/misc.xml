@@ -20,6 +20,12 @@
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/item_merchants.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/layout/layout_sky.xml" value="0.115625" />
         <entry key="..\:/Downloads/CalorieIntakeApp/app/src/main/res/menu/bottomnavmenu.xml" value="0.115625" />
+        <entry key="app/src/main/res/layout/activity_food_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_merchant_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_report_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_reporting.xml" value="0.14" />
+        <entry key="app/src/main/res/layout/fragment_merchant_list.xml" value="0.1" />
       </map>
     </option>
   </component>
