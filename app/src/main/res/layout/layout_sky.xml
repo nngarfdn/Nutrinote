@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:textStyle="bold"
+        android:textSize="30dp"
         android:text="Profile" />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="3dp"
-        android:layout_marginVertical="4dp"
+        android:layout_width="120dp"
+        android:layout_height="4dp"
+        android:layout_marginVertical="10dp"
         android:layout_gravity="center_horizontal"
         android:src="@color/black"
        />
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:textStyle="bold"
+        android:textSize="30dp"
         android:text="Keluar" />
 
 </LinearLayout>
