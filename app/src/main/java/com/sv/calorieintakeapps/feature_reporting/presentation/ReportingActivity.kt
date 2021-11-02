@@ -239,7 +239,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             val imageUri = data?.data
             when (requestCode) {
                 RC_PICK_PRE_IMAGE -> {
-                    val file = File(imageUri?.path)
                     val dir = getRealPathFromURI(imageUri)
                     if (dir != null) {
                         this.preImageUri = dir
@@ -247,8 +246,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     binding.imgPreImage.loadImage(imageUri)
                 }
                 RC_PICK_POST_IMAGE -> {
-//                    this.postImageUri = imageUri?.path?.drop(4).orEmpty()
-                    val file = File(imageUri?.path)
                     val dir = getRealPathFromURI(imageUri)
                     if (dir != null) {
                         this.postImageUri = dir

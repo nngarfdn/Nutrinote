@@ -2,8 +2,10 @@ package com.sv.calorieintakeapps.feature_profile.presentation
 
 import android.annotation.TargetApi
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.library_common.util.loadImage
@@ -131,13 +133,22 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
     }
 
+    fun getRealPathFromURI(contentUri: Uri?): String? {
+        val proj = arrayOf<String>(MediaStore.Audio.Media.DATA)
+        val cursor = managedQuery(contentUri, proj, null, null, null)
+        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(column_index)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             val imageUri = data?.data
             when (requestCode) {
                 RC_PICK_PROFILE_IMAGE -> {
-                    this.profileImageUri = imageUri?.path?.drop(4).orEmpty()
+                    val dir = getRealPathFromURI(imageUri)
+                    if (dir != null) this.profileImageUri = dir
                     binding.imageButton.loadImage(imageUri)
                 }
             }
