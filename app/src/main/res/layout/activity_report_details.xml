@@ -36,7 +36,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
@@ -140,11 +140,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFoodNutrition"
-                tools:listitem="@layout/item_food_nutrient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Kalori 288 kal \nProtein 24 g" />
+                android:text="Kalori 288 kal \nProtein 24 g"
+                tools:listitem="@layout/item_food_nutrient" />
         </LinearLayout>
 
         <TextView
