@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
         balloon = createBalloon(requireContext()) {
             setArrowSize(10)
             setWidth(BalloonSizeSpec.WRAP)
-            setHeight(75)
+            setHeight(87)
             setArrowPosition(0.8f)
             setCornerRadius(4f)
             setAlpha(0.9f)
