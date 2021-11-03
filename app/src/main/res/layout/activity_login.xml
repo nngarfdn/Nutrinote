@@ -14,34 +14,30 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Masuk"
         android:textSize="22dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="18dp"
-        android:paddingVertical="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="30dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="Email">
+            android:layout_height="wrap_content"
+            app:hintEnabled="false">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edittext_border"
                 android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="7dp"
+                android:drawablePadding="8dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Email"
                 android:paddingHorizontal="16dp"
                 android:textSize="13sp" />
 
@@ -49,19 +45,21 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Password"
+            app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_edittext_border"
                 android:drawableStart="@drawable/ic_password"
-                android:drawablePadding="10dp"
+                android:drawablePadding="8dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingHorizontal="16dp"
                 android:textSize="13sp" />
@@ -79,10 +77,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="Masuk"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/btn_register"
@@ -90,9 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Belum punya akun? Daftar"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="16dp"/>
 
 </LinearLayout>

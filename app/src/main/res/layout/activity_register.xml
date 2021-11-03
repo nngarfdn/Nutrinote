@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="24dp"
     >
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Daftar"
         android:textSize="22dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/layout_register"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/layout_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="35dp"
         android:paddingHorizontal="18dp"
-        android:paddingVertical="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingVertical="30dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Nama">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_name"
@@ -44,7 +39,8 @@
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/poppins_medium"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:hint="Nama"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:hint="Email">
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_email"
@@ -63,15 +59,16 @@
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/poppins_medium"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:hint="Email"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:hint="Password"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password"
@@ -83,15 +80,16 @@
                 android:fontFamily="@font/poppins_medium"
                 android:inputType="textPassword"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:hint="Password"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:hint="Konfirmasi Password"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password_conf"
@@ -103,7 +101,8 @@
                 android:fontFamily="@font/poppins_medium"
                 android:inputType="textPassword"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:hint="Konfirmasi Password"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -132,4 +131,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
