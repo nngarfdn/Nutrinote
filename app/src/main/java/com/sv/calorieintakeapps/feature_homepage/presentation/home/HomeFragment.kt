@@ -1,7 +1,6 @@
 package com.sv.calorieintakeapps.feature_homepage.presentation.home
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,7 +17,9 @@ import com.skydoves.balloon.createBalloon
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.FragmentHomeBinding
 import com.sv.calorieintakeapps.feature_homepage.di.HomepageModule
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openLoginIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -42,11 +43,7 @@ class HomeFragment : Fragment() {
             imgProfile.setOnClickListener { showBalloon() }
             setName()
             cvMenuMakanan.setOnClickListener {
-                startActivity(
-                    Actions.openMerchantListIntent(
-                        requireContext()
-                    )
-                )
+                startActivity(requireContext().openMerchantListIntent())
             }
             cvBuatLaporan.setOnClickListener { cvMenuMakanan.performClick() }
         }
@@ -96,7 +93,7 @@ class HomeFragment : Fragment() {
         val profile: TextView = balloon?.getContentView()?.findViewById(R.id.profile)!!
         val logout: TextView = balloon?.getContentView()?.findViewById(R.id.logout)!!
         profile.setOnClickListener {
-            startActivity(Actions.openProfileIntent(requireContext()))
+            startActivity(requireContext().openProfileIntent())
         }
         logout.setOnClickListener {
             viewModel.logout()
@@ -106,11 +103,8 @@ class HomeFragment : Fragment() {
 
     private fun openLogin() {
         startActivity(
-            Actions.openLoginIntent(requireContext())
+            requireContext().openLoginIntent()
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
-
-
-
 }

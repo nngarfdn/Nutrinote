@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
-import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityScanBinding
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantMenuIntent
+import com.sv.calorieintakeapps.library_common.util.showToast
 
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
@@ -64,7 +64,7 @@ class ScanActivity : AppCompatActivity() {
                 val scanResult = it.text
                 try {
                     val id = scanResult.drop(36).toInt()
-                    startActivity(Actions.openMerchantMenuIntent(this, id))
+                    startActivity(openMerchantMenuIntent(id))
                 } catch (e: Exception) {
                     showToast("Kode QR tidak valid")
                 }

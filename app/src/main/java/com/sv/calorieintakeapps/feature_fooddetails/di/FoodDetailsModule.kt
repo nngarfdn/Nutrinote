@@ -1,6 +1,6 @@
 package com.sv.calorieintakeapps.feature_fooddetails.di
 
-import com.sv.calorieintakeapps.feature_fooddetails.repository.FoodDetailsRepository
+import com.sv.calorieintakeapps.feature_fooddetails.data.repository.FoodDetailsRepository
 import com.sv.calorieintakeapps.feature_fooddetails.domain.repository.IFoodDetailsRepository
 import com.sv.calorieintakeapps.feature_fooddetails.domain.usecase.FoodDetailsInteractor
 import com.sv.calorieintakeapps.feature_fooddetails.domain.usecase.FoodDetailsUseCase

@@ -1,4 +1,4 @@
-package com.sv.calorieintakeapps.feature.profile.presentation
+package com.sv.calorieintakeapps.feature_profile.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.sv.calorieintakeapps.feature_profile.domain.usecase.ProfileUseCase
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.vo.Resource
 
-class ProfileViewModel(val useCase: ProfileUseCase) : ViewModel(){
+class ProfileViewModel(val useCase: ProfileUseCase) : ViewModel() {
 
     val userProfile = useCase.getUserProfile().asLiveData()
 

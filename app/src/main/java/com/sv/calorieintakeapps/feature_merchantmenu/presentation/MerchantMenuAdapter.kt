@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.databinding.ItemFoodBinding
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openFoodDetailsIntent
+import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_database.domain.model.Food
-
 
 @SuppressLint("NotifyDataSetChanged")
 class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>() {
@@ -20,7 +19,7 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
             notifyDataSetChanged()
         }
 
-    var foods = listOf<Food>()
+    private var foods = listOf<Food>()
         set(values) {
             field = values
             notifyDataSetChanged()
@@ -56,9 +55,8 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 imgEditRiwayat.visibility = View.GONE
 
                 itemView.setOnClickListener {
-                    itemView.context.startActivity(
-                        Actions.openFoodDetailsIntent(
-                            itemView.context,
+                    it.context.startActivity(
+                        it.context.openFoodDetailsIntent(
                             merchantName = merchantName.orEmpty(),
                             foodId = food.id,
                             foodName = food.name,

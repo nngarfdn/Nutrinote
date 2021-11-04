@@ -70,7 +70,7 @@
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Nama User"
                     app:layout_constraintStart_toEndOf="@+id/imageButton"
@@ -80,7 +80,7 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="user@mail.com"
                     app:layout_constraintStart_toEndOf="@+id/imageButton"
@@ -91,7 +91,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="14dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="DATA DIRI" />
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Nama Lengkap" />
@@ -116,6 +116,7 @@
                     android:drawableStart="@drawable/ic_person"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
+                    android:inputType="textPersonName|textCapWords"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />
 
@@ -124,7 +125,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Email"
@@ -151,7 +152,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Usia" />
@@ -165,9 +166,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_email"
+                    android:drawableStart="@drawable/ic_person"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
+                    android:inputType="number"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />
 
@@ -176,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Jenis Kelamin" />
@@ -196,7 +198,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Ganti Kata Sandi" />

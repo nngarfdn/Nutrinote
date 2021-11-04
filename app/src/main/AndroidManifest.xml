@@ -11,10 +11,10 @@
     <application
         android:name="com.sv.calorieintakeapps.app.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo_96"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo_96"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalorieIntakeApps">
 
@@ -44,12 +44,12 @@
             android:exported="true" />
 
         <activity
-            android:requestLegacyExternalStorage="true"
             android:name=".feature_reporting.presentation.ReportingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:requestLegacyExternalStorage="true" />
 
         <activity
-            android:name=".feature.reportdetails.presentation.ReportDetailsActivity"
+            android:name=".feature_reportdetails.presentation.ReportDetailsActivity"
             android:exported="true" />
 
         <activity

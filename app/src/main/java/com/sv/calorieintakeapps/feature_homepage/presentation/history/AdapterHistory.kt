@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.databinding.ItemHistoryBinding
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportDetailsIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportEditingIntent
+import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import java.util.*
 import kotlin.collections.ArrayList
@@ -18,12 +19,13 @@ import kotlin.collections.ArrayList
 class AdapterHistory(
     private val activity: Activity,
     private val isCompleteReport: Boolean,
-    private val onEdit: HistoryAdapterListener
 ) :
     RecyclerView.Adapter<AdapterHistory.ViewHolder>(),
     Filterable {
+
     private val listItem = ArrayList<Report>()
     private val listItemFiltered = ArrayList<Report>()
+
     var data: List<Report>?
         get() = listItem
         @SuppressLint("NotifyDataSetChanged")
@@ -43,7 +45,7 @@ class AdapterHistory(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding.root, binding, isCompleteReport, onEdit)
+        return ViewHolder(binding.root, binding, isCompleteReport)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,8 +53,7 @@ class AdapterHistory(
         holder.bind(item)
         holder.itemView.setOnClickListener {
             activity.startActivity(
-                Actions.openReportDetailsIntent(
-                    holder.itemView.context,
+                holder.itemView.context.openReportDetailsIntent(
                     item.id,
                     item.foodId,
                     item.foodName
@@ -68,8 +69,7 @@ class AdapterHistory(
     class ViewHolder(
         itemView: View,
         private val binding: ItemHistoryBinding,
-        private val isPendingReport: Boolean,
-        private val onEdit: HistoryAdapterListener
+        private val isPendingReport: Boolean
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Report) {
             binding.apply {
@@ -80,8 +80,7 @@ class AdapterHistory(
                 else {
                     imgEditRiwayat.setOnClickListener {
                         it.context.startActivity(
-                            Actions.openReportEditingIntent(
-                                itemView.context,
+                            itemView.context.openReportEditingIntent(
                                 item.id,
                                 item.foodName
                             )

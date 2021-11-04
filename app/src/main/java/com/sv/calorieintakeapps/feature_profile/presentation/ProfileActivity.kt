@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
+import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
 import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
-import com.sv.calorieintakeapps.feature.profile.presentation.ProfileViewModel
-import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
                 val age = edtAge.text.toString()
                 actionEdit(name, gender, age, pass, profileImageUri)
             }
-            btnBack.setOnClickListener{ onBackPressed() }
+            btnBack.setOnClickListener { onBackPressed() }
             imageButton.setOnClickListener { chooseImage(RC_PICK_PROFILE_IMAGE) }
         }
     }
@@ -133,12 +132,12 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
     }
 
-    fun getRealPathFromURI(contentUri: Uri?): String? {
-        val proj = arrayOf<String>(MediaStore.Audio.Media.DATA)
+    private fun getRealPathFromURI(contentUri: Uri?): String? {
+        val proj = arrayOf(MediaStore.Audio.Media.DATA)
         val cursor = managedQuery(contentUri, proj, null, null, null)
-        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
         cursor.moveToFirst()
-        return cursor.getString(column_index)
+        return cursor.getString(columnIndex)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

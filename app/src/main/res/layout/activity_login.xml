@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    >
+    android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,7 +12,7 @@
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Masuk"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -38,6 +37,7 @@
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:paddingHorizontal="16dp"
                 android:textSize="13sp" />
 
@@ -85,6 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Belum punya akun? Daftar"
-        android:textSize="16dp"/>
+        android:textSize="16sp" />
 
 </LinearLayout>

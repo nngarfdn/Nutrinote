@@ -1,19 +1,16 @@
 package com.sv.calorieintakeapps.feature_merchantlist.presentation
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.databinding.ItemMerchantsBinding
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantMenuIntent
+import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 
-class AdapterMerchant(
-    private val activity: Activity,
-) :
+class AdapterMerchant :
     RecyclerView.Adapter<AdapterMerchant.ViewHolder>() {
     private val listItem = ArrayList<Merchant>()
     private val listItemFiltered = ArrayList<Merchant>()
@@ -28,7 +25,7 @@ class AdapterMerchant(
             notifyDataSetChanged()
         }
 
-    var countryFilterList = listOf<Merchant>()
+    private var countryFilterList = listOf<Merchant>()
 
     init {
         countryFilterList = data!!
@@ -44,12 +41,7 @@ class AdapterMerchant(
         val item = countryFilterList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity(
-                Actions.openMerchantMenuIntent(
-                    holder.itemView.context,
-                    item.id
-                )
-            )
+            it.context.startActivity(it.context.openMerchantMenuIntent(item.id))
         }
     }
 
@@ -68,5 +60,4 @@ class AdapterMerchant(
             }
         }
     }
-
 }

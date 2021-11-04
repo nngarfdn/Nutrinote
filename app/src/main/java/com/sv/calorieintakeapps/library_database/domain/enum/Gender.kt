@@ -5,6 +5,6 @@ enum class Gender(val id: Int) {
     FEMALE(1);
 
     companion object {
-        fun new(id: Int) = Gender.values().find { it.id == id } ?: MALE
+        fun new(id: Int) = values().find { it.id == id } ?: MALE
     }
 }

@@ -7,5 +7,5 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
     }
 }
-rootProject.name = "Calorie Intake Apps"
+rootProject.name = "Nutrinote"
 include(":app")

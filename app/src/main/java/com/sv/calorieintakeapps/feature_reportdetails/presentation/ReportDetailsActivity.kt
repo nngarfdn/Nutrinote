@@ -1,15 +1,14 @@
-package com.sv.calorieintakeapps.feature.reportdetails.presentation
+package com.sv.calorieintakeapps.feature_reportdetails.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.library_common.util.loadImage
-import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityReportDetailsBinding
 import com.sv.calorieintakeapps.feature_reportdetails.di.ReportDetailsModule
-import com.sv.calorieintakeapps.feature_reportdetails.presentation.ReportDetailViewModel
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutrientAdapter
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel

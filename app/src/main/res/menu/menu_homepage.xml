@@ -6,7 +6,7 @@
         android:id="@+id/action_beranda"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="Beranda"
+        android:title="@string/home"
         app:showAsAction="ifRoom" />
 
     <item
@@ -19,7 +19,7 @@
         android:id="@+id/action_riwayat"
         android:enabled="true"
         android:icon="@drawable/ic_riwayat"
-        android:title="Riwayat"
+        android:title="@string/history"
         app:showAsAction="ifRoom" />
-
+    
 </menu>

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -41,6 +40,7 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Informasi Hidangan" />
+
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
@@ -53,6 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@android:color/darker_gray" />
+
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -65,16 +66,15 @@
                 android:textColor="#272727" />
 
             <TextView
-                android:id="@+id/namaKantin"
+                android:id="@+id/tv_merchant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_location_item"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="IKM A"
-                android:visibility="gone"
-                android:textColor="#80272727" />
+                android:textColor="#80272727"
+                app:drawableLeftCompat="@drawable/ic_location_item" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,18 +82,18 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Penjelasan Singkat"
-                android:visibility="gone"
                 android:textColor="#272727"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Koloke, atau kuluyuk, merupakan salah satu masakan TionghoaIndonesia yang menggunakan bahan baku dari daging ayam, ikan, udang, jamur dan dibumbui dengan saus asam manis merah."
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,10 +109,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                tools:listitem="@layout/item_food_nutrient"
-                android:fontFamily="@font/poppins"
-                android:textSize="13sp" />
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                tools:listitem="@layout/item_food_nutrient" />
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatButton

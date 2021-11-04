@@ -20,7 +20,6 @@ import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -256,12 +255,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    fun getRealPathFromURI(contentUri: Uri?): String? {
-        val proj = arrayOf<String>(MediaStore.Audio.Media.DATA)
+    private fun getRealPathFromURI(contentUri: Uri?): String? {
+        val proj = arrayOf(MediaStore.Audio.Media.DATA)
         val cursor = managedQuery(contentUri, proj, null, null, null)
-        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
         cursor.moveToFirst()
-        return cursor.getString(column_index)
+        return cursor.getString(columnIndex)
     }
 
     override fun onDestroy() {

@@ -1,218 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent"
         tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
 
-        <RelativeLayout
-            android:id="@+id/toolbarLayout"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_back" />
+            <RelativeLayout
+                android:id="@+id/toolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Buat Laporan" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Makanan"
+                android:textColor="@color/text_buatlaporan"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_food_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Ayam Koloke A"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:drawableStartCompat="@drawable/ic_makanan_laporan" />
+
+            <TextView
+                android:id="@+id/textTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Waktu Makan"
+                android:textColor="@color/text_buatlaporan"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_time"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edittext_border"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_waktu_buat_laporan"
+                android:drawablePadding="8dp"
+                android:editable="false"
+                android:focusable="false"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Buat Laporan" />
-        </RelativeLayout>
+                android:hint="Masukkan Jam"
+                android:inputType="none"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp"
+                tools:ignore="KeyboardInaccessibleWidget" />
 
-        <TextView
+            <EditText
+                android:id="@+id/edt_date"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edittext_border"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_calendar_buat_laporan"
+                android:drawablePadding="8dp"
+                android:editable="false"
+                android:focusable="false"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Masukkan Tanggal"
+                android:inputType="none"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp"
+                tools:ignore="KeyboardInaccessibleWidget,TextFields" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Foto Makanan"
+                android:textColor="@color/text_buatlaporan"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins"
-            android:text="Makanan"
-            android:textColor="@color/text_buatlaporan"
-            android:textSize="13sp" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-        <TextView
-            android:id="@+id/tv_food_name"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_pre_image"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@android:color/darker_gray"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_pre_image"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:drawableStart="@drawable/ic_makanan_laporan"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/poppins"
-            android:text="Ayam Koloke A"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_round"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Unggah Foto Sebelum"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
 
-        <TextView
-            android:id="@+id/textTest"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_post_image"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_post_image"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins"
-            android:text="Waktu Makan"
-            android:textColor="@color/text_buatlaporan"
-            android:textSize="13sp" />
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_round"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Unggah Foto Sesudah"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
 
-        <EditText
-            android:id="@+id/edt_time"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_edittext_border"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_waktu_buat_laporan"
-            android:drawablePadding="8dp"
-            android:editable="false"
-            android:focusable="false"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="Masukkan Jam"
-            android:inputType="none"
-            android:paddingHorizontal="16dp"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/edt_date"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_edittext_border"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_calendar_buat_laporan"
-            android:drawablePadding="8dp"
-            android:editable="false"
-            android:focusable="false"
-            android:fontFamily="@font/poppins_medium"
-            android:hint="Masukkan Tanggal"
-            android:inputType="none"
-            android:paddingHorizontal="16dp"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins"
-            android:text="Foto Makanan"
-            android:textColor="@color/text_buatlaporan"
-            android:textSize="13sp" />
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btn_post_image">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_gradient_round"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Kirim Laporan"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-    <ImageView
-        android:id="@+id/img_pre_image"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@android:color/darker_gray"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/bg_gradient_round"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Hapus Laporan"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_pre_image"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_button_round"
-        android:fontFamily="@font/poppins"
-        android:text="Unggah Foto Sebelum"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
+        </LinearLayout>
 
-    <ImageView
-        android:id="@+id/img_post_image"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_post_image"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_button_round"
-        android:fontFamily="@font/poppins"
-        android:text="Unggah Foto Sesudah"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_post_image"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical">
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_gradient_round"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="Kirim Laporan"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:background="@drawable/bg_gradient_round"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="Hapus Laporan"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
-</LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

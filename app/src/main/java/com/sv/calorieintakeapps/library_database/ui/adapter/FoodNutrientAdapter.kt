@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ItemFoodNutrientBinding
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 
@@ -16,7 +17,7 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
             notifyDataSetChanged()
         }
 
-    var foodNutrients = listOf<FoodNutrient>()
+    private var foodNutrients = listOf<FoodNutrient>()
         set(values) {
             field = values
             notifyDataSetChanged()
@@ -47,8 +48,11 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
         fun bind(foodNutrient: FoodNutrient) {
             binding.apply {
                 txtNutritionName.text = foodNutrient.nutrientName
-                txtNutritionValue.text =
-                    "${foodNutrient.value * percentage.toDouble() / 100} ${foodNutrient.nutrientUnit}"
+                txtNutritionValue.text = itemView.context.getString(
+                    R.string.nutrient_value,
+                    foodNutrient.value * percentage.toDouble() / 100,
+                    foodNutrient.nutrientUnit
+                )
             }
         }
     }

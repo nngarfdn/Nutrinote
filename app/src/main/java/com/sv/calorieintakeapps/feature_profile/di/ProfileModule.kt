@@ -1,6 +1,6 @@
 package com.sv.calorieintakeapps.feature_profile.di
 
-import com.sv.calorieintakeapps.feature.profile.presentation.ProfileViewModel
+import com.sv.calorieintakeapps.feature_profile.presentation.ProfileViewModel
 import com.sv.calorieintakeapps.feature_profile.data.repository.ProfileRepository
 import com.sv.calorieintakeapps.feature_profile.domain.repository.IProfileRepository
 import com.sv.calorieintakeapps.feature_profile.domain.usecase.ProfileInteractor

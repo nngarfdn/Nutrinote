@@ -3,21 +3,26 @@ package com.sv.calorieintakeapps.feature_auth.presentation.register
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.databinding.ActivityRegisterBinding
 import com.sv.calorieintakeapps.feature_auth.di.AuthModule
-import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityRegisterBinding
+
     private val viewModel: RegisterViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         AuthModule.load()
+
         binding.apply {
             btnRegister.setOnClickListener {
                 val name = edtName.text.toString()
@@ -35,10 +40,11 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
-        observe()
+
+        observeRegisterResult()
     }
 
-    private fun observe() {
+    private fun observeRegisterResult() {
         viewModel.registerResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
@@ -47,8 +53,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     is Resource.Success -> {
                         startActivity(
-                            Actions.openHomepageIntent(this)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            openHomepageIntent()
+                                .setFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
                         )
                     }
                     is Resource.Error -> {

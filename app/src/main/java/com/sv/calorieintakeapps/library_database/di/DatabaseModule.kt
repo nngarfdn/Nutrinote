@@ -1,7 +1,7 @@
 package com.sv.calorieintakeapps.library_database.di
 
-import com.sv.calorieintakeapps.BuildConfig.*
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.sv.calorieintakeapps.BuildConfig.*
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.local.persistence.LoginSessionPreference
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
@@ -46,7 +46,6 @@ val networkModule = module {
         }
     }
     single {
-
         val retrofit = Retrofit.Builder()
             .baseUrl(GIZI_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())

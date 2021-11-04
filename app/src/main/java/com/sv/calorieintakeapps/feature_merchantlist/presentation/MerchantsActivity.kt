@@ -4,20 +4,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.databinding.FragmentMerchantListBinding
+import com.sv.calorieintakeapps.databinding.ActivityMerchantsBinding
 import com.sv.calorieintakeapps.feature_merchantlist.di.MerchantListModule
+import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MerchantsActivity : AppCompatActivity() {
 
-    private lateinit var binding: FragmentMerchantListBinding
+    private lateinit var binding: ActivityMerchantsBinding
     private val viewModel: MerchantListViewModel by viewModel()
     private lateinit var adapterMerchant: AdapterMerchant
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentMerchantListBinding.inflate(layoutInflater)
+        binding = ActivityMerchantsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         MerchantListModule.load()
         observe()
@@ -33,7 +33,7 @@ class MerchantsActivity : AppCompatActivity() {
 
                     }
                     is Resource.Success -> {
-                        adapterMerchant = AdapterMerchant(this)
+                        adapterMerchant = AdapterMerchant()
                         binding.apply {
                             rvRestauranList.apply {
                                 val lm = LinearLayoutManager(context)

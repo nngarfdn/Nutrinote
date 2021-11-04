@@ -19,7 +19,8 @@
             android:id="@+id/img_item_riwayat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ayam" />
+            android:src="@drawable/ic_placeholder" />
+
     </androidx.cardview.widget.CardView>
 
     <ImageView

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    >
+    android:padding="24dp">
 
     <TextView
         android:id="@+id/textView3"
@@ -14,14 +12,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:text="Daftar"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="35dp"
+        android:orientation="vertical"
         android:paddingHorizontal="18dp"
         android:paddingVertical="30dp">
 
@@ -38,9 +36,10 @@
                 android:drawableStart="@drawable/ic_person"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Nama"
+                android:inputType="textPersonName|textCapWords"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                android:hint="Nama"/>
+                android:textSize="13sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,17 +57,18 @@
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="7dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                android:hint="Email"/>
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true"
-            app:hintEnabled="false">
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password"
@@ -78,18 +78,18 @@
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                android:hint="Password"/>
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true"
-            app:hintEnabled="false">
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_password_conf"
@@ -99,10 +99,10 @@
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppins_medium"
+                android:hint="Konfirmasi Password"
                 android:inputType="textPassword"
                 android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                android:hint="Konfirmasi Password"/>
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Sudah punya akun? Masuk"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
