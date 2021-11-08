@@ -10,4 +10,6 @@ data class User(
     val password: String = "",
     val gender: Gender = Gender.MALE,
     val age: Int = 0,
+    val height: Int = 0,
+    val weight: Int = 0,
 )

@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.library_database.helper
 
+import com.sv.calorieintakeapps.library_database.data.source.remote.response.*
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
@@ -8,7 +9,6 @@ import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.*
 
 fun mapResponseToDomain(input: FoodNutrientsResponse): List<FoodNutrient> {
     return input.foodNutrients?.map { item ->
@@ -87,8 +87,10 @@ fun mapResponseToDomain(input: UserResponse): User {
             email = this?.email.orEmpty(),
             photo = this?.photo.orEmpty(),
             password = this?.password.orEmpty(),
+            gender = Gender.new(this?.gender ?: 0),
             age = this?.age ?: 0,
-            gender = Gender.new(this?.gender ?: 0)
+            height = this?.height ?: 0,
+            weight = this?.weight ?: 0
         )
     }
 }

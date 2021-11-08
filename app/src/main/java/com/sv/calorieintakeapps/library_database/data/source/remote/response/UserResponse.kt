@@ -39,4 +39,10 @@ data class Profile(
 
     @Json(name = "age")
     val age: Int? = null,
+
+    @Json(name = "height")
+    val height: Int? = null,
+
+    @Json(name = "weight")
+    val weight: Int? = null,
 )
