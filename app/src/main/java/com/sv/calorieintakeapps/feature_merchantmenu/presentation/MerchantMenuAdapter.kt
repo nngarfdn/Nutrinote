@@ -52,8 +52,6 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 txtTitleRiwayat.text = food.name
                 txtLocationRiwayat.text = merchantName
 
-                imgEditRiwayat.visibility = View.GONE
-
                 itemView.setOnClickListener {
                     it.context.startActivity(
                         it.context.openFoodDetailsIntent(
