@@ -35,7 +35,6 @@
         android:text="@string/sample_menu"
         android:textColor="@color/text_item_primari_color"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+id/img_edit_riwayat"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/cardView" />
 
@@ -59,8 +58,16 @@
         android:text="@string/sample_location"
         android:textColor="@color/text_item_location_color"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/img_edit_riwayat"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/img_good"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
