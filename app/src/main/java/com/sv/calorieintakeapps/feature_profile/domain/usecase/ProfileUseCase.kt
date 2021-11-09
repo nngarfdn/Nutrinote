@@ -14,6 +14,8 @@ interface ProfileUseCase {
         photoUri: String,
         gender: Gender,
         age: Int,
-        password: String
+        password: String,
+        height: Int,
+        weight: Int
     ): Flow<Resource<Boolean>>
 }

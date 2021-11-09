@@ -31,7 +31,6 @@ val networkModule = module {
             .add(hostname, "sha256/$GIZI_PUBLIC_KEY_1")
             .add(hostname, "sha256/$GIZI_PUBLIC_KEY_2")
             .add(hostname, "sha256/$GIZI_PUBLIC_KEY_3")
-            .add(hostname, "sha256/$GIZI_PUBLIC_KEY_4")
             .build()
 
         val httpClient = OkHttpClient.Builder()

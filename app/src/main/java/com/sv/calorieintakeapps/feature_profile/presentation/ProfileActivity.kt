@@ -63,7 +63,7 @@ class ProfileActivity : AppCompatActivity() {
             profileImage,
             gender,
             if (age.isNotEmpty()) age.toInt() else 0,
-            pass
+            pass,  0, 0
         )
             .observe(this) { result ->
                 if (result != null) {

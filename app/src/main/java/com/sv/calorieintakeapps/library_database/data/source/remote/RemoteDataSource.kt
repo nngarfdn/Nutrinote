@@ -289,6 +289,13 @@ class RemoteDataSource(private val apiService: ApiService) {
                     multipartBuilder.addFormDataPart("age", user.age.toString())
                 }
 
+                if (user.height.toString().isNotEmpty()) {
+                    multipartBuilder.addFormDataPart("height", user.height.toString())
+                }
+                if (user.weight.toString().isNotEmpty()) {
+                    multipartBuilder.addFormDataPart("weight", user.weight.toString())
+                }
+
                 val requestBody = multipartBuilder.build()
                 val response = apiService.putUserProfileById(user.id, requestBody)
 
