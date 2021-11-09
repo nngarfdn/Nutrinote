@@ -181,6 +181,58 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/poppins_medium"
+                android:text="Tinggi" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_edittext_border"
+                    android:drawableStart="@drawable/ic_person"
+                    android:drawablePadding="7dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:inputType="number"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Berat" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_edittext_border"
+                    android:drawableStart="@drawable/ic_person"
+                    android:drawablePadding="7dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:inputType="number"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Jenis Kelamin" />
 
             <RelativeLayout
