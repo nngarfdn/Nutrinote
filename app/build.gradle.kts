@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.*
 
 plugins {
     id(Plugins.ANDROID_APPLICATION)
@@ -36,7 +36,6 @@ android {
         buildConfigField("String", "GIZI_PUBLIC_KEY_1", getKeyProperty("GIZI_PUBLIC_KEY_1"))
         buildConfigField("String", "GIZI_PUBLIC_KEY_2", getKeyProperty("GIZI_PUBLIC_KEY_2"))
         buildConfigField("String", "GIZI_PUBLIC_KEY_3", getKeyProperty("GIZI_PUBLIC_KEY_3"))
-        buildConfigField("String", "GIZI_PUBLIC_KEY_4", getKeyProperty("GIZI_PUBLIC_KEY_4"))
         buildConfigField("String", "GIZI_SECRET_KEY", getKeyProperty("GIZI_SECRET_KEY"))
     }
 
