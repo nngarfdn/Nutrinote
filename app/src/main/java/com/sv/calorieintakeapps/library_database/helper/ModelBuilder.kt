@@ -49,7 +49,9 @@ object UserBuilder {
         photoUri: String,
         password: String,
         gender: Gender,
-        age: Int
+        age: Int,
+        height: Int,
+        weight: Int
     ): User {
         return User(
             id = id,
@@ -57,7 +59,9 @@ object UserBuilder {
             photo = photoUri,
             password = password,
             gender = gender,
-            age = age
+            age = age,
+            height = height,
+            weight = weight
         )
     }
 }

@@ -48,7 +48,9 @@ class ProfileRepository(
         photoUri: String,
         gender: Gender,
         age: Int,
-        password: String
+        password: String,
+        height: Int,
+        weight: Int
     ): Flow<Resource<Boolean>> {
         return object : NetworkBoundResource<Boolean, Response>() {
             private var resultDB = false
@@ -69,7 +71,9 @@ class ProfileRepository(
                     photoUri = photoUri,
                     password = password,
                     gender = gender,
-                    age = age
+                    age = age,
+                    height = height,
+                    weight = weight
                 )
                 return remoteDataSource.editUserProfileById(user)
             }

@@ -16,8 +16,10 @@ class ProfileViewModel(val useCase: ProfileUseCase) : ViewModel() {
         photoUri: String,
         gender: Gender,
         age: Int,
-        password: String
+        password: String,
+        height: Int,
+        weight: Int
     ): LiveData<Resource<Boolean>> =
-        useCase.editUserProfile(name, photoUri, gender, age, password)
+        useCase.editUserProfile(name, photoUri, gender, age, password, height, weight)
             .asLiveData()
 }

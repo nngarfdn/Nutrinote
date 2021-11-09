@@ -17,14 +17,18 @@ class ProfileInteractor(private val profileRepository: IProfileRepository) : Pro
         photoUri: String,
         gender: Gender,
         age: Int,
-        password: String
+        password: String,
+        height: Int,
+        weight: Int
     ): Flow<Resource<Boolean>> {
         return profileRepository.editUserProfile(
             name = name,
             photoUri = photoUri,
             gender = gender,
             age = age,
-            password = password
+            password = password,
+            height = height,
+            weight = weight
         )
     }
 }
