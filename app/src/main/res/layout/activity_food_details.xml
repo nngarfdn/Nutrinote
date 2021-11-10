@@ -76,6 +76,25 @@
                 android:textColor="#80272727"
                 app:drawableLeftCompat="@drawable/ic_location_item" />
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
+                app:cardCornerRadius="10dp">
+
+                <Button
+                    android:id="@+id/img_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#38A169"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Hidangan Sehat"
+                    android:textColor="@color/white" />
+
+            </androidx.cardview.widget.CardView>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
