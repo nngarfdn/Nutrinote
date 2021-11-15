@@ -44,7 +44,9 @@ class ProfileActivity : AppCompatActivity() {
                 if (spinnerSex.selectedItemPosition == 0) gender = Gender.MALE
                 if (spinnerSex.selectedItemPosition == 1) gender = Gender.FEMALE
                 val age = edtAge.text.toString()
-                actionEdit(name, gender, age, pass, profileImageUri)
+                val height = edtHeight.text.toString()
+                val weight = edtWeight.text.toString()
+                actionEdit(name, gender, age, pass, profileImageUri,height, weight)
             }
             btnBack.setOnClickListener { onBackPressed() }
             imageButton.setOnClickListener { chooseImage(RC_PICK_PROFILE_IMAGE) }
@@ -56,14 +58,16 @@ class ProfileActivity : AppCompatActivity() {
         gender: Gender,
         age: String,
         pass: String,
-        profileImage: String
+        profileImage: String,
+        height: String,
+        weight: String
     ) {
         viewModel.editUserProfile(
             name,
             profileImage,
             gender,
             if (age.isNotEmpty()) age.toInt() else 0,
-            pass,  0, 0
+            pass, height.toInt(), weight.toInt()
         )
             .observe(this) { result ->
                 if (result != null) {
@@ -99,6 +103,8 @@ class ProfileActivity : AppCompatActivity() {
                             if (data.photo != "") imageButton.loadImage(data.photo)
                             edtName.setText(data.name)
                             edtEmail.setText(data.email)
+                            edtWeight.setText(data.weight.toString())
+                            edtHeight.setText(data.height.toString())
                             data.age.let { edtAge.setText(it.toString()) }
                             if (data.gender == Gender.MALE) spinnerSex.setSelection(0)
                             if (data.gender == Gender.FEMALE) spinnerSex.setSelection(1)

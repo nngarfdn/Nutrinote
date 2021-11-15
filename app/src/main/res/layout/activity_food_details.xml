@@ -77,20 +77,38 @@
                 app:drawableLeftCompat="@drawable/ic_location_item" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:clickable="false"
                 app:cardCornerRadius="10dp">
 
-                <Button
-                    android:id="@+id/img_rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_label"
+                    android:layout_width="wrap_content"
                     android:background="#38A169"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Hidangan Sehat"
-                    android:textColor="@color/white" />
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/img_rating"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/img_good"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/cardView"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Hidangan Sehat"
+                        android:textColor="@color/white" />
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 

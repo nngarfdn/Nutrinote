@@ -17,12 +17,14 @@ import com.sv.calorieintakeapps.feature_profile.presentation.ProfileActivity
 import com.sv.calorieintakeapps.feature_reportdetails.presentation.ReportDetailsActivity
 import com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity
 import com.sv.calorieintakeapps.feature_scanner.presentation.ScanActivity
+import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 
 object Actions {
 
     const val EXTRA_FOOD_ID = "extra_food_id"
     const val EXTRA_FOOD_NAME = "extra_food_name"
     const val EXTRA_FOOD_IMAGE = "extra_food_image"
+    const val EXTRA_FOOD_LABEL = "extra_food_label"
     const val EXTRA_MERCHANT_ID = "extra_merchant_id"
     const val EXTRA_MERCHANT_NAME = "extra_merchant_name"
     const val EXTRA_REPORT_ID = "extra_report_id"
@@ -31,13 +33,15 @@ object Actions {
         merchantName: String,
         foodId: Int,
         foodName: String,
-        foodImage: String
+        foodImage: String,
+        foodLabel : String
     ): Intent {
         return Intent(this?.applicationContext, FoodDetailActivity::class.java)
             .putExtra(EXTRA_MERCHANT_NAME, merchantName)
             .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
             .putExtra(EXTRA_FOOD_IMAGE, foodImage)
+            .putExtra(EXTRA_FOOD_LABEL, foodLabel)
     }
 
     fun Context?.openHomepageIntent(): Intent {

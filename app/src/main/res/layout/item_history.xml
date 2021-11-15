@@ -54,7 +54,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/ic_location_item"
+        android:src="@drawable/ic_baseline_access_time_24"
         app:layout_constraintStart_toStartOf="@+id/txt_title_riwayat"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_riwayat" />
 

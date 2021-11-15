@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.loadImage
@@ -91,7 +92,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     is Resource.Success -> {
                         showToast("Berhasil mengirim laporan")
-                        onBackPressed()
+                        applicationContext.openHomepageIntent()
                     }
                     is Resource.Error -> {
                         showToast(result.message)

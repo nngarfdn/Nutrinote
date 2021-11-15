@@ -11,4 +11,7 @@
     <color name="text_item_primari_color">#272727</color>
     <color name="text_item_location_color">#939393</color>
     <color name="text_buatlaporan">#BCBCBC</color>
+    <color name="green_label">#008000</color>
+    <color name="yellow_label">#FFA500</color>
+    <color name="red_label">#FF0404</color>
 </resources>

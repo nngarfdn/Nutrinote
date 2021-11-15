@@ -43,12 +43,18 @@
         <entry key="..\:/Users/Lenovo/StudioProjects/CalorieIntakeApp/app/src/main/res/layout/item_history.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/Lenovo/StudioProjects/CalorieIntakeApp/app/src/main/res/layout/item_merchants.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/Lenovo/StudioProjects/CalorieIntakeApp/app/src/main/res/layout/layout_sky.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_food_details.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_action_edit.xml" value="0.2109375" />
+        <entry key="app/src/main/res/drawable/ic_bad.xml" value="0.12407407407407407" />
+        <entry key="app/src/main/res/drawable/ic_good.xml" value="0.12407407407407407" />
+        <entry key="app/src/main/res/drawable/ic_yellow.xml" value="0.12407407407407407" />
+        <entry key="app/src/main/res/layout/activity_food_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_merchant_menu.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_report_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_reporting.xml" value="0.14" />
         <entry key="app/src/main/res/layout/fragment_merchant_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_food.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/item_history.xml" value="0.25" />
       </map>
     </option>
   </component>
