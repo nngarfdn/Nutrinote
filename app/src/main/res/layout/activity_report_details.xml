@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5" />
+                    app:layout_constraintGuide_end="189dp" />
 
                 <ImageView
                     android:id="@+id/imgSebelum"
@@ -192,6 +192,36 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/bg_text_disabled"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:visibility="invisible"-->
+<!--                    android:id="@+id/precent"-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:src="@drawable/ic_food_disabled" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/txtPercent"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_toEndOf="@+id/precent"-->
+<!--                    android:fontFamily="@font/poppins_medium"-->
+<!--                    android:text="%"-->
+<!--                    android:textColor="#9F9F9F"-->
+<!--                    android:textSize="13sp" />-->
+
+<!--            </RelativeLayout>-->
 
         </LinearLayout>
 
