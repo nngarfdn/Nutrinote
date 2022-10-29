@@ -26,7 +26,7 @@
         tools:ignore="MissingConstraints">
 
         <SearchView
-            android:id="@+id/edt_search_riwayat"
+            android:id="@+id/edt_search_menu"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"

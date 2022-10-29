@@ -1,6 +1,7 @@
 package com.sv.calorieintakeapps.feature_merchantmenu.presentation
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.library_common.util.loadImage
@@ -34,6 +35,17 @@ class MerchantMenuActivity : AppCompatActivity() {
             imgCover.loadImage("https://i.imgur.com/Isc5ySZ.png")
             imgBack.setOnClickListener { onBackPressed() }
         }
+
+        binding.edtSearchMenu.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                merchantMenuAdapter.filter.filter(newText)
+                return false
+            }
+        })
 
         observeMerchantName()
         observeMerchantMenu()
