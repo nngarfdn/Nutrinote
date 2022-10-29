@@ -14,12 +14,14 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         foodId: Int,
         date: String,
         time: String,
+        percentage: Int,
         preImageUri: String,
         postImageUri: String
     ) {
         report.value = ReportBuilder.create(
             foodId = foodId, userId = -1,
             date = date, time = time,
+            percentage = percentage,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }
@@ -29,6 +31,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             reportingUseCase.addReport(
                 foodId = it.foodId,
                 date = it.getDateOnly(), time = it.getTimeOnly(),
+                percentage = it.percentage,
                 preImageUri = it.preImage, postImageUri = it.postImage
             ).asLiveData()
         }
@@ -41,12 +44,14 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         reportId: Int,
         date: String,
         time: String,
+        percentage: Int,
         preImageUri: String,
         postImageUri: String
     ) {
         report.value = ReportBuilder.update(
             id = reportId, userId = -1,
             date = date, time = time,
+            percentage = percentage,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }
@@ -56,6 +61,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             reportingUseCase.editReportById(
                 reportId = it.id,
                 date = it.getDateOnly(), time = it.getTimeOnly(),
+                percentage = it.percentage,
                 preImageUri = it.preImage, postImageUri = it.postImage
             ).asLiveData()
         }

@@ -7,10 +7,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputFilter
+import android.text.Spanned
+import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
+import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
@@ -43,6 +48,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var foodId = -1
     private var preImageUri = ""
     private var postImageUri = ""
+    private var percentage = ""
 
     private var isUpdate = false
 
@@ -60,10 +66,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).toString()
 
+        binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(1, 100))
+
         binding.apply {
             tvFoodName.text = foodName
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
+            edtPercent.setOnClickListener(this@ReportingActivity)
             btnPreImage.setOnClickListener(this@ReportingActivity)
             btnPostImage.setOnClickListener(this@ReportingActivity)
             btnSave.setOnClickListener(this@ReportingActivity)
@@ -83,6 +92,42 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+    inner class MinMaxFilter() : InputFilter {
+        private var intMin: Int = 0
+        private var intMax: Int = 0
+
+        // Initialized
+        constructor(minValue: Int, maxValue: Int) : this() {
+            this.intMin = minValue
+            this.intMax = maxValue
+        }
+
+        override fun filter(
+            source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dStart: Int,
+            dEnd: Int
+        ): CharSequence? {
+            try {
+                val input = Integer.parseInt(dest.toString() + source.toString())
+                if (isInRange(intMin, intMax, input)) {
+                    return null
+                }
+            } catch (e: NumberFormatException) {
+                e.printStackTrace()
+            }
+            return ""
+        }
+
+        // Check if input c is in between min a and max b and
+        // returns corresponding boolean
+        private fun isInRange(a: Int, b: Int, c: Int): Boolean {
+            return if (b > a) c in a..b else c in b..a
+        }
+    }
+
     private fun observeAddReportResult() {
         viewModel.addReportResult.observe(this) { result ->
             if (result != null) {
@@ -92,7 +137,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     is Resource.Success -> {
                         showToast("Berhasil mengirim laporan")
-                        applicationContext.openHomepageIntent()
+//                        applicationContext.openHomepageIntent()
+                        val intent = Intent(this, HomepageActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                     is Resource.Error -> {
                         showToast(result.message)
@@ -134,6 +182,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             foodId = report.foodId
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
+                            edtPercent.setText(report.percentage.toString())
                             imgPreImage.loadImage(report.preImage)
                             imgPostImage.loadImage(report.postImage)
                         }
@@ -150,6 +199,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         when (view?.id) {
             binding.edtDate.id -> showDatePicker()
             binding.edtTime.id -> showTimePicker()
+            binding.edtPercent.id -> view as EditText
             binding.btnPostImage.id -> chooseImage(RC_PICK_POST_IMAGE)
             binding.btnPreImage.id -> chooseImage(RC_PICK_PRE_IMAGE)
             binding.btnSave.id -> saveReport()
@@ -160,17 +210,20 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
+        val percentage = binding.edtPercent.text.toString().toInt()
 
         if (isUpdate) {
             viewModel.editReport(
                 reportId = reportId,
                 date = date, time = time,
+                percentage = percentage,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         } else {
             viewModel.addReport(
                 foodId = foodId,
                 date = date, time = time,
+                percentage = percentage,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         }

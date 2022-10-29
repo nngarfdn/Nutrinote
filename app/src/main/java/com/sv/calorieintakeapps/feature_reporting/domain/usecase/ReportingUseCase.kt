@@ -10,6 +10,7 @@ interface ReportingUseCase {
         foodId: Int,
         date: String,
         time: String,
+        percentage: Int,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>
@@ -20,6 +21,7 @@ interface ReportingUseCase {
         reportId: Int,
         date: String,
         time: String,
+        percentage: Int,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>

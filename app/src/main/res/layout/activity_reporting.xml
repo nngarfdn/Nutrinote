@@ -122,8 +122,9 @@
                 android:drawableStart="@drawable/ic_baseline_food_bank_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="Masukkan Persentase"
-                android:inputType="none"
+                android:hint="Masukkan Persentase (%)"
+                android:inputType="numberDecimal"
+                android:maxLength="100"
                 android:paddingHorizontal="16dp"
                 android:textSize="13sp"
                 tools:ignore="KeyboardInaccessibleWidget,TextFields" />
