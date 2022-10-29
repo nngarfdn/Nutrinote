@@ -57,9 +57,9 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 txtLocationRiwayat.text = merchantName
                 txtPrice.text = "Rp ${food.price}"
                 when (food.label) {
-                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.img_bad)
-                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.img_ok)
-                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.img_good)
+                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.img_circle_bad)
+                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.img_circle_ok)
+                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.img_circle_good)
                 }
 
                 itemView.setOnClickListener {
