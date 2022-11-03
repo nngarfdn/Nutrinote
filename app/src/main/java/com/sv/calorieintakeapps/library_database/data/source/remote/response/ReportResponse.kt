@@ -45,4 +45,7 @@ data class Report(
 
     @Json(name = "percentage")
     val percentage: Int? = null,
+
+    @Json(name = "mood")
+    val mood: String? = null,
 )

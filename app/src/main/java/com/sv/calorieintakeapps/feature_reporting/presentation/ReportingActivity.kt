@@ -195,8 +195,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtPercent.setText(report.percentage.toString())
                             imgPreImage.loadImage(report.preImage)
                             imgPostImage.loadImage(report.postImage)
-                            Log.d("TEST", "observeGetReportById: "+report.mood)
-                            Log.d("TEST", "observeGetReportById: "+(report.mood =="Senang/Semangat"))
                             when (report.mood) {
                                 "Senang/Semangat" -> spinnerMood.setSelection(0)
                                 "Sedih/Sakit" -> spinnerMood.setSelection(1)

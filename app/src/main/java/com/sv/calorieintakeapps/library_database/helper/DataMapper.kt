@@ -58,7 +58,8 @@ fun mapResponseToDomain(input: ReportResponse): Report {
             preImage = this?.preImage.orEmpty(),
             date = this?.date.orEmpty(),
             status = ReportStatus.new(this?.status.orEmpty()),
-            percentage = this?.percentage ?: 0
+            percentage = this?.percentage ?: 0,
+            mood = this?.mood.orEmpty(),
         )
     }
 }
@@ -74,7 +75,8 @@ fun mapResponseToDomain(input: ReportsResponse): List<Report> {
             preImage = item?.preImage.orEmpty(),
             date = item?.date.orEmpty(),
             status = ReportStatus.new(item?.status.orEmpty()),
-            percentage = item?.percentage ?: 0
+            percentage = item?.percentage ?: 0,
+            mood = item?.mood.orEmpty(),
         )
     } ?: listOf()
 }
