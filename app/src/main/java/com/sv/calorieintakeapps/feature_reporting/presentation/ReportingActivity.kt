@@ -1,6 +1,7 @@
 package com.sv.calorieintakeapps.feature_reporting.presentation
 
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.text.InputFilter
 import android.text.Spanned
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_common.util.showToast
+import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,9 +51,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var foodId = -1
     private var preImageUri = ""
     private var postImageUri = ""
-    private var percentage = ""
 
     private var isUpdate = false
+
+    private var mood = ""
+
+
+    val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +75,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(1, 100))
 
+        val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.apply {
+            spinnerMood.adapter = arrayAdapter
             tvFoodName.text = foodName
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
@@ -185,6 +195,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtPercent.setText(report.percentage.toString())
                             imgPreImage.loadImage(report.preImage)
                             imgPostImage.loadImage(report.postImage)
+                            Log.d("TEST", "observeGetReportById: "+report.mood)
+                            Log.d("TEST", "observeGetReportById: "+(report.mood =="Senang/Semangat"))
+                            when (report.mood) {
+                                "Senang/Semangat" -> spinnerMood.setSelection(0)
+                                "Sedih/Sakit" -> spinnerMood.setSelection(1)
+                                "Biasa Saja" -> spinnerMood.setSelection(2)
+                            }
                         }
                     }
                     is Resource.Error -> {
@@ -211,12 +228,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
         val percentage = binding.edtPercent.text.toString().toInt()
+        mood = itemMood[binding.spinnerMood.selectedItemPosition]
 
         if (isUpdate) {
             viewModel.editReport(
                 reportId = reportId,
                 date = date, time = time,
                 percentage = percentage,
+                mood = mood,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         } else {
@@ -224,6 +243,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 foodId = foodId,
                 date = date, time = time,
                 percentage = percentage,
+                mood = mood,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         }

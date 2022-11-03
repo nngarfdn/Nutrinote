@@ -24,4 +24,10 @@
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>
+    <string-array name="mood">
+        <item>Mood</item>
+        <item>Senang/Semangat</item>
+        <item>Sedih/Sakit</item>
+        <item>Biasa Saja</item>
+    </string-array>
 </resources>

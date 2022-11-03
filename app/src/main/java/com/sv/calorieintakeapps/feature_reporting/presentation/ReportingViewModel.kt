@@ -15,6 +15,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         date: String,
         time: String,
         percentage: Int,
+        mood : String,
         preImageUri: String,
         postImageUri: String
     ) {
@@ -22,6 +23,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             foodId = foodId, userId = -1,
             date = date, time = time,
             percentage = percentage,
+            mood = mood,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }
@@ -32,6 +34,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 foodId = it.foodId,
                 date = it.getDateOnly(), time = it.getTimeOnly(),
                 percentage = it.percentage,
+                mood = it.mood,
                 preImageUri = it.preImage, postImageUri = it.postImage
             ).asLiveData()
         }
@@ -45,6 +48,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         date: String,
         time: String,
         percentage: Int,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ) {
@@ -52,6 +56,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             id = reportId, userId = -1,
             date = date, time = time,
             percentage = percentage,
+            mood = mood,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }
@@ -62,6 +67,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 reportId = it.id,
                 date = it.getDateOnly(), time = it.getTimeOnly(),
                 percentage = it.percentage,
+                mood = it.mood,
                 preImageUri = it.preImage, postImageUri = it.postImage
             ).asLiveData()
         }

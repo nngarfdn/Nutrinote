@@ -12,6 +12,7 @@ data class Report(
     val postImage: String = "",
     val status: ReportStatus = ReportStatus.PENDING,
     val percentage: Int = 0,
+    val mood: String = "",
 ) {
 
     fun getDateOnly(): String {

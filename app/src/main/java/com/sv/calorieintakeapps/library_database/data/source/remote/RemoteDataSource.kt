@@ -157,6 +157,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                     .addFormDataPart("post_image", postImageFile.name, requestPostImage)
                     .addFormDataPart("status_report", report.status.id)
                     .addFormDataPart("percentage", report.percentage.toString())
+                    .addFormDataPart("mood", report.mood)
                     .build()
                 val response = apiService.postReport(requestBody)
 
@@ -196,6 +197,7 @@ class RemoteDataSource(private val apiService: ApiService) {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("date_report", report.date)
                     .addFormDataPart("percentage", report.percentage.toString())
+                    .addFormDataPart("mood", report.mood)
 
                 if (report.preImage.isNotEmpty()) {
                     val preImageFile = File(report.preImage)

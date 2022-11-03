@@ -11,6 +11,7 @@ interface ReportingUseCase {
         date: String,
         time: String,
         percentage: Int,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>
@@ -22,6 +23,7 @@ interface ReportingUseCase {
         date: String,
         time: String,
         percentage: Int,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>
