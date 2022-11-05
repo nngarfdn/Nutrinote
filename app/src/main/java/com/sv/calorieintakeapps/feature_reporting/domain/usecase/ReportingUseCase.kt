@@ -10,7 +10,7 @@ interface ReportingUseCase {
         foodId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String
@@ -22,7 +22,7 @@ interface ReportingUseCase {
         reportId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String

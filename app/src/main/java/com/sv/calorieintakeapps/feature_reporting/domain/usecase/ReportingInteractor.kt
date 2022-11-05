@@ -12,7 +12,7 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         foodId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String
@@ -34,7 +34,7 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         reportId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String

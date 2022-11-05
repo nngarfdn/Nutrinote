@@ -11,7 +11,7 @@ object ReportBuilder {
         foodId: Int,
         date: String,
         time: String,
-        percentage : Int,
+        percentage : Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String
@@ -32,7 +32,7 @@ object ReportBuilder {
         userId: Int,
         date: String,
         time: String,
-        percentage : Int,
+        percentage : Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String

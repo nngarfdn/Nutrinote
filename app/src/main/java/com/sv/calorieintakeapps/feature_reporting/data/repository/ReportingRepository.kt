@@ -23,7 +23,7 @@ class ReportingRepository(
         foodId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood : String,
         preImageUri: String,
         postImageUri: String
@@ -84,7 +84,7 @@ class ReportingRepository(
         reportId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String

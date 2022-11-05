@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -20,15 +19,14 @@ import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
-import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.sql.Types.NULL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,6 +53,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var isUpdate = false
 
     private var mood = ""
+//    private var percentage: Int? = null;
 
 
     val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
@@ -73,7 +72,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).toString()
 
-        binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(1, 100))
+        binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
 
         val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -225,7 +224,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
-        val percentage = binding.edtPercent.text.toString().toInt()
+        val percentage: Int?= if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString().toInt() else null;
+//        val percentage = binding.edtPercent.text.toString().toInt()
+//        val percentage = binding.edtPercent.text.toString().toIntOrNull()
         mood = itemMood[binding.spinnerMood.selectedItemPosition]
 
         if (isUpdate) {

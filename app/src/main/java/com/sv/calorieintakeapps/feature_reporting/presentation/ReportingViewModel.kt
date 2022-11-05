@@ -14,7 +14,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         foodId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood : String,
         preImageUri: String,
         postImageUri: String
@@ -47,7 +47,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         reportId: Int,
         date: String,
         time: String,
-        percentage: Int,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
         postImageUri: String

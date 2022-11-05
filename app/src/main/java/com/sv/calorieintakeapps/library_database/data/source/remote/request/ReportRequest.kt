@@ -26,5 +26,5 @@ data class ReportRequest(
     val status: String = ReportStatus.PENDING.id,
 
     @Json(name = "percentage")
-    val percentage: Int = 0,
+    val percentage: Int? = null,
 )
