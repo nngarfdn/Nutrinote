@@ -191,9 +191,20 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             foodId = report.foodId
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
+
                             edtPercent.setText(report.percentage.toString())
-                            imgPreImage.loadImage(report.preImage)
-                            imgPostImage.loadImage(report.postImage)
+//                            imgPreImage.loadImage(report.preImage)
+//                            imgPostImage.loadImage(report.postImage)
+                            if(!report.preImage.isEmpty()){
+                                imgPreImage.loadImage(report.preImage)
+                            }else{
+                                imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                            }
+                            if(!report.postImage.isEmpty()){
+                                imgPostImage.loadImage(report.postImage)
+                            }else{
+                                imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                            }
                             when (report.mood) {
                                 "Senang/Semangat" -> spinnerMood.setSelection(0)
                                 "Sedih/Sakit" -> spinnerMood.setSelection(1)
@@ -225,8 +236,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
         val percentage: Int?= if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString().toInt() else null;
-//        val percentage = binding.edtPercent.text.toString().toInt()
-//        val percentage = binding.edtPercent.text.toString().toIntOrNull()
         mood = itemMood[binding.spinnerMood.selectedItemPosition]
 
         if (isUpdate) {

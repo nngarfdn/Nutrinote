@@ -127,7 +127,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Presentase sisa hidangan di konsumsi :" />
+                    android:text="Persentase sisa hidangan dikonsumsi :" />
 
                 <TextView
                     android:id="@+id/txtSisaHidangan"
@@ -139,7 +139,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kandungan gizi  yang di konsumsi :" />
+                    android:text="Kandungan gizi  yang dikonsumsi :" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFoodNutrition"

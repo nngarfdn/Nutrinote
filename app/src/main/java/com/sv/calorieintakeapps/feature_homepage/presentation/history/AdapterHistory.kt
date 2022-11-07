@@ -2,6 +2,7 @@ package com.sv.calorieintakeapps.feature_homepage.presentation.history
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,7 +74,9 @@ class AdapterHistory(
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Report) {
             binding.apply {
-                imgItemRiwayat.loadImage(item.preImage)
+                if(!item.preImage.isEmpty()){
+                    imgItemRiwayat.loadImage(item.preImage)
+                }
                 txtTitleRiwayat.text = item.foodName
                 txtLocationRiwayat.text = item.date
                 if (isPendingReport) imgEditRiwayat.visibility = View.INVISIBLE

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityReportDetailsBinding
 import com.sv.calorieintakeapps.feature_reportdetails.di.ReportDetailsModule
 import com.sv.calorieintakeapps.library_common.action.Actions
@@ -53,8 +54,16 @@ class ReportDetailsActivity : AppCompatActivity() {
                             val percentage = result.data?.percentage ?: 0
                             foodNutrientAdapter.percentage = percentage
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
-                            imgSebelum.loadImage(result.data?.preImage)
-                            imgSesudah.loadImage(result.data?.postImage)
+                            if(result.data?.preImage?.isEmpty() == false){
+                                imgSebelum.loadImage(result.data?.preImage)
+                            }else{
+                                imgSebelum.setImageResource(R.drawable.img_no_image)
+                            }
+                            if(result.data?.postImage?.isEmpty() == false){
+                                imgSesudah.loadImage(result.data?.postImage)
+                            }else{
+                                imgSesudah.setImageResource(R.drawable.img_no_image)
+                            }
                         }
                     }
                     is Resource.Error -> {
