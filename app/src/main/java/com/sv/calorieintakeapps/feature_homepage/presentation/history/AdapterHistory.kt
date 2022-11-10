@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ItemHistoryBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportDetailsIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportEditingIntent
@@ -76,6 +77,8 @@ class AdapterHistory(
             binding.apply {
                 if(!item.preImage.isEmpty()){
                     imgItemRiwayat.loadImage(item.preImage)
+                }else{
+                    imgItemRiwayat.setImageResource(R.drawable.ic_placeholder)
                 }
                 txtTitleRiwayat.text = item.foodName
                 txtLocationRiwayat.text = item.date
