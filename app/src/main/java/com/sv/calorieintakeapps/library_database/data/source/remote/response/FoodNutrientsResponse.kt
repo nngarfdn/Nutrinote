@@ -34,4 +34,7 @@ data class FoodNutrient(
 
     @Json(name = "value")
     val value: Double? = null,
+
+    @Json(name= "akg_day")
+    val akgDay: String? = null,
 )

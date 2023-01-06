@@ -18,7 +18,8 @@ fun mapResponseToDomain(input: FoodNutrientsResponse): List<FoodNutrient> {
             nutrientId = item?.nutrientId ?: -1,
             nutrientName = item?.nutrientName.orEmpty(),
             nutrientUnit = item?.nutrientUnit.orEmpty(),
-            value = item?.value ?: 0.0
+            value = item?.value ?: 0.0,
+            akgDay = item?.akgDay.orEmpty(),
         )
     } ?: listOf()
 }

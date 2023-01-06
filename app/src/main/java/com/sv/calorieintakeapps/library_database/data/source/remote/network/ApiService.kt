@@ -40,7 +40,8 @@ interface ApiService {
     @GET("get_detail_food")
     @Headers("API_Key: $GIZI_SECRET_KEY")
     suspend fun getFoodNutrientsById(
-        @Query("id_food") foodId: Int
+        @Query("id_food") foodId: Int,
+        @Query("id_user") userId: Int
     ): FoodNutrientsResponse
 
     @GET("get_nutritions")

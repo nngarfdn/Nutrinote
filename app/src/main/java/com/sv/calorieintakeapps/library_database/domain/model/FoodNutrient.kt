@@ -7,4 +7,5 @@ data class FoodNutrient(
     val nutrientName: String = "",
     val nutrientUnit: String = "",
     val value: Double = 0.0,
+    val akgDay: String = "",
 )

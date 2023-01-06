@@ -115,10 +115,10 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getFoodNutrientsById(foodId: Int): Flow<ApiResponse<FoodNutrientsResponse>> {
+    suspend fun getFoodNutrientsById(foodId: Int, userId: Int): Flow<ApiResponse<FoodNutrientsResponse>> {
         return flow {
             try {
-                val foodNutrientsResponse = apiService.getFoodNutrientsById(foodId)
+                val foodNutrientsResponse = apiService.getFoodNutrientsById(foodId, userId)
                 val nutrientsResponse = apiService.getAllNutrients()
 
                 val dataArray = foodNutrientsResponse.foodNutrients
