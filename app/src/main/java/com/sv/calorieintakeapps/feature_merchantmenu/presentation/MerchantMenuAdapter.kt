@@ -1,9 +1,14 @@
 package com.sv.calorieintakeapps.feature_merchantmenu.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sv.calorieintakeapps.R
@@ -12,9 +17,13 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openFoodDetailsInt
 import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.model.Food
+import java.util.*
+import kotlin.collections.ArrayList
 
 @SuppressLint("NotifyDataSetChanged")
-class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>() {
+class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>(), Filterable {
+
+    var foodFilterList = ArrayList<Food>()
 
     var merchantName: String? = null
         set(value) {
@@ -30,6 +39,7 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
 
     fun submitList(foods: List<Food>?) {
         this.foods = foods ?: listOf()
+        this.foodFilterList = (foods ?: listOf()) as ArrayList<Food>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,12 +48,43 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val food = foods[position]
+        val food = foodFilterList[position]
         holder.bind(food)
     }
 
     override fun getItemCount(): Int {
-        return foods.size
+        return foodFilterList.size
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    foodFilterList = foods as ArrayList<Food>
+                } else {
+                    val resultList = ArrayList<Food>()
+                    for (row in foods) {
+                        if (row.name.lowercase(Locale.ROOT)
+                                .contains(charSearch.lowercase(Locale.ROOT))
+                        ) {
+                            resultList.add(row)
+                        }
+                    }
+                    foodFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = foodFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                foodFilterList = results?.values as ArrayList<Food>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 
     inner class ViewHolder(private val binding: ItemFoodBinding) :
@@ -57,9 +98,9 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 txtLocationRiwayat.text = merchantName
                 txtPrice.text = "Rp ${food.price}"
                 when (food.label) {
-                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.img_bad)
-                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.img_ok)
-                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.img_good)
+                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.img_circle_bad)
+                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.img_circle_ok)
+                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.img_circle_good)
                 }
 
                 itemView.setOnClickListener {

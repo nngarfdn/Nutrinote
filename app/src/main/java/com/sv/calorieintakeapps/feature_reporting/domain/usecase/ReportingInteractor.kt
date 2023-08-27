@@ -12,12 +12,16 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         foodId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>> {
         return reportingRepository.addReport(
             foodId = foodId,
             date = date, time = time,
+            percentage = percentage,
+            mood = mood,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }
@@ -30,12 +34,16 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         reportId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>> {
         return reportingRepository.editReportById(
             reportId = reportId,
             date = date, time = time,
+            percentage = percentage,
+            mood = mood,
             preImageUri = preImageUri, postImageUri = postImageUri
         )
     }

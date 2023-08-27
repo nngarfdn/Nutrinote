@@ -1,19 +1,24 @@
 package com.sv.calorieintakeapps.feature_reporting.presentation
 
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputFilter
+import android.text.Spanned
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
+import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
-import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.loadImage
@@ -21,6 +26,7 @@ import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.sql.Types.NULL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,6 +52,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
     private var isUpdate = false
 
+    private var mood = ""
+//    private var percentage: Int? = null;
+
+
+    val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportingBinding.inflate(layoutInflater)
@@ -60,10 +72,16 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).toString()
 
+        binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
+
+        val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.apply {
+            spinnerMood.adapter = arrayAdapter
             tvFoodName.text = foodName
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
+            edtPercent.setOnClickListener(this@ReportingActivity)
             btnPreImage.setOnClickListener(this@ReportingActivity)
             btnPostImage.setOnClickListener(this@ReportingActivity)
             btnSave.setOnClickListener(this@ReportingActivity)
@@ -83,6 +101,42 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+    inner class MinMaxFilter() : InputFilter {
+        private var intMin: Int = 0
+        private var intMax: Int = 0
+
+        // Initialized
+        constructor(minValue: Int, maxValue: Int) : this() {
+            this.intMin = minValue
+            this.intMax = maxValue
+        }
+
+        override fun filter(
+            source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dStart: Int,
+            dEnd: Int
+        ): CharSequence? {
+            try {
+                val input = Integer.parseInt(dest.toString() + source.toString())
+                if (isInRange(intMin, intMax, input)) {
+                    return null
+                }
+            } catch (e: NumberFormatException) {
+                e.printStackTrace()
+            }
+            return ""
+        }
+
+        // Check if input c is in between min a and max b and
+        // returns corresponding boolean
+        private fun isInRange(a: Int, b: Int, c: Int): Boolean {
+            return if (b > a) c in a..b else c in b..a
+        }
+    }
+
     private fun observeAddReportResult() {
         viewModel.addReportResult.observe(this) { result ->
             if (result != null) {
@@ -92,7 +146,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     is Resource.Success -> {
                         showToast("Berhasil mengirim laporan")
-                        applicationContext.openHomepageIntent()
+//                        applicationContext.openHomepageIntent()
+                        val intent = Intent(this, HomepageActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                     is Resource.Error -> {
                         showToast(result.message)
@@ -134,8 +191,25 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             foodId = report.foodId
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
-                            imgPreImage.loadImage(report.preImage)
-                            imgPostImage.loadImage(report.postImage)
+
+                            edtPercent.setText(report.percentage.toString())
+//                            imgPreImage.loadImage(report.preImage)
+//                            imgPostImage.loadImage(report.postImage)
+                            if(!report.preImage.isEmpty()){
+                                imgPreImage.loadImage(report.preImage)
+                            }else{
+                                imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                            }
+                            if(!report.postImage.isEmpty()){
+                                imgPostImage.loadImage(report.postImage)
+                            }else{
+                                imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                            }
+                            when (report.mood) {
+                                "Senang/Semangat" -> spinnerMood.setSelection(0)
+                                "Sedih/Sakit" -> spinnerMood.setSelection(1)
+                                "Biasa Saja" -> spinnerMood.setSelection(2)
+                            }
                         }
                     }
                     is Resource.Error -> {
@@ -150,6 +224,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         when (view?.id) {
             binding.edtDate.id -> showDatePicker()
             binding.edtTime.id -> showTimePicker()
+            binding.edtPercent.id -> view as EditText
             binding.btnPostImage.id -> chooseImage(RC_PICK_POST_IMAGE)
             binding.btnPreImage.id -> chooseImage(RC_PICK_PRE_IMAGE)
             binding.btnSave.id -> saveReport()
@@ -160,17 +235,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
+        val percentage: Int?= if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString().toInt() else null;
+        mood = itemMood[binding.spinnerMood.selectedItemPosition]
 
         if (isUpdate) {
             viewModel.editReport(
                 reportId = reportId,
                 date = date, time = time,
+                percentage = percentage,
+                mood = mood,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         } else {
             viewModel.addReport(
                 foodId = foodId,
                 date = date, time = time,
+                percentage = percentage,
+                mood = mood,
                 preImageUri = preImageUri, postImageUri = postImageUri
             )
         }

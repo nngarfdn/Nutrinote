@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityReportDetailsBinding
 import com.sv.calorieintakeapps.feature_reportdetails.di.ReportDetailsModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.util.loadImage
 import com.sv.calorieintakeapps.library_common.util.showToast
+import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutrientAdapter
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,6 +20,7 @@ class ReportDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReportDetailsBinding
     private val viewModel: ReportDetailViewModel by viewModel()
     private lateinit var foodNutrientAdapter: FoodNutrientAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,16 @@ class ReportDetailsActivity : AppCompatActivity() {
                             val percentage = result.data?.percentage ?: 0
                             foodNutrientAdapter.percentage = percentage
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
-                            imgSebelum.loadImage(result.data?.preImage)
-                            imgSesudah.loadImage(result.data?.postImage)
+                            if(result.data?.preImage?.isEmpty() == false){
+                                imgSebelum.loadImage(result.data?.preImage)
+                            }else{
+                                imgSebelum.setImageResource(R.drawable.img_no_image)
+                            }
+                            if(result.data?.postImage?.isEmpty() == false){
+                                imgSesudah.loadImage(result.data?.postImage)
+                            }else{
+                                imgSesudah.setImageResource(R.drawable.img_no_image)
+                            }
                         }
                     }
                     is Resource.Error -> {

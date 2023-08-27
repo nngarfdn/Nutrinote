@@ -48,6 +48,7 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
         fun bind(foodNutrient: FoodNutrient) {
             binding.apply {
                 txtNutritionName.text = foodNutrient.nutrientName
+                txtPercentageValue.text = foodNutrient.akgDay + if(!foodNutrient.akgDay.equals("-")) " %" else ""
                 txtNutritionValue.text = itemView.context.getString(
                     R.string.nutrient_value,
                     foodNutrient.value * percentage.toDouble() / 100,

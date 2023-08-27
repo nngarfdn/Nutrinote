@@ -10,6 +10,8 @@ interface IReportingRepository {
         foodId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>
@@ -20,6 +22,8 @@ interface IReportingRepository {
         reportId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>>

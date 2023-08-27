@@ -55,7 +55,8 @@ class ReportDetailsRepository(
             }
 
             override suspend fun createCall(): Flow<ApiResponse<FoodNutrientsResponse>> {
-                return remoteDataSource.getFoodNutrientsById(foodId)
+                val userId = localDataSource.getUserId()
+                return remoteDataSource.getFoodNutrientsById(foodId, userId)
             }
 
             override suspend fun saveCallResult(data: FoodNutrientsResponse) {

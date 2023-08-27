@@ -44,8 +44,8 @@ class FoodDetailActivity : AppCompatActivity() {
 
             when (foodLabel) {
                 FoodLabel.VERY_GOOD.name -> {
-                    txtLabel.text = FoodLabel.VERY_GOOD.id
-                    imgRating.setImageResource(R.drawable.img_good)
+//                    txtLabel.text = FoodLabel.VERY_GOOD.id
+//                    imgRating.setImageResource(R.drawable.img_good)
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
@@ -54,8 +54,8 @@ class FoodDetailActivity : AppCompatActivity() {
                     )
                 }
                 FoodLabel.GOOD.name -> {
-                    txtLabel.text = FoodLabel.GOOD.id
-                    imgRating.setImageResource(R.drawable.img_ok)
+//                    txtLabel.text = FoodLabel.GOOD.id
+//                    imgRating.setImageResource(R.drawable.img_ok)
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
@@ -64,8 +64,8 @@ class FoodDetailActivity : AppCompatActivity() {
                     )
                 }
                 FoodLabel.BAD.name -> {
-                    txtLabel.text = FoodLabel.BAD.id
-                    imgRating.setImageResource(R.drawable.img_bad)
+//                    txtLabel.text = FoodLabel.BAD.id
+//                    imgRating.setImageResource(R.drawable.img_bad)
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,

@@ -115,10 +115,10 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getFoodNutrientsById(foodId: Int): Flow<ApiResponse<FoodNutrientsResponse>> {
+    suspend fun getFoodNutrientsById(foodId: Int, userId: Int): Flow<ApiResponse<FoodNutrientsResponse>> {
         return flow {
             try {
-                val foodNutrientsResponse = apiService.getFoodNutrientsById(foodId)
+                val foodNutrientsResponse = apiService.getFoodNutrientsById(foodId, userId)
                 val nutrientsResponse = apiService.getAllNutrients()
 
                 val dataArray = foodNutrientsResponse.foodNutrients
@@ -148,16 +148,39 @@ class RemoteDataSource(private val apiService: ApiService) {
                 val postImageFile = File(report.postImage)
                 val requestPreImage = RequestBody.create(contentType, preImageFile)
                 val requestPostImage = RequestBody.create(contentType, postImageFile)
-                val requestBody = MultipartBody.Builder()
+                val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("id_user", report.userId.toString())
                     .addFormDataPart("id_food", report.foodId.toString())
                     .addFormDataPart("date_report", report.date)
-                    .addFormDataPart("pre_image", preImageFile.name, requestPreImage)
-                    .addFormDataPart("post_image", postImageFile.name, requestPostImage)
                     .addFormDataPart("status_report", report.status.id)
-                    .addFormDataPart("percentage", report.percentage.toString())
-                    .build()
+                    .addFormDataPart("mood", report.mood)
+                if (report.percentage != null) {
+                    multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                }
+
+                if (report.preImage.isNotEmpty()) {
+                    val preImageFile = File(report.preImage)
+                    val requestPreImage = RequestBody.create(contentType, preImageFile)
+                    multipartBuilder.addFormDataPart(
+                        "pre_image",
+                        preImageFile.name,
+                        requestPreImage
+                    )
+                }
+
+                if (report.postImage.isNotEmpty()) {
+                    val postImageFile = File(report.postImage)
+                    val requestPostImage = RequestBody.create(contentType, postImageFile)
+                    multipartBuilder.addFormDataPart(
+                        "post_image",
+                        postImageFile.name,
+                        requestPostImage
+                    )
+                }
+
+                val requestBody = multipartBuilder.build()
+
                 val response = apiService.postReport(requestBody)
 
                 if (response.apiStatus == 1) {
@@ -195,6 +218,11 @@ class RemoteDataSource(private val apiService: ApiService) {
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("date_report", report.date)
+//                    .addFormDataPart("percentage", report.percentage.toString())
+                    .addFormDataPart("mood", report.mood)
+                if (report.percentage != null) {
+                    multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                }
 
                 if (report.preImage.isNotEmpty()) {
                     val preImageFile = File(report.preImage)

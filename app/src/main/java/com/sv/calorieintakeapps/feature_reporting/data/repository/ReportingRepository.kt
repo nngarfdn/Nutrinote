@@ -23,6 +23,8 @@ class ReportingRepository(
         foodId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood : String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>> {
@@ -42,6 +44,8 @@ class ReportingRepository(
                 val report = ReportBuilder.create(
                     userId = userId, foodId = foodId,
                     date = date, time = time,
+                    percentage = percentage,
+                    mood = mood,
                     preImageUri = preImageUri, postImageUri = postImageUri
                 )
                 return remoteDataSource.addReport(report)
@@ -80,6 +84,8 @@ class ReportingRepository(
         reportId: Int,
         date: String,
         time: String,
+        percentage: Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Flow<Resource<Boolean>> {
@@ -99,6 +105,8 @@ class ReportingRepository(
                 val report = ReportBuilder.update(
                     id = reportId, userId = userId,
                     date = date, time = time,
+                    percentage = percentage,
+                    mood = mood,
                     preImageUri = preImageUri, postImageUri = postImageUri
                 )
                 return remoteDataSource.editReportById(report)

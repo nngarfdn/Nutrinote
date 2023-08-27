@@ -112,6 +112,33 @@
                 android:textSize="13sp"
                 tools:ignore="KeyboardInaccessibleWidget,TextFields" />
 
+            <EditText
+                android:id="@+id/edt_percent"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edittext_border"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_baseline_food_bank_24"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Masukkan Persentase (%)"
+                android:inputType="numberDecimal"
+                android:maxLength="100"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp"
+                tools:ignore="KeyboardInaccessibleWidget,TextFields" />
+
+            <Spinner
+                android:id="@+id/spinner_mood"
+                android:layout_height="50dp"
+                android:paddingLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+
+                android:background="@drawable/bg_edittext_border"
+                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,6 +210,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

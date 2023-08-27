@@ -11,6 +11,8 @@ object ReportBuilder {
         foodId: Int,
         date: String,
         time: String,
+        percentage : Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Report {
@@ -18,6 +20,8 @@ object ReportBuilder {
             userId = userId,
             foodId = foodId,
             date = "$date $time",
+            percentage = percentage,
+            mood = mood,
             preImage = preImageUri,
             postImage = postImageUri
         )
@@ -28,6 +32,8 @@ object ReportBuilder {
         userId: Int,
         date: String,
         time: String,
+        percentage : Int?,
+        mood: String,
         preImageUri: String,
         postImageUri: String
     ): Report {
@@ -35,6 +41,8 @@ object ReportBuilder {
             id = id,
             userId = userId,
             date = "$date $time",
+            percentage = percentage,
+            mood = mood,
             preImage = preImageUri,
             postImage = postImageUri
         )

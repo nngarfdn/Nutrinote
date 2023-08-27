@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 private val repositoryModule = module {
     single<IFoodDetailsRepository> {
-        FoodDetailsRepository(remoteDataSource = get())
+        FoodDetailsRepository( localDataSource = get(),remoteDataSource = get())
     }
 }
 

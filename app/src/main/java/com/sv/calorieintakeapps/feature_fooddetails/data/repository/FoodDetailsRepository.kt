@@ -1,6 +1,7 @@
 package com.sv.calorieintakeapps.feature_fooddetails.data.repository
 
 import com.sv.calorieintakeapps.feature_fooddetails.domain.repository.IFoodDetailsRepository
+import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.response.FoodNutrientsResponse
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FoodDetailsRepository(
+    private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : IFoodDetailsRepository {
 
@@ -28,7 +30,8 @@ class FoodDetailsRepository(
             }
 
             override suspend fun createCall(): Flow<ApiResponse<FoodNutrientsResponse>> {
-                return remoteDataSource.getFoodNutrientsById(foodId)
+                val userId = localDataSource.getUserId()
+                return remoteDataSource.getFoodNutrientsById(foodId, userId)
             }
 
             override suspend fun saveCallResult(data: FoodNutrientsResponse) {
@@ -36,4 +39,5 @@ class FoodDetailsRepository(
             }
         }.asFlow()
     }
+
 }
