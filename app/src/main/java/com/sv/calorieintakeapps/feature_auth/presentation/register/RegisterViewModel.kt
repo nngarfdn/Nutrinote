@@ -22,7 +22,7 @@ class RegisterViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
     }
 
     val registerResult: LiveData<Resource<Boolean>> =
-        Transformations.switchMap(user) {
+        user.switchMap {
             authUseCase.register(it.name, it.email, it.password, it.password).asLiveData()
         }
 }

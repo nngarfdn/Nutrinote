@@ -14,12 +14,12 @@ class MerchantMenuViewModel(private val merchantMenuUseCase: MerchantMenuUseCase
     }
 
     val merchantName: LiveData<Resource<String>> =
-        Transformations.switchMap(merchantId) {
+        merchantId.switchMap {
             merchantMenuUseCase.getMerchantNameById(it).asLiveData()
         }
 
     val merchantMenu: LiveData<Resource<List<Food>>> =
-        Transformations.switchMap(merchantId) {
+        merchantId.switchMap {
             merchantMenuUseCase.getMerchantMenuById(it).asLiveData()
         }
 }

@@ -29,7 +29,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
     }
 
     val addReportResult: LiveData<Resource<Boolean>> =
-        Transformations.switchMap(report) {
+        report.switchMap {
             reportingUseCase.addReport(
                 foodId = it.foodId,
                 date = it.getDateOnly(), time = it.getTimeOnly(),
@@ -62,7 +62,7 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
     }
 
     val editReportResult: LiveData<Resource<Boolean>> =
-        Transformations.switchMap(report) {
+        report.switchMap {
             reportingUseCase.editReportById(
                 reportId = it.id,
                 date = it.getDateOnly(), time = it.getTimeOnly(),

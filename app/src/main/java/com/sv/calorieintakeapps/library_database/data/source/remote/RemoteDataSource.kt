@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -143,7 +144,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun addReport(report: Report): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
-                val contentType = MediaType.parse("multipart")
+                val contentType = "multipart".toMediaTypeOrNull()
                 val preImageFile = File(report.preImage)
                 val postImageFile = File(report.postImage)
                 val requestPreImage = RequestBody.create(contentType, preImageFile)
@@ -213,7 +214,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun editReportById(report: Report): Flow<ApiResponse<Response>> {
         return flow {
             try {
-                val contentType = MediaType.parse("multipart")
+                val contentType = "multipart".toMediaTypeOrNull()
 
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -293,40 +294,40 @@ class RemoteDataSource(private val apiService: ApiService) {
     suspend fun editUserProfileById(user: User): Flow<ApiResponse<Response>> {
         return flow {
             try {
-                val contentType = MediaType.parse("multipart")
-
+                val contentType = "multipart".toMediaTypeOrNull()
+        
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("gender", user.gender.id.toString())
-
+        
                 if (user.name.isNotEmpty()) {
                     multipartBuilder.addFormDataPart("name", user.name)
                 }
-
+        
                 if (user.photo.isNotEmpty()) {
                     val photoFile = File(user.photo)
                     val requestPhotoFile = RequestBody.create(contentType, photoFile)
                     multipartBuilder.addFormDataPart("photo", photoFile.name, requestPhotoFile)
                 }
-
+        
                 if (user.password.isNotEmpty()) {
                     multipartBuilder.addFormDataPart("password", user.password)
                 }
-
+        
                 if (user.age.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("age", user.age.toString())
                 }
-
+        
                 if (user.height.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("height", user.height.toString())
                 }
                 if (user.weight.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("weight", user.weight.toString())
                 }
-
+        
                 val requestBody = multipartBuilder.build()
                 val response = apiService.putUserProfileById(user.id, requestBody)
-
+        
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {

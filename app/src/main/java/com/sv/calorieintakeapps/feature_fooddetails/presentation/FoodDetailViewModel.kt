@@ -15,7 +15,7 @@ class FoodDetailViewModel(private val foodDetailsUseCase: FoodDetailsUseCase) : 
 
 
     val foodNutrients: LiveData<Resource<List<FoodNutrient>>> =
-        Transformations.switchMap(foodId) {
+        foodId.switchMap {
             foodDetailsUseCase.getFoodNutrientsById(it).asLiveData()
         }
 }

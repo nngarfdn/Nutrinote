@@ -26,7 +26,7 @@ val dataSourceModule = module {
 
 val networkModule = module {
     single {
-        val hostname = GIZI_BASE_URL
+        val hostname = GIZI_BASE_URL.getHost()
         val certificatePinner = CertificatePinner.Builder()
             .add(hostname, "sha256/$GIZI_PUBLIC_KEY_1")
             .add(hostname, "sha256/$GIZI_PUBLIC_KEY_2")
@@ -52,4 +52,8 @@ val networkModule = module {
             .build()
         retrofit.create(ApiService::class.java)
     }
+}
+
+private fun String?.getHost(): String {
+    return this?.split("/")?.get(2).orEmpty()
 }

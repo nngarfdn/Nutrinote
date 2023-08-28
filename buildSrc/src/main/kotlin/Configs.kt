@@ -1,9 +1,9 @@
 object Configs {
     const val APPLICATION_ID = "com.sv.calorieintakeapps"
 
-    const val COMPILE_SDK = 31
+    const val COMPILE_SDK = 33
     const val MIN_SDK = 21
-    const val TARGET_SDK = 31
+    const val TARGET_SDK = 33
 
     const val VERSION_CODE = 6
     const val VERSION_NAME = "0.1.6"

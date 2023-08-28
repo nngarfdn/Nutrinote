@@ -4,8 +4,8 @@ import java.util.*
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
-    id(Plugins.KOTLIN_KAPT)
     id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.KSP)
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
 }
@@ -20,17 +20,21 @@ fun getKeyProperty(key: String): String {
 }
 
 android {
+    namespace = Configs.APPLICATION_ID
     compileSdk = Configs.COMPILE_SDK
-
+    
     defaultConfig {
         applicationId = Configs.APPLICATION_ID
         minSdk = Configs.MIN_SDK
         targetSdk = Configs.TARGET_SDK
         versionCode = Configs.VERSION_CODE
         versionName = Configs.VERSION_NAME
-
+        
         testInstrumentationRunner = Configs.TEST_INSTRUMENTATION_RUNNER
-
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        
         buildConfigField("String", "DATABASE_PASSPHRASE", getKeyProperty("DATABASE_PASSPHRASE"))
         buildConfigField("String", "GIZI_BASE_URL", getKeyProperty("GIZI_BASE_URL"))
         buildConfigField("String", "GIZI_PUBLIC_KEY_1", getKeyProperty("GIZI_PUBLIC_KEY_1"))
@@ -38,7 +42,7 @@ android {
         buildConfigField("String", "GIZI_PUBLIC_KEY_3", getKeyProperty("GIZI_PUBLIC_KEY_3"))
         buildConfigField("String", "GIZI_SECRET_KEY", getKeyProperty("GIZI_SECRET_KEY"))
     }
-
+    
     buildTypes {
         getByName(BuildType.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
@@ -53,7 +57,7 @@ android {
                 )
             )
         }
-
+        
         getByName(BuildType.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             addManifestPlaceholders(
@@ -64,18 +68,25 @@ android {
             )
         }
     }
-
+    
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
+    
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
-
+    
     buildFeatures {
+        buildConfig = true
         viewBinding = true
+    }
+    
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -99,12 +110,12 @@ dependencies {
     implementation(Dependencies.PICASSO)
     /* Database */
     implementation(Dependencies.ROOM_RUNTIME)
-    kapt(Dependencies.ROOM_COMPILER)
+    ksp(Dependencies.ROOM_COMPILER)
     implementation(Dependencies.SQLCHIPHER)
     implementation(Dependencies.SQLITE)
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.MOSHI)
-    kapt(Dependencies.MOSHI_CODEGEN)
+    ksp(Dependencies.MOSHI_CODEGEN)
     implementation(Dependencies.MOSHI_CONVERTER)
     debugImplementation(Dependencies.CHUCKER)
     releaseImplementation(Dependencies.CHUCKER_NO_OP)

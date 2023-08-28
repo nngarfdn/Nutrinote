@@ -5,18 +5,11 @@
 
 object Plugins {
     const val ANDROID_APPLICATION = "com.android.application"
+    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
+    const val KOTLIN_PARCELIZE = "org.jetbrains.kotlin.plugin.parcelize"
+    const val KSP = "com.google.devtools.ksp"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
-    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
-    const val KOTLIN_KAPT = "org.jetbrains.kotlin.kapt"
-    const val KOTLIN_PARCELIZE = "org.jetbrains.kotlin.plugin.parcelize"
-}
-
-object BuildDependencies {
-    val ANDROID by lazy { "com.android.tools.build:gradle:${Versions.GRADLE}" }
-    val KOTLIN by lazy { "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}" }
-    val GOOGLE by lazy { "com.google.gms:google-services:${Versions.GOOGLE}" }
-    val CRASHLYTICS by lazy { "com.google.firebase:firebase-crashlytics-gradle:${Versions.CRASHLYTICS}" }
 }
 
 object Dependencies {

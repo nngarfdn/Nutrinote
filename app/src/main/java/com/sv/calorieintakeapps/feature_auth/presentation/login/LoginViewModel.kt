@@ -17,7 +17,7 @@ class LoginViewModel(private val authUseCase: AuthUseCase) : ViewModel() {
     }
 
     val loginResult: LiveData<Resource<Boolean>> =
-        Transformations.switchMap(user) {
+        user.switchMap {
             authUseCase.login(it.email, it.password).asLiveData()
         }
 }
