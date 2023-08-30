@@ -106,7 +106,7 @@ dependencies {
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
     debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.TIMBER)
-    implementation(Dependencies.PICASSO)
+    implementation(Dependencies.COIL)
     /* Database */
     implementation(Dependencies.ROOM_RUNTIME)
     ksp(Dependencies.ROOM_COMPILER)

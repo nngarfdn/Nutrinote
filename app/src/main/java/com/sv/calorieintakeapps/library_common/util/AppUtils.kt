@@ -1,12 +1,14 @@
 package com.sv.calorieintakeapps.library_common.util
 
 import android.app.Activity
-import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import com.squareup.picasso.Picasso
+import coil.load
+import coil.transform.RoundedCornersTransformation
+import coil.transform.Transformation
+import com.sv.calorieintakeapps.R
 
 val Any.TAG: String
     get() {
@@ -31,20 +33,17 @@ fun Activity.showToast(message: CharSequence?) {
     ).show()
 }
 
-fun ImageView.loadImage(source: String?) {
-    Picasso.get()
-        .load(source)
-        .placeholder(android.R.color.darker_gray)
-        .error(android.R.color.darker_gray)
-        .into(this)
+fun ImageView.load(
+    source: Any?,
+    transformation: Transformation = RoundedCornersTransformation(20f),
+) {
+    load(source) {
+        placeholder(R.drawable.ic_placeholder)
+        error(R.drawable.ic_placeholder)
+        transformations(transformation)
+    }
 }
 
-fun ImageView.loadImage(source: Uri?) {
-    Picasso.get()
-        .load(source)
-        .placeholder(android.R.color.darker_gray)
-        .error(android.R.color.darker_gray)
-        .into(this)
 }
 
 fun View.visible() {

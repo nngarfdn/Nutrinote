@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sv.calorieintakeapps.databinding.ItemMerchantsBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantMenuIntent
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 
 class AdapterMerchant :
@@ -56,7 +56,7 @@ class AdapterMerchant :
 
             binding.apply {
                 txtName.text = item.name
-                imgBanner.loadImage("https://i.imgur.com/FSGh7aS.png")
+                imgBanner.load("https://i.imgur.com/FSGh7aS.png")
             }
         }
     }

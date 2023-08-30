@@ -2,7 +2,6 @@ package com.sv.calorieintakeapps.feature_homepage.presentation.history
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,9 @@ import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ItemHistoryBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportDetailsIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportEditingIntent
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AdapterHistory(
     private val activity: Activity,
@@ -76,7 +74,7 @@ class AdapterHistory(
         fun bind(item: Report) {
             binding.apply {
                 if(!item.preImage.isEmpty()){
-                    imgItemRiwayat.loadImage(item.preImage)
+                    imgItemRiwayat.load(item.preImage)
                 }else{
                     imgItemRiwayat.setImageResource(R.drawable.ic_placeholder)
                 }

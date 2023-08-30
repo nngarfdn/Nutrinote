@@ -32,6 +32,6 @@ object Versions {
 
     const val BALLOON = "1.5.4"
     const val CODE_SCANNER = "2.3.2"
+    const val COIL = "2.4.0"
     const val CURVE_BOTTOM_BAR = "1.0"
-    const val PICASSO = "2.8"
 }

@@ -8,9 +8,8 @@ import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityReportDetailsBinding
 import com.sv.calorieintakeapps.feature_reportdetails.di.ReportDetailsModule
 import com.sv.calorieintakeapps.library_common.action.Actions
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutrientAdapter
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,12 +56,12 @@ class ReportDetailsActivity : AppCompatActivity() {
                             foodNutrientAdapter.percentage = percentage
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
                             if(result.data?.preImage?.isEmpty() == false){
-                                imgSebelum.loadImage(result.data?.preImage)
+                                imgSebelum.load(result.data?.preImage)
                             }else{
                                 imgSebelum.setImageResource(R.drawable.img_no_image)
                             }
                             if(result.data?.postImage?.isEmpty() == false){
-                                imgSesudah.loadImage(result.data?.postImage)
+                                imgSesudah.load(result.data?.postImage)
                             }else{
                                 imgSesudah.setImageResource(R.drawable.img_no_image)
                             }

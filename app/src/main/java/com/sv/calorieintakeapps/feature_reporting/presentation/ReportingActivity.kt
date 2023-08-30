@@ -21,12 +21,11 @@ import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.sql.Types.NULL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -193,15 +192,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtTime.setText(report.getTimeOnly())
 
                             edtPercent.setText(report.percentage.toString())
-//                            imgPreImage.loadImage(report.preImage)
-//                            imgPostImage.loadImage(report.postImage)
                             if(!report.preImage.isEmpty()){
-                                imgPreImage.loadImage(report.preImage)
+                                imgPreImage.load(report.preImage)
                             }else{
                                 imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
                             }
                             if(!report.postImage.isEmpty()){
-                                imgPostImage.loadImage(report.postImage)
+                                imgPostImage.load(report.postImage)
                             }else{
                                 imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
                             }
@@ -324,14 +321,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     if (dir != null) {
                         this.preImageUri = dir
                     }
-                    binding.imgPreImage.loadImage(imageUri)
+                    binding.imgPreImage.load(imageUri)
                 }
                 RC_PICK_POST_IMAGE -> {
                     val dir = getRealPathFromURI(imageUri)
                     if (dir != null) {
                         this.postImageUri = dir
                     }
-                    binding.imgPostImage.loadImage(imageUri)
+                    binding.imgPostImage.load(imageUri)
                 }
             }
         }

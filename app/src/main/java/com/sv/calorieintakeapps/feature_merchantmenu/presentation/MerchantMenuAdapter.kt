@@ -1,24 +1,18 @@
 package com.sv.calorieintakeapps.feature_merchantmenu.presentation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ItemFoodBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openFoodDetailsIntent
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.model.Food
 import java.util.*
-import kotlin.collections.ArrayList
 
 @SuppressLint("NotifyDataSetChanged")
 class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>(), Filterable {
@@ -93,7 +87,7 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
         @SuppressLint("SetTextI18n")
         fun bind(food: Food) {
             binding.apply {
-                imgItemRiwayat.loadImage(food.image)
+                imgItemRiwayat.load(food.image)
                 txtTitleRiwayat.text = food.name
                 txtLocationRiwayat.text = merchantName
                 txtPrice.text = "Rp ${food.price}"

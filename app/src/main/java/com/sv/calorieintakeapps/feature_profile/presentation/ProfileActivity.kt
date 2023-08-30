@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
 import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
-import com.sv.calorieintakeapps.library_common.util.loadImage
+import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.vo.Resource
@@ -100,7 +100,7 @@ class ProfileActivity : AppCompatActivity() {
                             id = data?.id!!
                             tvName.text = data.name
                             tvEmail.text = data.email
-                            if (data.photo != "") imageButton.loadImage(data.photo)
+                            if (data.photo != "") imageButton.load(data.photo)
                             edtName.setText(data.name)
                             edtEmail.setText(data.email)
                             edtWeight.setText(data.weight.toString())
@@ -154,7 +154,7 @@ class ProfileActivity : AppCompatActivity() {
                 RC_PICK_PROFILE_IMAGE -> {
                     val dir = getRealPathFromURI(imageUri)
                     if (dir != null) this.profileImageUri = dir
-                    binding.imageButton.loadImage(imageUri)
+                    binding.imageButton.load(imageUri)
                 }
             }
         }

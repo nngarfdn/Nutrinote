@@ -66,11 +66,11 @@ object Dependencies {
     // Code scanner
     val CODE_SCANNER by lazy { "com.github.yuriy-budiyev:code-scanner:${Versions.CODE_SCANNER}" }
 
+    // Image downloading and caching
+    val COIL by lazy { "io.coil-kt:coil:${Versions.COIL}" }
+    
     // Curve bottom bar
     val CURVE_BOTTOM_BAR by lazy { "com.github.Akshay-Katariya:CurveBottomBar:${Versions.CURVE_BOTTOM_BAR}" }
-
-    // Image downloading and caching
-    val PICASSO by lazy { "com.squareup.picasso:picasso:${Versions.PICASSO}" }
 }
 
 object TestDependencies {
