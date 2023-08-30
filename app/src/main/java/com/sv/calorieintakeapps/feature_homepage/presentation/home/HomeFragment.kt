@@ -17,26 +17,27 @@ import com.skydoves.balloon.createBalloon
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.FragmentHomeBinding
 import com.sv.calorieintakeapps.feature_homepage.di.HomepageModule
+import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionSearchIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openLoginIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
-
+    
     private lateinit var binding: FragmentHomeBinding
     private var balloon: Balloon? = null
     private val viewModel: HomeViewModel by viewModel()
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         HomepageModule.load()
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -45,29 +46,34 @@ class HomeFragment : Fragment() {
             cvMenuMakanan.setOnClickListener {
                 startActivity(requireContext().openMerchantListIntent())
             }
-            cvBuatLaporan.setOnClickListener { cvMenuMakanan.performClick() }
+            cvBuatLaporan.setOnClickListener {
+                cvMenuMakanan.performClick()
+            }
+            cvFoodNutritionSearch.setOnClickListener {
+                startActivity(requireContext().openFoodNutritionSearchIntent())
+            }
         }
         viewModel.isLoggedIn.observe(viewLifecycleOwner) {
             if (!it) openLogin()
         }
     }
-
+    
     private fun FragmentHomeBinding.setName() {
         viewModel.userName.observe(viewLifecycleOwner) {
             txtNameUser.text = "Halo, $it"
         }
     }
-
+    
     override fun onResume() {
         super.onResume()
         binding.setName()
     }
-
+    
     override fun onStart() {
         super.onStart()
         binding.setName()
     }
-
+    
     private fun showBalloon() {
         balloon = createBalloon(requireContext()) {
             setArrowSize(10)
@@ -86,7 +92,7 @@ class HomeFragment : Fragment() {
             setBackgroundColorResource(R.color.white)
             setBalloonAnimation(BalloonAnimation.FADE)
             setLifecycleOwner(lifecycleOwner)
-
+            
             balloon?.showAlignBottom(binding.imgProfile)
             Handler(Looper.getMainLooper()).postDelayed({ balloon?.dismiss() }, 2000)
         }
@@ -100,11 +106,12 @@ class HomeFragment : Fragment() {
             openLogin()
         }
     }
-
+    
     private fun openLogin() {
         startActivity(
             requireContext().openLoginIntent()
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
+    
 }

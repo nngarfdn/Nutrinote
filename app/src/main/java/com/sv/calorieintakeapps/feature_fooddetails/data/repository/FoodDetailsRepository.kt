@@ -3,7 +3,7 @@ package com.sv.calorieintakeapps.feature_fooddetails.data.repository
 import com.sv.calorieintakeapps.feature_fooddetails.domain.repository.IFoodDetailsRepository
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.FoodNutrientsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain

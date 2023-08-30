@@ -1,5 +1,5 @@
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     id(Plugins.ANDROID_APPLICATION)
@@ -35,12 +35,63 @@ android {
             useSupportLibrary = true
         }
         
-        buildConfigField("String", "DATABASE_PASSPHRASE", getKeyProperty("DATABASE_PASSPHRASE"))
-        buildConfigField("String", "GIZI_BASE_URL", getKeyProperty("GIZI_BASE_URL"))
-        buildConfigField("String", "GIZI_PUBLIC_KEY_1", getKeyProperty("GIZI_PUBLIC_KEY_1"))
-        buildConfigField("String", "GIZI_PUBLIC_KEY_2", getKeyProperty("GIZI_PUBLIC_KEY_2"))
-        buildConfigField("String", "GIZI_PUBLIC_KEY_3", getKeyProperty("GIZI_PUBLIC_KEY_3"))
-        buildConfigField("String", "GIZI_SECRET_KEY", getKeyProperty("GIZI_SECRET_KEY"))
+        buildConfigField(
+            "String",
+            "DATABASE_PASSPHRASE",
+            getKeyProperty("DATABASE_PASSPHRASE")
+        )
+        
+        buildConfigField(
+            "String",
+            "GIZI_BASE_URL",
+            getKeyProperty("GIZI_BASE_URL")
+        )
+        buildConfigField(
+            "String",
+            "GIZI_PUBLIC_KEY_1",
+            getKeyProperty("GIZI_PUBLIC_KEY_1")
+        )
+        buildConfigField(
+            "String",
+            "GIZI_PUBLIC_KEY_2",
+            getKeyProperty("GIZI_PUBLIC_KEY_2")
+        )
+        buildConfigField(
+            "String",
+            "GIZI_PUBLIC_KEY_3",
+            getKeyProperty("GIZI_PUBLIC_KEY_3")
+        )
+        buildConfigField(
+            "String",
+            "GIZI_SECRET_KEY",
+            getKeyProperty("GIZI_SECRET_KEY")
+        )
+        
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_BASE_URL",
+            getKeyProperty("NILAIGIZI_COM_BASE_URL")
+        )
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_PUBLIC_KEY_1",
+            getKeyProperty("NILAIGIZI_COM_PUBLIC_KEY_1")
+        )
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_PUBLIC_KEY_2",
+            getKeyProperty("NILAIGIZI_COM_PUBLIC_KEY_2")
+        )
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_PUBLIC_KEY_3",
+            getKeyProperty("NILAIGIZI_COM_PUBLIC_KEY_3")
+        )
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_TOKEN",
+            getKeyProperty("NILAIGIZI_COM_TOKEN")
+        )
     }
     
     buildTypes {
@@ -105,8 +156,10 @@ dependencies {
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
     debugImplementation(Dependencies.LEAKCANARY)
+    implementation(Dependencies.PAGING)
     implementation(Dependencies.TIMBER)
     implementation(Dependencies.COIL)
+    implementation(Dependencies.FLEXBOX)
     /* Database */
     implementation(Dependencies.ROOM_RUNTIME)
     ksp(Dependencies.ROOM_COMPILER)

@@ -1,19 +1,26 @@
 package com.sv.calorieintakeapps.library_database.di
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.sv.calorieintakeapps.BuildConfig.*
+import com.sv.calorieintakeapps.BuildConfig.DEBUG
+import com.sv.calorieintakeapps.BuildConfig.GIZI_BASE_URL
+import com.sv.calorieintakeapps.BuildConfig.GIZI_PUBLIC_KEY_1
+import com.sv.calorieintakeapps.BuildConfig.GIZI_PUBLIC_KEY_2
+import com.sv.calorieintakeapps.BuildConfig.GIZI_PUBLIC_KEY_3
+import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_BASE_URL
+import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_PUBLIC_KEY_1
+import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_PUBLIC_KEY_2
+import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_PUBLIC_KEY_3
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.local.persistence.LoginSessionPreference
+import com.sv.calorieintakeapps.library_database.data.source.remote.FoodNutritionSearchPagingSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.network.ApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.NilaigiziComApiService
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
-
-private const val NETWORK_CALL_TIMEOUT = 120
 
 val databaseModule = module {
     single { LoginSessionPreference(context = get()) }
@@ -21,36 +28,53 @@ val databaseModule = module {
 
 val dataSourceModule = module {
     single { LocalDataSource(loginSessionPreference = get()) }
-    single { RemoteDataSource(apiService = get()) }
+    single {
+        RemoteDataSource(
+            mainApiService = get(),
+            nilaigiziComApiService = get(),
+        )
+    }
+    single { FoodNutritionSearchPagingSource(nilaigiziComApiService = get()) }
 }
 
 val networkModule = module {
     single {
-        val hostname = GIZI_BASE_URL.getHost()
+        val hostnameGizi = GIZI_BASE_URL.getHost()
+        val hostnameNilaigizi = NILAIGIZI_COM_BASE_URL.getHost()
+        
         val certificatePinner = CertificatePinner.Builder()
-            .add(hostname, "sha256/$GIZI_PUBLIC_KEY_1")
-            .add(hostname, "sha256/$GIZI_PUBLIC_KEY_2")
-            .add(hostname, "sha256/$GIZI_PUBLIC_KEY_3")
+            .add(hostnameGizi, "sha256/$GIZI_PUBLIC_KEY_1")
+            .add(hostnameGizi, "sha256/$GIZI_PUBLIC_KEY_2")
+            .add(hostnameGizi, "sha256/$GIZI_PUBLIC_KEY_3")
+            .add(hostnameNilaigizi, "sha256/$NILAIGIZI_COM_PUBLIC_KEY_1")
+            .add(hostnameNilaigizi, "sha256/$NILAIGIZI_COM_PUBLIC_KEY_2")
+            .add(hostnameNilaigizi, "sha256/$NILAIGIZI_COM_PUBLIC_KEY_3")
             .build()
-
+        
         val httpClient = OkHttpClient.Builder()
         with(httpClient) {
             if (DEBUG) addInterceptor(
                 ChuckerInterceptor.Builder(context = get()).build()
             )
-            connectTimeout(NETWORK_CALL_TIMEOUT.toLong(), TimeUnit.SECONDS)
-            readTimeout(NETWORK_CALL_TIMEOUT.toLong(), TimeUnit.SECONDS)
             certificatePinner(certificatePinner)
             build()
         }
     }
     single {
-        val retrofit = Retrofit.Builder()
+        Retrofit.Builder()
             .baseUrl(GIZI_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(get())
             .build()
-        retrofit.create(ApiService::class.java)
+            .create(MainApiService::class.java)
+    }
+    single {
+        Retrofit.Builder()
+            .baseUrl(NILAIGIZI_COM_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(get())
+            .build()
+            .create(NilaigiziComApiService::class.java)
     }
 }
 

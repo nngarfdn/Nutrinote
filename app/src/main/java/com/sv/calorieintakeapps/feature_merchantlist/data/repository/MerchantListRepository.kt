@@ -4,7 +4,7 @@ import com.sv.calorieintakeapps.feature_merchantlist.domain.repository.IMerchant
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.MerchantsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantsResponse
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource

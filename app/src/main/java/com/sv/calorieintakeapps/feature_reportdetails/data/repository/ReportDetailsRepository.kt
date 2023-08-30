@@ -5,8 +5,8 @@ import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.FoodNutrientsResponse
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.ReportResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse

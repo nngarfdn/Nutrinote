@@ -1,30 +1,43 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote
 
-import com.sv.calorieintakeapps.library_database.data.source.remote.network.ApiService
-import com.sv.calorieintakeapps.library_database.data.source.remote.request.LoginRequest
-import com.sv.calorieintakeapps.library_database.data.source.remote.request.RegisterRequest
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.LoginResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantMenuResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.RegisterResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.UserResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.NilaigiziComApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class RemoteDataSource(private val apiService: ApiService) {
-
+class RemoteDataSource(
+    private val mainApiService: MainApiService,
+    private val nilaigiziComApiService: NilaigiziComApiService,
+) {
+    
     suspend fun register(
         name: String,
         email: String,
         password: String,
-        passwordConfirmation: String
+        passwordConfirmation: String,
     ): Flow<ApiResponse<RegisterResponse>> {
         return flow {
             try {
@@ -33,8 +46,8 @@ class RemoteDataSource(private val apiService: ApiService) {
                     email = email,
                     password = password, passwordConfirmation = passwordConfirmation
                 )
-                val response = apiService.postRegister(request)
-
+                val response = mainApiService.postRegister(request)
+                
                 if (response.apiStatus == "Created") {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -47,13 +60,13 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun login(email: String, password: String): Flow<ApiResponse<LoginResponse>> {
         return flow {
             try {
                 val request = LoginRequest(email, password)
-                val response = apiService.postLogin(request)
-
+                val response = mainApiService.postLogin(request)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -64,14 +77,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun getReportsByUserId(userId: Int): Flow<ApiResponse<ReportsResponse>> {
         return flow {
             try {
-                val response = apiService.getReportsByUserId(userId)
-
+                val response = mainApiService.getReportsByUserId(userId)
+                
                 val dataArray = response.reports
-                if (dataArray?.isNotEmpty() as Boolean) {
+                if (dataArray?.isNotEmpty() == true) {
                     emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Empty)
@@ -81,14 +94,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun getAllMerchants(): Flow<ApiResponse<MerchantsResponse>> {
         return flow {
             try {
-                val response = apiService.getAllMerchants()
-
+                val response = mainApiService.getAllMerchants()
+                
                 val dataArray = response.merchants
-                if (dataArray?.isNotEmpty() as Boolean) {
+                if (dataArray?.isNotEmpty() == true) {
                     emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Empty)
@@ -98,14 +111,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun getMerchantMenuById(merchantId: Int): Flow<ApiResponse<MerchantMenuResponse>> {
         return flow {
             try {
-                val response = apiService.getMerchantMenuById(merchantId)
-
+                val response = mainApiService.getMerchantMenuById(merchantId)
+                
                 val dataArray = response.foods
-                if (dataArray?.isNotEmpty() as Boolean) {
+                if (dataArray?.isNotEmpty() == true) {
                     emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Empty)
@@ -115,15 +128,18 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
-    suspend fun getFoodNutrientsById(foodId: Int, userId: Int): Flow<ApiResponse<FoodNutrientsResponse>> {
+    
+    suspend fun getFoodNutrientsById(
+        foodId: Int,
+        userId: Int,
+    ): Flow<ApiResponse<FoodNutrientsResponse>> {
         return flow {
             try {
-                val foodNutrientsResponse = apiService.getFoodNutrientsById(foodId, userId)
-                val nutrientsResponse = apiService.getAllNutrients()
-
+                val foodNutrientsResponse = mainApiService.getFoodNutrientsById(foodId, userId)
+                val nutrientsResponse = mainApiService.getAllNutrients()
+                
                 val dataArray = foodNutrientsResponse.foodNutrients
-                if (dataArray?.isNotEmpty() as Boolean) {
+                if (dataArray?.isNotEmpty() == true) {
                     dataArray.forEach { foodNutrient ->
                         val relatedNutrient = nutrientsResponse.nutrients?.find {
                             foodNutrient?.nutrientId == it?.id
@@ -140,15 +156,11 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun addReport(report: Report): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
-                val preImageFile = File(report.preImage)
-                val postImageFile = File(report.postImage)
-                val requestPreImage = RequestBody.create(contentType, preImageFile)
-                val requestPostImage = RequestBody.create(contentType, postImageFile)
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("id_user", report.userId.toString())
@@ -159,31 +171,31 @@ class RemoteDataSource(private val apiService: ApiService) {
                 if (report.percentage != null) {
                     multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
                 }
-
+                
                 if (report.preImage.isNotEmpty()) {
                     val preImageFile = File(report.preImage)
-                    val requestPreImage = RequestBody.create(contentType, preImageFile)
+                    val requestPreImage = preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "pre_image",
                         preImageFile.name,
                         requestPreImage
                     )
                 }
-
+                
                 if (report.postImage.isNotEmpty()) {
                     val postImageFile = File(report.postImage)
-                    val requestPostImage = RequestBody.create(contentType, postImageFile)
+                    val requestPostImage = postImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "post_image",
                         postImageFile.name,
                         requestPostImage
                     )
                 }
-
+                
                 val requestBody = multipartBuilder.build()
-
-                val response = apiService.postReport(requestBody)
-
+                
+                val response = mainApiService.postReport(requestBody)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -194,12 +206,12 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun getReportById(userId: Int, reportId: Int): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
-                val response = apiService.getReportById(userId, reportId)
-
+                val response = mainApiService.getReportById(userId, reportId)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -210,44 +222,43 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun editReportById(report: Report): Flow<ApiResponse<Response>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
-
+                
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("date_report", report.date)
-//                    .addFormDataPart("percentage", report.percentage.toString())
                     .addFormDataPart("mood", report.mood)
                 if (report.percentage != null) {
                     multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
                 }
-
+                
                 if (report.preImage.isNotEmpty()) {
                     val preImageFile = File(report.preImage)
-                    val requestPreImage = RequestBody.create(contentType, preImageFile)
+                    val requestPreImage = preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "pre_image",
                         preImageFile.name,
                         requestPreImage
                     )
                 }
-
+                
                 if (report.postImage.isNotEmpty()) {
                     val postImageFile = File(report.postImage)
-                    val requestPostImage = RequestBody.create(contentType, postImageFile)
+                    val requestPostImage = postImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "post_image",
                         postImageFile.name,
                         requestPostImage
                     )
                 }
-
+                
                 val requestBody = multipartBuilder.build()
-                val response = apiService.putReportById(report.id, requestBody)
-
+                val response = mainApiService.putReportById(report.id, requestBody)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -258,12 +269,12 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun deleteReportById(reportId: Int): Flow<ApiResponse<Response>> {
         return flow {
             try {
-                val response = apiService.deleteReportById(reportId)
-
+                val response = mainApiService.deleteReportById(reportId)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -274,12 +285,12 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun getUserProfile(userId: Int): Flow<ApiResponse<UserResponse>> {
         return flow {
             try {
-                val response = apiService.getUserProfileById(userId)
-
+                val response = mainApiService.getUserProfileById(userId)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -290,44 +301,44 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
-
+    
     suspend fun editUserProfileById(user: User): Flow<ApiResponse<Response>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
-        
+                
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("gender", user.gender.id.toString())
-        
+                
                 if (user.name.isNotEmpty()) {
                     multipartBuilder.addFormDataPart("name", user.name)
                 }
-        
+                
                 if (user.photo.isNotEmpty()) {
                     val photoFile = File(user.photo)
-                    val requestPhotoFile = RequestBody.create(contentType, photoFile)
+                    val requestPhotoFile = photoFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart("photo", photoFile.name, requestPhotoFile)
                 }
-        
+                
                 if (user.password.isNotEmpty()) {
                     multipartBuilder.addFormDataPart("password", user.password)
                 }
-        
+                
                 if (user.age.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("age", user.age.toString())
                 }
-        
+                
                 if (user.height.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("height", user.height.toString())
                 }
                 if (user.weight.toString().isNotEmpty()) {
                     multipartBuilder.addFormDataPart("weight", user.weight.toString())
                 }
-        
+                
                 val requestBody = multipartBuilder.build()
-                val response = apiService.putUserProfileById(user.id, requestBody)
-        
+                val response = mainApiService.putUserProfileById(user.id, requestBody)
+                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -338,4 +349,40 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+    
+    suspend fun getFoodNutritionSearch(query: String): Flow<ApiResponse<FoodNutritionSearchResponse>> {
+        return flow {
+            try {
+                val response = nilaigiziComApiService.getFoodNutritionSearch(
+                    query = query,
+                    page = 1,
+                    pageSize = 10,
+                )
+                
+                val dataArray = response.data?.data
+                if (dataArray?.isNotEmpty() == true) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    
+    suspend fun getFoodNutritionDetails(foodId: Int): Flow<ApiResponse<FoodNutritionDetailsResponse>> {
+        return flow {
+            try {
+                val response = nilaigiziComApiService.getFoodNutritionDetails(
+                    foodId = foodId,
+                )
+                
+                emit(ApiResponse.Success(response))
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    
 }

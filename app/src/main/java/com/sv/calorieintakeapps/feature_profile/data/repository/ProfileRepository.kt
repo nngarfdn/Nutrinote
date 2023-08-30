@@ -5,8 +5,8 @@ import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.Response
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.UserResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.UserResponse
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.helper.UserBuilder

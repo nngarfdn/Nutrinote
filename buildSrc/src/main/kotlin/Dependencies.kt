@@ -56,6 +56,9 @@ object Dependencies {
 
     // Memory leak detection
     val LEAKCANARY by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.LEAKCANARY}" }
+    
+    // Paging
+    val PAGING by lazy { "androidx.paging:paging-runtime:${Versions.PAGING}" }
 
     // Logger
     val TIMBER by lazy { "com.jakewharton.timber:timber:${Versions.TIMBER}" }
@@ -71,6 +74,9 @@ object Dependencies {
     
     // Curve bottom bar
     val CURVE_BOTTOM_BAR by lazy { "com.github.Akshay-Katariya:CurveBottomBar:${Versions.CURVE_BOTTOM_BAR}" }
+    
+    // Flexbox layout
+    val FLEXBOX by lazy { "com.google.android.flexbox:flexbox:${Versions.FLEXBOX}" }
 }
 
 object TestDependencies {

@@ -4,8 +4,8 @@ import com.sv.calorieintakeapps.feature_auth.domain.repository.IAuthRepository
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.LoginResponse
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.RegisterResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.LoginResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.RegisterResponse
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow

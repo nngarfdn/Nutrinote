@@ -1,11 +1,19 @@
 package com.sv.calorieintakeapps.library_database.helper
 
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.*
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantMenuResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.UserResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.Food
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
+import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
@@ -94,6 +102,43 @@ fun mapResponseToDomain(input: UserResponse): User {
             age = this?.age ?: 0,
             height = this?.height ?: 0,
             weight = this?.weight ?: 0
+        )
+    }
+}
+
+fun mapResponseToDomain(input: FoodNutritionSearchResponse): List<FoodNutrition> {
+    return input.data?.data?.map {
+        mapResponseToDomain(it)
+    }.orEmpty()
+}
+
+fun mapResponseToDomain(input: FoodNutritionSearchResponse.DataItem?): FoodNutrition {
+    return FoodNutrition(
+        foodId = input?.id ?: -1,
+        name = input?.name.orEmpty(),
+        imageUrl = input?.images?.firstOrNull().orEmpty(),
+        calories = "",
+        protein = "",
+        fat = "",
+        carbs = "",
+    )
+}
+
+fun mapResponseToDomain(input: FoodNutritionDetailsResponse): FoodNutrition {
+    with(input.data) {
+        val calories = this?.nutritions?.firstOrNull { it?.name == "Energi" }
+        val protein = this?.nutritions?.firstOrNull { it?.name == "Protein" }
+        val fat = this?.nutritions?.firstOrNull { it?.name == "Lemak total" }
+        val carbs = this?.nutritions?.firstOrNull { it?.name == "Karbohidrat total" }
+        
+        return FoodNutrition(
+            foodId = this?.id ?: -1,
+            name = this?.name.orEmpty(),
+            imageUrl = this?.images?.firstOrNull().orEmpty(),
+            calories = "${calories?.value} ${calories?.unit}",
+            protein = "${protein?.value} ${protein?.unit}",
+            fat = "${fat?.value} ${fat?.unit}",
+            carbs = "${carbs?.value} ${carbs?.unit}",
         )
     }
 }

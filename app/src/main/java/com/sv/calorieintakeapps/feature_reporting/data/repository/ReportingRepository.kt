@@ -4,8 +4,8 @@ import com.sv.calorieintakeapps.feature_reporting.domain.repository.IReportingRe
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.ReportResponse
-import com.sv.calorieintakeapps.library_database.data.source.remote.response.Response
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain

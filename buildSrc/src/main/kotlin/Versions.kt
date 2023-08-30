@@ -28,10 +28,12 @@ object Versions {
 
     const val FIREBASE = "32.2.3"
     const val LEAKCANARY = "2.12"
+    const val PAGING = "3.2.0"
     const val TIMBER = "5.0.1"
 
     const val BALLOON = "1.5.4"
     const val CODE_SCANNER = "2.3.2"
     const val COIL = "2.4.0"
     const val CURVE_BOTTOM_BAR = "1.0"
+    const val FLEXBOX = "3.0.0"
 }
