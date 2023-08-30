@@ -11,25 +11,25 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
-
+    
     private lateinit var binding: ActivityRegisterBinding
-
+    
     private val viewModel: RegisterViewModel by viewModel()
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         AuthModule.load()
-
+        
         binding.apply {
             btnRegister.setOnClickListener {
                 val name = edtName.text.toString()
                 val email = edtEmail.text.toString()
                 val pass = edtPassword.text.toString()
                 val passConf = edtPasswordConf.text.toString()
-
+                
                 if (name.isEmpty() || email.isEmpty() ||
                     pass.isEmpty() || passConf.isEmpty()
                 ) {
@@ -39,19 +39,23 @@ class RegisterActivity : AppCompatActivity() {
                     else showToast("Konfirmasi Password Tidak Sama")
                 }
             }
+            
+            btnLogin.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
-
+        
         observeRegisterResult()
     }
-
+    
     private fun observeRegisterResult() {
         viewModel.registerResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-
-                    }
+                    is Resource.Loading -> {}
+                    
                     is Resource.Success -> {
+                        showToast("Daftar berhasil, silakan login")
                         startActivity(
                             openHomepageIntent()
                                 .setFlags(
@@ -59,6 +63,7 @@ class RegisterActivity : AppCompatActivity() {
                                 )
                         )
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -66,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         AuthModule.unload()
