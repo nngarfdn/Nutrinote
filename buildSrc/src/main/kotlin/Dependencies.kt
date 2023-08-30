@@ -58,7 +58,6 @@ object Dependencies {
     val LEAKCANARY by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.LEAKCANARY}" }
 
     // Logger
-    val LOGGER by lazy { "com.orhanobut:logger:${Versions.LOGGER}" }
     val TIMBER by lazy { "com.jakewharton.timber:timber:${Versions.TIMBER}" }
 
     // Balloon popup

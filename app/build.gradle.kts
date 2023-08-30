@@ -105,7 +105,6 @@ dependencies {
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
     debugImplementation(Dependencies.LEAKCANARY)
-    implementation(Dependencies.LOGGER)
     implementation(Dependencies.TIMBER)
     implementation(Dependencies.PICASSO)
     /* Database */

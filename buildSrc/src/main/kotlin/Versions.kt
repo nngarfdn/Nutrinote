@@ -28,7 +28,6 @@ object Versions {
 
     const val FIREBASE = "32.2.3"
     const val LEAKCANARY = "2.12"
-    const val LOGGER = "2.2.0"
     const val TIMBER = "5.0.1"
 
     const val BALLOON = "1.5.4"
