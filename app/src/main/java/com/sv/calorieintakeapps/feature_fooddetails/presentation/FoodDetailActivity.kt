@@ -49,7 +49,7 @@ class FoodDetailActivity : AppCompatActivity() {
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
-                            R.color.green_label
+                            R.color.green
                         )
                     )
                 }
@@ -60,7 +60,7 @@ class FoodDetailActivity : AppCompatActivity() {
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
-                            R.color.yellow_label
+                            R.color.yellow
                         )
                     )
                 }
@@ -71,7 +71,7 @@ class FoodDetailActivity : AppCompatActivity() {
                     llLabel.setBackgroundColor(
                         ContextCompat.getColor(
                             applicationContext,
-                            R.color.red_label
+                            R.color.red
                         )
                     )
                 }

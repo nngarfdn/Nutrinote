@@ -19,7 +19,7 @@
             android:id="@+id/img_item_riwayat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_placeholder" />
+            android:src="@drawable/ic_placeholder_24" />
 
     </androidx.cardview.widget.CardView>
 
@@ -33,7 +33,6 @@
         android:fontFamily="@font/poppins_medium"
         android:maxLines="1"
         android:text="@string/sample_menu"
-        android:textColor="@color/text_item_primari_color"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/cardView" />
@@ -43,7 +42,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/ic_location_item"
+        android:src="@drawable/ic_location_16"
         app:layout_constraintStart_toStartOf="@+id/txt_title_riwayat"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_riwayat" />
 
@@ -56,7 +55,7 @@
         android:fontFamily="@font/poppins_medium"
         android:maxLines="1"
         android:text="@string/sample_location"
-        android:textColor="@color/text_item_location_color"
+        android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
@@ -67,7 +66,7 @@
         android:layout_height="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/img_good"
+        android:src="@drawable/ic_food_label_very_good"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cardView" />
 

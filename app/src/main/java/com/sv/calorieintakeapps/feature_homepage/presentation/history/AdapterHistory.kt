@@ -76,7 +76,7 @@ class AdapterHistory(
                 if(!item.preImage.isEmpty()){
                     imgItemRiwayat.load(item.preImage)
                 }else{
-                    imgItemRiwayat.setImageResource(R.drawable.ic_placeholder)
+                    imgItemRiwayat.setImageResource(R.drawable.ic_placeholder_24)
                 }
                 txtTitleRiwayat.text = item.foodName
                 txtLocationRiwayat.text = item.date

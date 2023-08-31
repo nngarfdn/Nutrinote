@@ -16,40 +16,40 @@ import java.util.*
 
 @SuppressLint("NotifyDataSetChanged")
 class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>(), Filterable {
-
+    
     var foodFilterList = ArrayList<Food>()
-
+    
     var merchantName: String? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-
+    
     private var foods = listOf<Food>()
         set(values) {
             field = values
             notifyDataSetChanged()
         }
-
+    
     fun submitList(foods: List<Food>?) {
         this.foods = foods ?: listOf()
         this.foodFilterList = (foods ?: listOf()) as ArrayList<Food>
     }
-
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
-
+    
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val food = foodFilterList[position]
         holder.bind(food)
     }
-
+    
     override fun getItemCount(): Int {
         return foodFilterList.size
     }
-
+    
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -71,19 +71,19 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 filterResults.values = foodFilterList
                 return filterResults
             }
-
+            
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 foodFilterList = results?.values as ArrayList<Food>
                 notifyDataSetChanged()
             }
-
+            
         }
     }
-
+    
     inner class ViewHolder(private val binding: ItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        
         @SuppressLint("SetTextI18n")
         fun bind(food: Food) {
             binding.apply {
@@ -92,11 +92,11 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 txtLocationRiwayat.text = merchantName
                 txtPrice.text = "Rp ${food.price}"
                 when (food.label) {
-                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.img_circle_bad)
-                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.img_circle_ok)
-                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.img_circle_good)
+                    FoodLabel.BAD -> imgRating.setImageResource(R.drawable.ic_food_label_bad)
+                    FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.ic_food_label_good)
+                    FoodLabel.VERY_GOOD -> imgRating.setImageResource(R.drawable.ic_food_label_very_good)
                 }
-
+                
                 itemView.setOnClickListener {
                     it.context.startActivity(
                         it.context.openFoodDetailsIntent(

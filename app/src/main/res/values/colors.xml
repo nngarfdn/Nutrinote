@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+
+    <color name="black">#FF272727</color>
+    <color name="green">#FF3AA76D</color>
+    <color name="grey">#FF939393</color>
+    <color name="light_grey">#FFDADADA</color>
+    <color name="grayish_white">#FFEFEFEF</color>
+    <color name="light_red">#FFE0A997</color>
+    <color name="orange">#FFB86300</color>
+    <color name="red">#FFB82D00</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#B82D00</color>
-    <color name="red_second">#E0A997</color>
-    <color name="gradient_red">#B80000</color>
-    <color name="gradient_orange">#B86300</color>
-    <color name="bg_fragment">#EFEFEF</color>
-    <color name="tab_selected">#CB550D</color>
-    <color name="text_item_primari_color">#272727</color>
-    <color name="text_item_location_color">#939393</color>
-    <color name="text_buatlaporan">#BCBCBC</color>
-    <color name="green_label">#008000</color>
-    <color name="yellow_label">#FFA500</color>
-    <color name="red_label">#FF0404</color>
+    <color name="yellow">#FFFFA500</color>
+
 </resources>

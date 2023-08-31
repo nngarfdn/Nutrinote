@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,12 +36,12 @@
         android:layout_height="52dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bg_white_rounded"
-        android:closeIcon="@drawable/ic_clear_search"
-        android:commitIcon="@drawable/ic_clear_search"
+        android:background="@drawable/sv_primary"
+        android:closeIcon="@drawable/ic_clear_action_24"
+        android:commitIcon="@drawable/ic_clear_action_24"
         android:iconifiedByDefault="false"
         android:queryBackground="@null"
-        android:searchIcon="@drawable/ic_right_search" />
+        android:searchIcon="@drawable/ic_search_action_37_36" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

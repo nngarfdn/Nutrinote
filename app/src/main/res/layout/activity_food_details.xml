@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_back" />
+                    android:src="@drawable/ic_back_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="IKM A"
                 android:textColor="#80272727"
-                app:drawableLeftCompat="@drawable/ic_location_item" />
+                app:drawableLeftCompat="@drawable/ic_location_16" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_gradient_round"
+        android:background="@drawable/btn_primary"
         android:fontFamily="@font/poppins_semibold"
         android:text="Buat Laporan"
         android:textAllCaps="false"

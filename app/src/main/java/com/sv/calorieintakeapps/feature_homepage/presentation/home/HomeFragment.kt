@@ -2,8 +2,6 @@ package com.sv.calorieintakeapps.feature_homepage.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.FragmentHomeBinding
@@ -23,10 +20,11 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIn
 import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), View.OnClickListener {
     
-    private lateinit var binding: FragmentHomeBinding
-    private var balloon: Balloon? = null
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+    
     private val viewModel: HomeViewModel by viewModel()
     
     override fun onCreateView(
@@ -34,84 +32,106 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         HomepageModule.load()
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
         binding.apply {
-            imgProfile.setOnClickListener { showBalloon() }
-            setName()
-            cvMenuMakanan.setOnClickListener {
-                startActivity(requireContext().openMerchantListIntent())
-            }
-            cvBuatLaporan.setOnClickListener {
-                cvMenuMakanan.performClick()
-            }
-            cvFoodNutritionSearch.setOnClickListener {
-                startActivity(requireContext().openFoodNutritionSearchIntent())
-            }
+            imgProfile.setOnClickListener(this@HomeFragment)
+            cvMerchantMenu.setOnClickListener(this@HomeFragment)
+            cvReporting.setOnClickListener(this@HomeFragment)
+            cvFoodNutritionSearch.setOnClickListener(this@HomeFragment)
         }
+        
+        viewModel.userName.observe(viewLifecycleOwner) {
+            binding.tvUserName.text = "Halo, $it"
+        }
+        
         viewModel.isLoggedIn.observe(viewLifecycleOwner) {
             if (!it) openLogin()
         }
     }
     
-    private fun FragmentHomeBinding.setName() {
-        viewModel.userName.observe(viewLifecycleOwner) {
-            txtNameUser.text = "Halo, $it"
+    override fun onClick(view: View) {
+        val balloonProfile = createBalloonProfile()
+        when (view.id) {
+            binding.imgProfile.id -> {
+                balloonProfile.showAlignBottom(binding.imgProfile)
+            }
+            
+            binding.cvMerchantMenu.id -> {
+                startActivity(requireContext().openMerchantListIntent())
+            }
+            
+            binding.cvReporting.id -> {
+                startActivity(requireContext().openMerchantListIntent())
+            }
+            
+            binding.cvFoodNutritionSearch.id -> {
+                startActivity(requireContext().openFoodNutritionSearchIntent())
+            }
         }
     }
     
-    override fun onResume() {
-        super.onResume()
-        binding.setName()
-    }
-    
-    override fun onStart() {
-        super.onStart()
-        binding.setName()
-    }
-    
-    private fun showBalloon() {
-        balloon = createBalloon(requireContext()) {
+    private fun createBalloonProfile(): Balloon {
+        val balloon = createBalloon(requireContext()) {
             setArrowSize(10)
-            setWidth(BalloonSizeSpec.WRAP)
-            setHeight(87)
+            setWidth(190)
+            setHeight(110)
             setArrowPosition(0.8f)
-            setCornerRadius(4f)
+            setCornerRadius(16f)
             setAlpha(0.9f)
             setPaddingHorizontal(8)
             setPaddingVertical(4)
             setMarginHorizontal(24)
-            setLayout(R.layout.layout_sky)
+            setLayout(R.layout.layout_profile_menu)
             setTextColorResource(R.color.white)
             setTextIsHtml(true)
-            setIconDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile))
+            setIconDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_profile_action_36
+                )
+            )
             setBackgroundColorResource(R.color.white)
             setBalloonAnimation(BalloonAnimation.FADE)
             setLifecycleOwner(lifecycleOwner)
+        }
+        
+        val view = balloon.getContentView()
+        view.apply {
+            val tvProfile: TextView = findViewById(R.id.tv_profile)
+            tvProfile.setOnClickListener {
+                startActivity(requireContext().openProfileIntent())
+            }
             
-            balloon?.showAlignBottom(binding.imgProfile)
-            Handler(Looper.getMainLooper()).postDelayed({ balloon?.dismiss() }, 2000)
+            val tvLogout: TextView = findViewById(R.id.tv_logout)
+            tvLogout.setOnClickListener {
+                viewModel.logout()
+                openLogin()
+            }
         }
-        val profile: TextView = balloon?.getContentView()?.findViewById(R.id.profile)!!
-        val logout: TextView = balloon?.getContentView()?.findViewById(R.id.logout)!!
-        profile.setOnClickListener {
-            startActivity(requireContext().openProfileIntent())
-        }
-        logout.setOnClickListener {
-            viewModel.logout()
-            openLogin()
-        }
+        
+        return balloon
     }
     
     private fun openLogin() {
         startActivity(
             requireContext().openLoginIntent()
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                )
         )
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        HomepageModule.unload()
+        _binding = null
     }
     
 }

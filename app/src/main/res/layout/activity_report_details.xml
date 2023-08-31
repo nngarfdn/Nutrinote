@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_fragment">
+        android:background="@color/grayish_white">
 
         <RelativeLayout
             android:id="@+id/toolbarLayout"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_back" />
+                android:src="@drawable/ic_back_24" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_text_disabled"
+                android:background="#DDDDDD"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -64,7 +64,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_food_disabled" />
+                    android:src="@drawable/ic_food_19" />
 
                 <TextView
                     android:id="@+id/txtName"
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_text_disabled"
+                android:background="#DDDDDD"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -93,7 +93,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_calendar_disabled" />
+                    android:src="@drawable/ic_calendar_18" />
 
                 <TextView
                     android:id="@+id/txtDateTime"
@@ -120,7 +120,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_detail_border"
+                android:background="@drawable/lyt_bordered"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -193,35 +193,35 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:background="@drawable/bg_text_disabled"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:background="@drawable/bg_text_disabled"-->
+            <!--                android:orientation="horizontal">-->
 
-<!--                <ImageView-->
-<!--                    android:visibility="invisible"-->
-<!--                    android:id="@+id/precent"-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:src="@drawable/ic_food_disabled" />-->
+            <!--                <ImageView-->
+            <!--                    android:visibility="invisible"-->
+            <!--                    android:id="@+id/precent"-->
+            <!--                    android:layout_width="25dp"-->
+            <!--                    android:layout_height="25dp"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginStart="16dp"-->
+            <!--                    android:src="@drawable/ic_food_disabled" />-->
 
-<!--                <EditText-->
-<!--                    android:id="@+id/txtPercent"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_toEndOf="@+id/precent"-->
-<!--                    android:fontFamily="@font/poppins_medium"-->
-<!--                    android:text="%"-->
-<!--                    android:textColor="#9F9F9F"-->
-<!--                    android:textSize="13sp" />-->
+            <!--                <EditText-->
+            <!--                    android:id="@+id/txtPercent"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginStart="16dp"-->
+            <!--                    android:layout_toEndOf="@+id/precent"-->
+            <!--                    android:fontFamily="@font/poppins_medium"-->
+            <!--                    android:text="%"-->
+            <!--                    android:textColor="#9F9F9F"-->
+            <!--                    android:textSize="13sp" />-->
 
-<!--            </RelativeLayout>-->
+            <!--            </RelativeLayout>-->
 
         </LinearLayout>
 

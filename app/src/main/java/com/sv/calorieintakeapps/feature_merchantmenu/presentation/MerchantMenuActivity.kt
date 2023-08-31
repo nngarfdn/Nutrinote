@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityMerchantMenuBinding
 import com.sv.calorieintakeapps.feature_merchantmenu.di.MerchantMenuModule
 import com.sv.calorieintakeapps.library_common.action.Actions
-import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,7 +32,7 @@ class MerchantMenuActivity : AppCompatActivity() {
         merchantMenuAdapter = MerchantMenuAdapter()
 
         binding.apply {
-            imgCover.load("https://i.imgur.com/Isc5ySZ.png")
+            imgCover.setImageResource(R.drawable.img_merchant_banner_512_325)
             imgBack.setOnClickListener { onBackPressed() }
         }
 

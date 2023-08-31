@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_fragment"
+    android:background="@color/grayish_white"
     tools:context="com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity">
 
     <FrameLayout
@@ -13,16 +13,16 @@
         android:layout_height="match_parent"/>
 
     <Button
-        android:id="@+id/scan"
+        android:id="@+id/btn_scan"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/ic_scan" />
+        android:background="@drawable/ic_btn_scan_92" />
 
     <com.akshay.library.CurveBottomBar
-        android:id="@+id/bottomBar"
+        android:id="@+id/navbar_homepage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -30,7 +30,7 @@
         android:paddingVertical="8dp"
         app:curveRadius="40dp"
         app:elevation="8dp"
-        app:itemIconTint="@drawable/state_bnv"
-        app:itemTextColor="@drawable/state_bnv" />
+        app:itemIconTint="@drawable/navbar_item_colors"
+        app:itemTextColor="@drawable/navbar_item_colors" />
 
 </RelativeLayout>

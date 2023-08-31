@@ -9,13 +9,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_fragment"
+        android:background="@color/grayish_white"
         android:paddingHorizontal="24dp"
         android:paddingTop="24dp"
         android:paddingBottom="124dp">
 
         <TextView
-            android:id="@+id/txtNameUser"
+            android:id="@+id/tv_user_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
@@ -33,23 +33,23 @@
             android:fontFamily="@font/poppins_light"
             android:text="Pantau kebutuhan gizimu disini"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/txtNameUser"
-            app:layout_constraintTop_toBottomOf="@+id/txtNameUser" />
+            app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
 
         <ImageView
             android:id="@+id/imgProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_profile"
+            android:src="@drawable/ic_profile_action_36"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtNameUser" />
+            app:layout_constraintTop_toTopOf="@+id/tv_user_name" />
 
         <ImageView
             android:id="@+id/imgIlustrasi"
             android:layout_width="match_parent"
             android:layout_height="210dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/img_banner"
+            android:src="@drawable/img_app_banner_654_366"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@id/imgIlustrasi" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvMenuMakanan"
+            android:id="@+id/cv_merchant_menu"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="8dp"
@@ -85,14 +85,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu_makanan" />
+                    android:src="@drawable/ic_btn_merchant_menu_117_100" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvBuatLaporan"
+            android:id="@+id/cv_reporting"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginStart="12dp"
@@ -113,7 +113,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_buat_laporan" />
+                    android:src="@drawable/ic_btn_reporting_117_100" />
 
             </LinearLayout>
 
@@ -129,7 +129,7 @@
             app:cardElevation="0dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvMenuMakanan">
+            app:layout_constraintTop_toBottomOf="@+id/cv_merchant_menu">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_food_nutrition_search" />
+                    android:src="@drawable/ic_btn_food_nutrition_117_114" />
 
             </LinearLayout>
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_fragment">
+    android:background="@color/grayish_white">
 
     <ImageView
         android:id="@+id/img_cover"
@@ -14,6 +14,12 @@
         android:src="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/lyt_top_shadow"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -30,18 +36,18 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/bg_white_rounded"
-            android:closeIcon="@drawable/ic_clear_search"
-            android:commitIcon="@drawable/ic_clear_search"
+            android:background="@drawable/sv_primary"
+            android:closeIcon="@drawable/ic_clear_action_24"
+            android:commitIcon="@drawable/ic_clear_action_24"
             android:searchHintIcon="@null"
-            android:searchIcon="@drawable/ic_right_search" />
+            android:searchIcon="@drawable/ic_search_action_37_36" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:src="@drawable/solid_rounded_top"
+        android:src="@drawable/lyt_rounded_top"
         app:layout_constraintBottom_toBottomOf="@+id/img_cover" />
 
     <ImageView
@@ -51,7 +57,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />

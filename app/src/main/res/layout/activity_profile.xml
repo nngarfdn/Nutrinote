@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_checklist_done" />
+            android:src="@drawable/ic_checklist_24" />
 
     </RelativeLayout>
 
@@ -112,8 +112,8 @@
                     android:id="@+id/edt_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_person"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_person_18"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="textPersonName|textCapWords"
@@ -140,8 +140,8 @@
                     android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_email"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_email_19_18"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
                     android:paddingHorizontal="16dp"
@@ -165,8 +165,8 @@
                     android:id="@+id/edt_age"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_person"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_person_18"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="number"
@@ -191,8 +191,8 @@
                     android:id="@+id/edt_height"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_person"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_person_18"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="number"
@@ -217,8 +217,8 @@
                     android:id="@+id/edt_weight"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_person"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_person_18"
                     android:drawablePadding="7dp"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="number"
@@ -238,7 +238,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/bg_edittext_border">
+                android:background="@drawable/edt_primary">
 
                 <Spinner
                     android:id="@+id/spinner_sex"
@@ -264,8 +264,8 @@
                     android:id="@+id/edt_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_edittext_border"
-                    android:drawableStart="@drawable/ic_password"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_password_16_18"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="textPassword"

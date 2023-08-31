@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_back" />
+                    android:src="@drawable/ic_back_24" />
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -50,7 +50,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Makanan"
-                android:textColor="@color/text_buatlaporan"
+                android:textColor="@color/grey"
                 android:textSize="13sp" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:text="Ayam Koloke A"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                app:drawableStartCompat="@drawable/ic_makanan_laporan" />
+                app:drawableStartCompat="@drawable/ic_food_19" />
 
             <TextView
                 android:id="@+id/textTest"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Waktu Makan"
-                android:textColor="@color/text_buatlaporan"
+                android:textColor="@color/grey"
                 android:textSize="13sp" />
 
             <EditText
@@ -81,9 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_edittext_border"
+                android:background="@drawable/edt_primary"
                 android:clickable="true"
-                android:drawableStart="@drawable/ic_waktu_buat_laporan"
+                android:drawableStart="@drawable/ic_time_18"
                 android:drawablePadding="8dp"
                 android:editable="false"
                 android:focusable="false"
@@ -99,9 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_edittext_border"
+                android:background="@drawable/edt_primary"
                 android:clickable="true"
-                android:drawableStart="@drawable/ic_calendar_buat_laporan"
+                android:drawableStart="@drawable/ic_calendar_18"
                 android:drawablePadding="8dp"
                 android:editable="false"
                 android:focusable="false"
@@ -117,10 +117,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_edittext_border"
+                android:background="@drawable/edt_primary"
                 android:clickable="true"
-                android:drawableStart="@drawable/ic_baseline_food_bank_24"
+                android:drawableStart="@drawable/ic_food_bank_24"
                 android:drawablePadding="8dp"
+                android:drawableTint="#40000000"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="Masukkan Persentase (%)"
                 android:inputType="numberDecimal"
@@ -131,13 +132,11 @@
 
             <Spinner
                 android:id="@+id/spinner_mood"
-                android:layout_height="50dp"
-                android:paddingLeft="8dp"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-
-                android:background="@drawable/bg_edittext_border"
-                />
+                android:background="@drawable/edt_primary"
+                android:paddingStart="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,7 +144,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Foto Makanan"
-                android:textColor="@color/text_buatlaporan"
+                android:textColor="@color/grey"
                 android:textSize="13sp" />
 
         </LinearLayout>
@@ -174,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_button_round"
+            android:background="@drawable/btn_secondary"
             android:fontFamily="@font/poppins_regular"
             android:text="Unggah Foto Sebelum"
             android:textAllCaps="false"
@@ -201,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_button_round"
+            android:background="@drawable/btn_secondary"
             android:fontFamily="@font/poppins_regular"
             android:text="Unggah Foto Sesudah"
             android:textAllCaps="false"
@@ -210,7 +209,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
-
 
 
         <LinearLayout
@@ -225,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@drawable/bg_gradient_round"
+                android:background="@drawable/btn_primary"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Kirim Laporan"
                 android:textAllCaps="false"
@@ -239,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:background="@drawable/bg_gradient_round"
+                android:background="@drawable/btn_primary"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Hapus Laporan"
                 android:textAllCaps="false"

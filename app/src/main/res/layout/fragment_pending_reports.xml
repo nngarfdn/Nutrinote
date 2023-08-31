@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_fragment"
+    android:background="@color/grayish_white"
     android:paddingHorizontal="24dp"
     tools:context="com.sv.calorieintakeapps.feature_homepage.presentation.history.PendingReportsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_fragment"
+        android:background="@color/grayish_white"
         android:orientation="vertical">
 
         <SearchView
@@ -18,11 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/bg_white_rounded"
-            android:closeIcon="@drawable/ic_clear_search"
-            android:commitIcon="@drawable/ic_clear_search"
+            android:background="@drawable/sv_primary"
+            android:closeIcon="@drawable/ic_clear_action_24"
+            android:commitIcon="@drawable/ic_clear_action_24"
             android:searchHintIcon="@null"
-            android:searchIcon="@drawable/ic_right_search" />
+            android:searchIcon="@drawable/ic_search_action_37_36" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_proses_riwayat"

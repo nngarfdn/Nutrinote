@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_fragment"
+    android:background="@color/grayish_white"
     tools:context="com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,25 +12,25 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_riwayat"
+            android:id="@+id/tab_report_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@color/tab_selected"
+            app:tabIndicatorColor="@color/orange"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/tab_selected" />
+            app:tabTextColor="@color/orange" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager_login"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_report_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@id/tab_layout_riwayat"
+            android:layout_below="@id/tab_report_history"
             android:paddingBottom="124dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_layout_riwayat" />
+            app:layout_constraintTop_toBottomOf="@+id/tab_report_history" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

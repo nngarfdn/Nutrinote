@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sv.calorieintakeapps.databinding.ItemMerchantsBinding
+import com.sv.calorieintakeapps.R
+import com.sv.calorieintakeapps.databinding.ItemMerchantBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantMenuIntent
-import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
 
 class AdapterMerchant :
@@ -33,7 +33,7 @@ class AdapterMerchant :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ItemMerchantsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemMerchantBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding.root, binding)
     }
 
@@ -50,13 +50,13 @@ class AdapterMerchant :
     }
 
     class ViewHolder(
-        itemView: View, private val binding: ItemMerchantsBinding
+        itemView: View, private val binding: ItemMerchantBinding
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Merchant) {
 
             binding.apply {
                 txtName.text = item.name
-                imgBanner.load("https://i.imgur.com/FSGh7aS.png")
+                imgBanner.setImageResource(R.drawable.img_merchant_banner_512_325)
             }
         }
     }

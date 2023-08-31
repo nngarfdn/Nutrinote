@@ -40,8 +40,8 @@ fun ImageView.load(
     transformation: Transformation = RoundedCornersTransformation(20f),
 ) {
     load(source) {
-        placeholder(R.drawable.ic_placeholder)
-        error(R.drawable.ic_placeholder)
+        placeholder(R.drawable.ic_placeholder_24)
+        error(R.drawable.ic_placeholder_24)
         transformations(transformation)
     }
 }

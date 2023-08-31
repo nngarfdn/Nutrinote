@@ -195,12 +195,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             if(!report.preImage.isEmpty()){
                                 imgPreImage.load(report.preImage)
                             }else{
-                                imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                                imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
                             if(!report.postImage.isEmpty()){
                                 imgPostImage.load(report.postImage)
                             }else{
-                                imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image)
+                                imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
                             when (report.mood) {
                                 "Senang/Semangat" -> spinnerMood.setSelection(0)

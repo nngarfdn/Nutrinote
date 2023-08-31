@@ -58,12 +58,12 @@ class ReportDetailsActivity : AppCompatActivity() {
                             if(result.data?.preImage?.isEmpty() == false){
                                 imgSebelum.load(result.data?.preImage)
                             }else{
-                                imgSebelum.setImageResource(R.drawable.img_no_image)
+                                imgSebelum.setImageResource(R.drawable.img_no_image_24)
                             }
                             if(result.data?.postImage?.isEmpty() == false){
                                 imgSesudah.load(result.data?.postImage)
                             }else{
-                                imgSesudah.setImageResource(R.drawable.img_no_image)
+                                imgSesudah.setImageResource(R.drawable.img_no_image_24)
                             }
                         }
                     }

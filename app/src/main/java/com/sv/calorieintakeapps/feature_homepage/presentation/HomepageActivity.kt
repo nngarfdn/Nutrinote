@@ -21,36 +21,37 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
         super.onCreate(savedInstanceState)
         binding = ActivityHomepageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.bottomBar.inflateMenu(R.menu.menu_homepage)
-        loadFragment(HomeFragment())
-        binding.bottomBar.setOnItemSelectedListener(this)
         
-        binding.scan.setOnClickListener(this)
+        binding.apply {
+            navbarHomepage.inflateMenu(R.menu.menu_homepage)
+            navbarHomepage.setOnItemSelectedListener(this@HomepageActivity)
+            navbarHomepage.selectedItemId = R.id.menu_home
+            
+            btnScan.setOnClickListener(this@HomepageActivity)
+        }
+    }
+    
+    override fun onClick(view: View) {
+        when (view.id) {
+            binding.btnScan.id -> startActivity(openScannerIntent())
+        }
     }
     
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_riwayat -> loadFragment(HistoryFragment())
-            R.id.action_beranda -> loadFragment(HomeFragment())
+            R.id.menu_home -> loadFragment(HomeFragment())
+            R.id.menu_report_history -> loadFragment(HistoryFragment())
         }
         return true
     }
     
     private fun loadFragment(fragment: Fragment) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.flayout)
+        if (currentFragment != null && currentFragment::class.java == fragment::class.java) return
+        
         supportFragmentManager.beginTransaction()
             .replace(R.id.flayout, fragment)
-            .commitAllowingStateLoss()
-    }
-    
-    override fun onBackPressed() {
-        super.onBackPressed()
-        loadFragment(HomeFragment())
-    }
-    
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.scan -> startActivity(openScannerIntent())
-        }
+            .commit()
     }
     
 }

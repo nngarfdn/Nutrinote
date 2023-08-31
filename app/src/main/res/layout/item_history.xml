@@ -19,7 +19,7 @@
             android:id="@+id/img_item_riwayat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_placeholder" />
+            android:src="@drawable/ic_placeholder_24" />
 
     </androidx.cardview.widget.CardView>
 
@@ -28,7 +28,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_action_edit"
+        android:src="@drawable/ic_edit_27"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,6 @@
         android:fontFamily="@font/poppins_medium"
         android:maxLines="1"
         android:text="@string/sample_menu"
-        android:textColor="@color/text_item_primari_color"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/img_edit_riwayat"
         app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -54,7 +53,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/ic_baseline_access_time_24"
+        android:src="@drawable/ic_time_18"
         app:layout_constraintStart_toStartOf="@+id/txt_title_riwayat"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_riwayat" />
 
@@ -67,7 +66,7 @@
         android:fontFamily="@font/poppins_medium"
         android:maxLines="1"
         android:text="@string/sample_location"
-        android:textColor="@color/text_item_location_color"
+        android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/img_edit_riwayat"
         app:layout_constraintStart_toEndOf="@+id/imageView"

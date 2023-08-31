@@ -3,23 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_beranda"
-        android:enabled="true"
-        android:icon="@drawable/ic_home"
-        android:title="@string/home"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/menu_home"
+        android:checked="true"
+        android:icon="@drawable/ic_home_24_23"
+        android:title="@string/home" />
 
     <item
-        android:id="@+id/action_schedules"
-        android:enabled="true"
-        android:title=""
-        app:showAsAction="ifRoom" />
+        android:enabled="false"
+        android:title="" />
 
     <item
-        android:id="@+id/action_riwayat"
-        android:enabled="true"
-        android:icon="@drawable/ic_riwayat"
-        android:title="@string/history"
-        app:showAsAction="ifRoom" />
-    
+        android:id="@+id/menu_report_history"
+        android:icon="@drawable/ic_history_24"
+        android:title="@string/history" />
+
 </menu>
