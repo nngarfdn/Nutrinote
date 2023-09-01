@@ -1,254 +1,434 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="12dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context="com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity">
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_back_24" />
 
-            <RelativeLayout
-                android:id="@+id/toolbarLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_back_24" />
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Buat Laporan" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Makanan"
-                android:textColor="@color/grey"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_food_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:drawablePadding="8dp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Ayam Koloke A"
-                android:textColor="@color/black"
-                android:textSize="13sp"
-                app:drawableStartCompat="@drawable/ic_food_19" />
-
-            <TextView
-                android:id="@+id/textTest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Waktu Makan"
-                android:textColor="@color/grey"
-                android:textSize="13sp" />
-
-            <EditText
-                android:id="@+id/edt_time"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edt_primary"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_time_18"
-                android:drawablePadding="8dp"
-                android:editable="false"
-                android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Masukkan Jam"
-                android:inputType="none"
-                android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                tools:ignore="KeyboardInaccessibleWidget" />
-
-            <EditText
-                android:id="@+id/edt_date"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edt_primary"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_calendar_18"
-                android:drawablePadding="8dp"
-                android:editable="false"
-                android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Masukkan Tanggal"
-                android:inputType="none"
-                android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                tools:ignore="KeyboardInaccessibleWidget,TextFields" />
-
-            <EditText
-                android:id="@+id/edt_percent"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edt_primary"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_food_bank_24"
-                android:drawablePadding="8dp"
-                android:drawableTint="#40000000"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Masukkan Persentase (%)"
-                android:inputType="numberDecimal"
-                android:maxLength="100"
-                android:paddingHorizontal="16dp"
-                android:textSize="13sp"
-                tools:ignore="KeyboardInaccessibleWidget,TextFields" />
-
-            <Spinner
-                android:id="@+id/spinner_mood"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/edt_primary"
-                android:paddingStart="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Foto Makanan"
-                android:textColor="@color/grey"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <ImageView
-            android:id="@+id/img_pre_image"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@android:color/darker_gray"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            android:layout_toEndOf="@+id/btn_back"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Buat Laporan"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_pre_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_secondary"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Unggah Foto Sebelum"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/img_post_image"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@android:color/darker_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_post_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_secondary"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Unggah Foto Sesudah"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
-
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/btn_post_image">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_save"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/btn_primary"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Kirim Laporan"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_title_food_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama Makanan"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edt_food_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edt_primary"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_food_19"
+                    android:drawablePadding="8dp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Masukkan nama makanan"
+                    android:inputType="none"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/textTest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Waktu Makan"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edt_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edt_primary"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_time_18"
+                    android:drawablePadding="8dp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Masukkan jam"
+                    android:inputType="none"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp"
+                    tools:ignore="KeyboardInaccessibleWidget" />
+
+                <EditText
+                    android:id="@+id/edt_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edt_primary"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_calendar_18"
+                    android:drawablePadding="8dp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Masukkan tanggal"
+                    android:inputType="none"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp"
+                    tools:ignore="KeyboardInaccessibleWidget,TextFields" />
+
+                <TextView
+                    android:id="@+id/textTest2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Persentase Sisa Makanan"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edt_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/edt_primary"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_leftovers_24"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="#40000000"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Masukkan persentase (%)"
+                    android:inputType="numberDecimal"
+                    android:maxLength="100"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp"
+                    tools:ignore="KeyboardInaccessibleWidget,TextFields" />
+
+                <TextView
+                    android:id="@+id/textTest3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Panduan menentukan persentase:"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_0_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 0%\nMakanan habis"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_25_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 25%\nSisa makanan 1/4 porsi"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_50_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 50%\nSisa makanan 1/2 porsi"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_75_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 75%\nSisa makanan 3/4 porsi"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_95_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 95%\nSisa makanan hampir utuh (±1 sdm dikonsumsi)"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:src="@drawable/ic_100_leftovers_38" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Sisa: 100%\nMakanan utuh (tidak ada yang dikonsumsi)"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textTest4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Suasana Hati"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_mood"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edt_primary"
+                    android:paddingStart="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Foto Makanan"
+                    android:textColor="@color/grey"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/img_pre_image"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:src="@android:color/darker_gray"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_delete"
+                android:id="@+id/btn_pre_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Unggah Foto Sebelum"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
+
+            <ImageView
+                android:id="@+id/img_post_image"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_post_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_secondary"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Unggah Foto Sesudah"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/img_pre_image" />
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:background="@drawable/btn_primary"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Hapus Laporan"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/btn_post_image">
 
-        </LinearLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_primary"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Kirim Laporan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_primary"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Hapus Laporan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent" />
 
-</androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</LinearLayout>

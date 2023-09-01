@@ -41,43 +41,43 @@ private const val TIME_FORMAT = "HH:mm:00"
 
 class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
-
+    
     private lateinit var binding: ActivityReportingBinding
     private val viewModel: ReportingViewModel by viewModel()
     private var reportId = -1
     private var foodId = -1
     private var preImageUri = ""
     private var postImageUri = ""
-
+    
     private var isUpdate = false
-
+    
     private var mood = ""
 //    private var percentage: Int? = null;
-
-
+    
+    
     val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         ReportingModule.load()
-
+        
         shouldAskStoragePermission(RC_READ_EXTERNAL_STORAGE_PERMISSION)
-
+        
         isUpdate = intent.hasExtra(Actions.EXTRA_REPORT_ID)
         reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).toString()
-
+        
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
-
+        
         val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.apply {
             spinnerMood.adapter = arrayAdapter
-            tvFoodName.text = foodName
+            edtFoodName.setText(foodName)
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
             edtPercent.setOnClickListener(this@ReportingActivity)
@@ -86,7 +86,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             btnSave.setOnClickListener(this@ReportingActivity)
             btnDelete.setOnClickListener(this@ReportingActivity)
             btnBack.setOnClickListener { onBackPressed() }
-
+            
             if (isUpdate) {
                 tvTitle.text = "Edit Laporan"
                 btnDelete.visibility = View.VISIBLE
@@ -99,24 +99,24 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
-
+    
     inner class MinMaxFilter() : InputFilter {
         private var intMin: Int = 0
         private var intMax: Int = 0
-
+        
         // Initialized
         constructor(minValue: Int, maxValue: Int) : this() {
             this.intMin = minValue
             this.intMax = maxValue
         }
-
+        
         override fun filter(
             source: CharSequence,
             start: Int,
             end: Int,
             dest: Spanned,
             dStart: Int,
-            dEnd: Int
+            dEnd: Int,
         ): CharSequence? {
             try {
                 val input = Integer.parseInt(dest.toString() + source.toString())
@@ -128,21 +128,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
             return ""
         }
-
+        
         // Check if input c is in between min a and max b and
         // returns corresponding boolean
         private fun isInRange(a: Int, b: Int, c: Int): Boolean {
             return if (b > a) c in a..b else c in b..a
         }
     }
-
+    
     private fun observeAddReportResult() {
         viewModel.addReportResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-
+                    
                     }
+                    
                     is Resource.Success -> {
                         showToast("Berhasil mengirim laporan")
 //                        applicationContext.openHomepageIntent()
@@ -150,6 +151,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                         startActivity(intent)
                         finish()
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -157,18 +159,20 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
-
+    
     private fun observeEditReportResult() {
         viewModel.editReportResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-
+                    
                     }
+                    
                     is Resource.Success -> {
                         showToast("Berhasil mengedit laporan")
                         onBackPressed()
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -176,30 +180,31 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
-
+    
     private fun observeGetReportById() {
         viewModel.getReportById(reportId).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-
+                    
                     }
+                    
                     is Resource.Success -> {
                         binding.apply {
                             val report = result.data ?: Report()
                             foodId = report.foodId
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
-
+                            
                             edtPercent.setText(report.percentage.toString())
-                            if(!report.preImage.isEmpty()){
+                            if (!report.preImage.isEmpty()) {
                                 imgPreImage.load(report.preImage)
-                            }else{
+                            } else {
                                 imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
-                            if(!report.postImage.isEmpty()){
+                            if (!report.postImage.isEmpty()) {
                                 imgPostImage.load(report.postImage)
-                            }else{
+                            } else {
                                 imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
                             when (report.mood) {
@@ -209,6 +214,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             }
                         }
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -216,7 +222,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
-
+    
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.edtDate.id -> showDatePicker()
@@ -228,13 +234,15 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             binding.btnDelete.id -> deleteReport()
         }
     }
-
+    
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
         val time = binding.edtTime.text.toString()
-        val percentage: Int?= if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString().toInt() else null;
+        val percentage: Int? =
+            if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString()
+                .toInt() else null;
         mood = itemMood[binding.spinnerMood.selectedItemPosition]
-
+        
         if (isUpdate) {
             viewModel.editReport(
                 reportId = reportId,
@@ -253,7 +261,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             )
         }
     }
-
+    
     private fun deleteReport() {
         AlertDialog.Builder(this)
             .setTitle("Hapus laporan")
@@ -263,12 +271,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     if (result != null) {
                         when (result) {
                             is Resource.Loading -> {
-
+                            
                             }
+                            
                             is Resource.Success -> {
                                 showToast("Laporan berhasil dihapus")
                                 onBackPressed()
                             }
+                            
                             is Resource.Error -> {
                                 showToast(result.message)
                             }
@@ -279,24 +289,24 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             .setNegativeButton("Tidak", null)
             .create().show()
     }
-
+    
     private fun showDatePicker() {
         val datePickerFragment = DatePickerFragment()
         datePickerFragment.show(supportFragmentManager, DATE_PICKER_TAG)
     }
-
+    
     override fun onDialogDateSet(tag: String?, year: Int, month: Int, dayOfMonth: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
         val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         binding.edtDate.setText(dateFormat.format(calendar.time))
     }
-
+    
     private fun showTimePicker() {
         val timePickerFragment = TimePickerFragment()
         timePickerFragment.show(supportFragmentManager, TIME_PICKER_TAG)
     }
-
+    
     override fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
@@ -304,13 +314,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val dateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
         binding.edtTime.setText(dateFormat.format(calendar.time))
     }
-
+    
     private fun chooseImage(requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
     }
-
+    
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -323,6 +333,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     binding.imgPreImage.load(imageUri)
                 }
+                
                 RC_PICK_POST_IMAGE -> {
                     val dir = getRealPathFromURI(imageUri)
                     if (dir != null) {
@@ -333,7 +344,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
-
+    
     private fun getRealPathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Audio.Media.DATA)
         val cursor = managedQuery(contentUri, proj, null, null, null)
@@ -341,12 +352,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         cursor.moveToFirst()
         return cursor.getString(columnIndex)
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         ReportingModule.unload()
     }
-
+    
     @Suppress("SameParameterValue")
     private fun shouldAskStoragePermission(requestCode: Int): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -360,11 +371,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             true
         }
     }
-
+    
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
