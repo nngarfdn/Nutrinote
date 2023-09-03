@@ -54,6 +54,7 @@
                 android:textSize="13sp" />
 
             <LinearLayout
+                android:id="@+id/lyt_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edt_primary"

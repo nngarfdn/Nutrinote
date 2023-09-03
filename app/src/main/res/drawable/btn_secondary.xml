@@ -3,7 +3,6 @@
     <item android:state_pressed="true">
         <shape>
             <solid android:color="#E03700" />
-            <stroke android:width="0dp" android:color="#53933f" />
             <corners android:radius="8dp" />
             <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>
@@ -11,7 +10,6 @@
     <item>
         <shape>
             <solid android:color="#B82D00" />
-            <stroke android:width="0dp" android:color="#53933f" />
             <corners android:radius="8dp" />
             <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>

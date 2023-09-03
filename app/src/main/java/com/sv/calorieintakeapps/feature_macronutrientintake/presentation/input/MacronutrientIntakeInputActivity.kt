@@ -121,6 +121,13 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
                                 override fun onNothingSelected(parent: AdapterView<*>) {}
                             }
                             spinnerDate.setSelection(0)
+                            
+                            if (inputDateArray.isEmpty()) {
+                                btnShowData.isEnabled = false
+                                spinnerDate.isEnabled = false
+                                lytDate.isEnabled = false
+                                showToast("Belum ada riwayat makanan yang dikonsumsi")
+                            }
                         }
                     }
                     

@@ -5,11 +5,11 @@
     <color name="green">#FF3AA76D</color>
     <color name="grey">#FF939393</color>
     <color name="light_grey">#FFDADADA</color>
-    <color name="grayish_white">#FFEFEFEF</color>
+    <color name="grayish_white">#F2F2F2</color>
     <color name="light_red">#FFE0A997</color>
     <color name="orange">#FFB86300</color>
     <color name="red">#FFB82D00</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFEFEFE</color>
     <color name="yellow">#FFFFA500</color>
 
 </resources>
