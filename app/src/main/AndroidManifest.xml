@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalorieIntakeApps">
         <activity
+            android:name=".feature_macronutrientintake.presentation.results.MacronutrientIntakeResultsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature_macronutrientintake.presentation.input.MacronutrientIntakeInputActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature_foodnutrition.presentation.details.FoodNutritionDetailsActivity"
             android:exported="false" />
         <activity

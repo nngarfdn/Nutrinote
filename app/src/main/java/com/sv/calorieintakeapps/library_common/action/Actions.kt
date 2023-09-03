@@ -13,6 +13,8 @@ import com.sv.calorieintakeapps.feature_fooddetails.presentation.FoodDetailActiv
 import com.sv.calorieintakeapps.feature_foodnutrition.presentation.details.FoodNutritionDetailsActivity
 import com.sv.calorieintakeapps.feature_foodnutrition.presentation.search.FoodNutritionSearchActivity
 import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
+import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.input.MacronutrientIntakeInputActivity
+import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.results.MacronutrientIntakeResultsActivity
 import com.sv.calorieintakeapps.feature_merchantlist.presentation.MerchantsActivity
 import com.sv.calorieintakeapps.feature_merchantmenu.presentation.MerchantMenuActivity
 import com.sv.calorieintakeapps.feature_profile.presentation.ProfileActivity
@@ -22,6 +24,8 @@ import com.sv.calorieintakeapps.feature_scanner.presentation.ScanActivity
 
 object Actions {
     
+    const val EXTRA_ACTIVITY_LEVEL = "extra_activity_level"
+    const val EXTRA_DATE = "extra_date"
     const val EXTRA_FOOD_ID = "extra_food_id"
     const val EXTRA_FOOD_NAME = "extra_food_name"
     const val EXTRA_FOOD_IMAGE = "extra_food_image"
@@ -29,6 +33,7 @@ object Actions {
     const val EXTRA_MERCHANT_ID = "extra_merchant_id"
     const val EXTRA_MERCHANT_NAME = "extra_merchant_name"
     const val EXTRA_REPORT_ID = "extra_report_id"
+    const val EXTRA_STRESS_LEVEL = "extra_stress_level"
     
     fun Context?.openFoodDetailsIntent(
         merchantName: String,
@@ -62,6 +67,21 @@ object Actions {
     
     fun Context?.openLoginIntent(): Intent {
         return Intent(this?.applicationContext, LoginActivity::class.java)
+    }
+    
+    fun Context?.openMacronutrientIntakeInput(): Intent {
+        return Intent(this?.applicationContext, MacronutrientIntakeInputActivity::class.java)
+    }
+    
+    fun Context?.openMacronutrientIntakeResults(
+        activityLevel: Double,
+        date: String,
+        stressLevel: Double,
+    ): Intent {
+        return Intent(this?.applicationContext, MacronutrientIntakeResultsActivity::class.java)
+            .putExtra(EXTRA_ACTIVITY_LEVEL, activityLevel)
+            .putExtra(EXTRA_DATE, date)
+            .putExtra(EXTRA_STRESS_LEVEL, stressLevel)
     }
     
     fun Context?.openMerchantListIntent(): Intent {

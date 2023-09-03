@@ -32,6 +32,15 @@ fun mapResponseToDomain(input: FoodNutrientsResponse): List<FoodNutrient> {
     } ?: listOf()
 }
 
+fun mapResponseToDomain(input: List<FoodNutrientsResponse>): List<FoodNutrient> {
+    val mapped = mutableListOf<FoodNutrient>()
+    input.forEach { foodNutrientsResponse ->
+        val list = mapResponseToDomain(foodNutrientsResponse)
+        mapped.addAll(list)
+    }
+    return mapped
+}
+
 fun mapResponseToDomain(input: MerchantMenuResponse): List<Food> {
     return input.foods?.map { item ->
         Food(

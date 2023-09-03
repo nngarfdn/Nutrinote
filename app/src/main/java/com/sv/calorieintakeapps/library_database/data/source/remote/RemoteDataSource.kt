@@ -157,6 +157,42 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
     
+    suspend fun getFoodNutrientsByFoodIds(
+        foodIds: List<Int>,
+        userId: Int,
+    ): Flow<ApiResponse<List<FoodNutrientsResponse>>> {
+        return flow {
+            try {
+                val foodNutrientsResponses = foodIds.map { foodId ->
+                    mainApiService.getFoodNutrientsById(foodId, userId)
+                }
+                val nutrientsResponse = mainApiService.getAllNutrients()
+                
+                val foodNutrientsResponsesFinal = mutableListOf<FoodNutrientsResponse>()
+                foodNutrientsResponses.forEach { foodNutrientsResponse ->
+                    if (foodNutrientsResponse.foodNutrients?.isNotEmpty() == true) {
+                        foodNutrientsResponse.foodNutrients.forEach { foodNutrient ->
+                            val relatedNutrient = nutrientsResponse.nutrients?.find {
+                                foodNutrient?.nutrientId == it?.id
+                            }
+                            foodNutrient?.nutrientName = relatedNutrient?.name
+                            foodNutrient?.nutrientUnit = relatedNutrient?.unit
+                        }
+                        foodNutrientsResponsesFinal.add(foodNutrientsResponse)
+                    }
+                }
+                
+                if (foodNutrientsResponsesFinal.isNotEmpty()) {
+                    emit(ApiResponse.Success(foodNutrientsResponsesFinal))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    
     suspend fun addReport(report: Report): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {

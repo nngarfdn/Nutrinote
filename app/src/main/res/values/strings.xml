@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Nutrinote</string>
     <string name="tab_selesai">Selesai</string>
     <string name="tab_proses">Proses</string>
@@ -20,14 +21,42 @@
     <string name="home">Beranda</string>
     <string name="scanner">Pindai</string>
     <string name="history">Riwayat</string>
+
     <string-array name="gender">
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>
+
     <string-array name="mood">
         <item>Mood</item>
         <item>Senang/Semangat</item>
         <item>Sedih/Sakit</item>
         <item>Biasa Saja</item>
     </string-array>
+
+    <string-array name="activity_level">
+        <item>Sangat jarang berolahraga</item>
+        <item>Jarang olahraga (1–3 kali per minggu)</item>
+        <item>Cukup olahraga (3–5 kali per minggu)</item>
+        <item>Sering olahraga (6–7 kali per minggu)</item>
+        <item>Sangat sering olahraga (sekitar 2 kali sehari)</item>
+    </string-array>
+
+    <string-array name="stress_level">
+        <item>Sehat</item>
+        <item>Operasi</item>
+        <item>Trauma</item>
+        <item>Infeksi berat</item>
+        <item>Peradangan/infalamasi saluran cerna/selaput rongga perut (peritonitis)</item>
+        <item>Patah tulang</item>
+        <item>Infeksi dengan trauma</item>
+        <item>Sepsis</item>
+        <item>Cedera kepala</item>
+        <item>Kanker/tumor</item>
+        <item>Luka bakar 0–20%</item>
+        <item>Luka bakar 20–40%</item>
+        <item>Luka bakar 40–100%</item>
+        <item>Demam</item>
+    </string-array>
+
 </resources>
