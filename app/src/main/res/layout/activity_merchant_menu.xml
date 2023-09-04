@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/grayish_white">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_cover"
@@ -25,8 +24,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="40dp"
         android:layout_marginBottom="10dp"
+        android:paddingHorizontal="40dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints">
@@ -63,18 +62,19 @@
         app:tint="@color/white" />
 
 
-
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_another_food"
         app:layout_constraintTop_toBottomOf="@+id/img_cover">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
+            android:paddingHorizontal="16dp"
             android:text="Daftar Menu"
             android:textColor="#272727"
             android:textSize="16sp" />
@@ -83,8 +83,24 @@
             android:id="@+id/rv_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
+            android:clipToPadding="false"
+            android:padding="16dp" />
 
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_another_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="24dp"
+        android:background="@drawable/btn_primary"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Makanan Lainnya"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

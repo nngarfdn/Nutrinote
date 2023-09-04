@@ -32,6 +32,7 @@ object Actions {
     const val EXTRA_FOOD_LABEL = "extra_food_label"
     const val EXTRA_MERCHANT_ID = "extra_merchant_id"
     const val EXTRA_MERCHANT_NAME = "extra_merchant_name"
+    const val EXTRA_NILAIGIZI_COM_FOOD_ID = "extra_nilai_gizi_com_food_id"
     const val EXTRA_REPORT_ID = "extra_report_id"
     const val EXTRA_STRESS_LEVEL = "extra_stress_level"
     
@@ -101,10 +102,15 @@ object Actions {
         return Intent(this?.applicationContext, RegisterActivity::class.java)
     }
     
-    fun Context?.openReportingIntent(foodId: Int, foodName: String): Intent {
+    fun Context?.openReportingIntent(
+        foodId: Int?,
+        foodName: String?,
+        nilaigiziComFoodId: Int?,
+    ): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
+            .putExtra(EXTRA_NILAIGIZI_COM_FOOD_ID, nilaigiziComFoodId)
     }
     
     fun Context?.openReportEditingIntent(reportId: Int, foodName: String): Intent {

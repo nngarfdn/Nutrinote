@@ -79,7 +79,7 @@ class FoodDetailActivity : AppCompatActivity() {
             
             btnBack.setOnClickListener { onBackPressed() }
             btnLaporkan.setOnClickListener {
-                startActivity(openReportingIntent(foodId, foodName))
+                startActivity(openReportingIntent(foodId, foodName, null))
             }
         }
         

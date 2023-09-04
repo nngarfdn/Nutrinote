@@ -5,8 +5,8 @@ object Configs {
     const val MIN_SDK = 21
     const val TARGET_SDK = 33
 
-    const val VERSION_CODE = 6
-    const val VERSION_NAME = "0.1.6"
+    const val VERSION_CODE = 8
+    const val VERSION_NAME = "0.3.0"
 
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
@@ -26,7 +26,7 @@ interface BuildType {
 object BuildTypeDebug : BuildType {
     override val isAnalyticsEnabled = false
     override val isCrashlyticsEnabled = true
-    override val isMinifyEnabled = true
+    override val isMinifyEnabled = false
 }
 
 object BuildTypeRelease : BuildType {

@@ -8,59 +8,67 @@ import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityMerchantMenuBinding
 import com.sv.calorieintakeapps.feature_merchantmenu.di.MerchantMenuModule
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionSearchIntent
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MerchantMenuActivity : AppCompatActivity() {
-
+    
     private lateinit var binding: ActivityMerchantMenuBinding
-
+    
     private val viewModel: MerchantMenuViewModel by viewModel()
     private lateinit var merchantMenuAdapter: MerchantMenuAdapter
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMerchantMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         MerchantMenuModule.load()
-
+        
         val merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
         viewModel.setMerchantId(merchantId)
-
+        
         merchantMenuAdapter = MerchantMenuAdapter()
-
+        
         binding.apply {
             imgCover.setImageResource(R.drawable.img_merchant_banner_512_325)
-            imgBack.setOnClickListener { onBackPressed() }
+            imgBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+            btnAnotherFood.setOnClickListener {
+                startActivity(openFoodNutritionSearchIntent())
+            }
         }
-
+        
         binding.edtSearchMenu.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
+            
             override fun onQueryTextChange(newText: String?): Boolean {
                 merchantMenuAdapter.filter.filter(newText)
                 return false
             }
         })
-
+        
         observeMerchantName()
         observeMerchantMenu()
     }
-
+    
     private fun observeMerchantName() {
         viewModel.merchantName.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-
+                    
                     }
+                    
                     is Resource.Success -> {
                         merchantMenuAdapter.merchantName = result.data
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -68,14 +76,15 @@ class MerchantMenuActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     private fun observeMerchantMenu() {
         viewModel.merchantMenu.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-
+                    
                     }
+                    
                     is Resource.Success -> {
                         binding.apply {
                             rvFood.apply {
@@ -86,6 +95,7 @@ class MerchantMenuActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -93,7 +103,7 @@ class MerchantMenuActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         MerchantMenuModule.unload()

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityFoodNutritionDetailsBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.di.FoodNutritionModule
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
@@ -29,6 +30,7 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
             btnBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
             }
+            btnReport.isEnabled = false
         }
         
         viewModel.setFoodId(foodId)
@@ -50,6 +52,17 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
                                 tvFat.text = food.fat
                                 tvCarbs.text = food.carbs
                                 imgFood.load(food.imageUrl)
+                                
+                                btnReport.isEnabled = true
+                                btnReport.setOnClickListener {
+                                    startActivity(
+                                        openReportingIntent(
+                                            foodId = null,
+                                            foodName = food.name,
+                                            nilaigiziComFoodId = food.foodId,
+                                        )
+                                    )
+                                }
                             }
                         }
                     }

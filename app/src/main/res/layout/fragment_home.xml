@@ -9,7 +9,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grayish_white"
         android:paddingHorizontal="24dp"
         android:paddingTop="24dp"
         android:paddingBottom="124dp">
@@ -120,7 +119,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_food_nutrition"
+            android:id="@+id/cv_macronutrient_intake"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="24dp"
@@ -141,14 +140,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_btn_food_nutrition_117_114" />
+                    android:src="@drawable/ic_btn_macronutrient_intake_137_115" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_macronutrient_intake"
+            android:id="@+id/cv_food_nutrition"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginStart="16dp"
@@ -169,7 +168,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_btn_macronutrient_intake_137_115" />
+                    android:src="@drawable/ic_btn_food_nutrition_117_114" />
 
             </LinearLayout>
 

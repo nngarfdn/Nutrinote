@@ -8,7 +8,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.databinding.ActivityFoodNutritionSearchBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.di.FoodNutritionModule
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.util.hideKeyboard
+import com.sv.calorieintakeapps.library_common.util.shouldVisible
+import com.sv.calorieintakeapps.library_common.util.showKeyboard
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutritionAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -32,8 +35,11 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
         binding.apply {
             foodNutritionAdapter = FoodNutritionAdapter().apply {
                 addLoadStateListener { loadState ->
-                    if (loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && itemCount < 1) {
-                        showToast("Data tidak ditemukan, coba gunakan kata kunci lain")
+                    if (loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
+                        if (itemCount < 1) {
+                            showToast("Data tidak ditemukan, coba gunakan kata kunci lain atau tambah baru")
+                        }
+                        btnAddNewFood.shouldVisible(itemCount < 1)
                     } else if (loadState.refresh is LoadState.Error) {
                         showToast("Terjadi kesalahan, coba lagi nanti")
                     }
@@ -44,15 +50,18 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                 adapter = foodNutritionAdapter
             }
             
+            searchView.showKeyboard()
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    if ((query?.length ?: 0) > 2) {
+                    if ((query?.length ?: 0) > 1) {
                         lifecycleScope.launch {
                             viewModel.search(query!!).collectLatest { pagingData ->
                                 foodNutritionAdapter.submitData(pagingData)
                             }
                         }
                         searchView.hideKeyboard()
+                    } else {
+                        showToast("Masukkan minimal 2 karakter")
                     }
                     return true
                 }
@@ -61,6 +70,12 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                     return true
                 }
             })
+            
+            btnAddNewFood.setOnClickListener {
+                startActivity(
+                    openReportingIntent(null, null, null)
+                )
+            }
             
             btnBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()

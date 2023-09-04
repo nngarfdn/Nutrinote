@@ -9,7 +9,6 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
-import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class MacronutrientIntakeInteractor(
@@ -139,7 +138,6 @@ class MacronutrientIntakeInteractor(
     
     private fun Double.roundOff(): Double {
         val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
         return df.format(this).toDouble()
     }
     

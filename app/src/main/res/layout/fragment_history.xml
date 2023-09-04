@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayish_white"
     tools:context="com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

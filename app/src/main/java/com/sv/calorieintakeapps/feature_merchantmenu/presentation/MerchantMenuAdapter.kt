@@ -54,8 +54,8 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
-                if (charSearch.isEmpty()) {
-                    foodFilterList = foods as ArrayList<Food>
+                foodFilterList = if (charSearch.isEmpty()) {
+                    foods as ArrayList<Food>
                 } else {
                     val resultList = ArrayList<Food>()
                     for (row in foods) {
@@ -65,7 +65,7 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                             resultList.add(row)
                         }
                     }
-                    foodFilterList = resultList
+                    resultList
                 }
                 val filterResults = FilterResults()
                 filterResults.values = foodFilterList
@@ -90,7 +90,7 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
                 imgItemRiwayat.load(food.image)
                 txtTitleRiwayat.text = food.name
                 txtLocationRiwayat.text = merchantName
-                txtPrice.text = "Rp ${food.price}"
+                txtPrice.text = "Rp${food.price}"
                 when (food.label) {
                     FoodLabel.BAD -> imgRating.setImageResource(R.drawable.ic_food_label_bad)
                     FoodLabel.GOOD -> imgRating.setImageResource(R.drawable.ic_food_label_good)

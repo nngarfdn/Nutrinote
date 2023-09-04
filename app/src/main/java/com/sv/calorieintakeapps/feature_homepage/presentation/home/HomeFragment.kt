@@ -44,8 +44,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             imgProfile.setOnClickListener(this@HomeFragment)
             cvMerchantMenu.setOnClickListener(this@HomeFragment)
             cvReporting.setOnClickListener(this@HomeFragment)
-            cvFoodNutrition.setOnClickListener(this@HomeFragment)
             cvMacronutrientIntake.setOnClickListener(this@HomeFragment)
+            cvFoodNutrition.setOnClickListener(this@HomeFragment)
         }
         
         viewModel.userName.observe(viewLifecycleOwner) {
@@ -72,12 +72,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 startActivity(requireContext().openMerchantListIntent())
             }
             
-            binding.cvFoodNutrition.id -> {
-                startActivity(requireContext().openFoodNutritionSearchIntent())
-            }
-            
             binding.cvMacronutrientIntake.id -> {
                 startActivity(requireContext().openMacronutrientIntakeInput())
+            }
+            
+            binding.cvFoodNutrition.id -> {
+                startActivity(requireContext().openFoodNutritionSearchIntent())
             }
         }
     }
@@ -112,6 +112,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             val tvProfile: TextView = findViewById(R.id.tv_profile)
             tvProfile.setOnClickListener {
                 startActivity(requireContext().openProfileIntent())
+                balloon.dismiss()
             }
             
             val tvLogout: TextView = findViewById(R.id.tv_logout)

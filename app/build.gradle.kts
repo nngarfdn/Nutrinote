@@ -155,7 +155,7 @@ dependencies {
     implementation(platform(Dependencies.FIREBASE_BOM))
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
-    debugImplementation(Dependencies.LEAKCANARY)
+    //debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.PAGING)
     implementation(Dependencies.TIMBER)
     implementation(Dependencies.COIL)

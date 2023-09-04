@@ -21,6 +21,7 @@ import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
+import com.sv.calorieintakeapps.library_common.util.gone
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
@@ -46,6 +47,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private val viewModel: ReportingViewModel by viewModel()
     private var reportId = -1
     private var foodId = -1
+    private var nilaigiziComFoodId = -1
     private var preImageUri = ""
     private var postImageUri = ""
     
@@ -69,15 +71,15 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         isUpdate = intent.hasExtra(Actions.EXTRA_REPORT_ID)
         reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
-        val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).toString()
+        val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME)
+        nilaigiziComFoodId = intent.getIntExtra(Actions.EXTRA_NILAIGIZI_COM_FOOD_ID, -1)
         
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
         
         val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.apply {
             spinnerMood.adapter = arrayAdapter
-            edtFoodName.setText(foodName)
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
             edtPercent.setOnClickListener(this@ReportingActivity)
@@ -96,6 +98,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 tvTitle.text = "Buat Laporan"
                 btnDelete.visibility = View.GONE
                 observeAddReportResult()
+            }
+            
+            edtFoodName.setText(foodName)
+            edtFoodName.isEnabled = foodName == null
+            
+            if (nilaigiziComFoodId != -1) {
+                edtPortionSize.setText("100 g")
+                edtPortionSize.isEnabled = false
+                tvPortionSizeHelper.gone()
+            }
+            
+            if (foodId != -1) {
+                edtPortionSize.gone()
+                edtPortionCount.gone()
+                tvPortionTitle.gone()
+                tvPortionSizeHelper.gone()
             }
         }
     }
@@ -253,7 +271,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             )
         } else {
             viewModel.addReport(
-                foodId = foodId,
+                foodId = if (foodId != -1) foodId else nilaigiziComFoodId,
                 date = date, time = time,
                 percentage = percentage,
                 mood = mood,
