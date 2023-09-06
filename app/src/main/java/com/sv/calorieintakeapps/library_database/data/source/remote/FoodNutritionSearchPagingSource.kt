@@ -11,9 +11,11 @@ class FoodNutritionSearchPagingSource(
 ) : PagingSource<Int, FoodNutritionSearchResponse.DataItem>() {
     
     private var query = ""
+    private var token = ""
     
-    fun setParams(query: String) {
+    fun setParams(query: String, token: String) {
         this.query = query
+        this.token = token
     }
     
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FoodNutritionSearchResponse.DataItem> {
@@ -23,6 +25,7 @@ class FoodNutritionSearchPagingSource(
                 query = query,
                 page = nextPageNumber,
                 pageSize = params.loadSize,
+                token = token,
             )
             @Suppress("UNCHECKED_CAST")
             return LoadResult.Page(

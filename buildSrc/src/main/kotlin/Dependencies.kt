@@ -17,7 +17,8 @@ object Dependencies {
     val CORE by lazy { "androidx.core:core-ktx:${Versions.CORE}" }
     val APP_COMPAT by lazy { "androidx.appcompat:appcompat:${Versions.APP_COMPAT}" }
     val MATERIAL by lazy { "com.google.android.material:material:${Versions.MATERIAL}" }
-    val LIVEDATA by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIVEDATA}" }
+    val LIFECYCLE_LIVEDATA by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE}" }
+    val LIFECYCLE_VIEWMODEL by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE}" }
 
     // Data storage
     val ROOM_RUNTIME by lazy { "androidx.room:room-runtime:${Versions.ROOM}" }
@@ -26,6 +27,7 @@ object Dependencies {
     // Database encryption
     val SQLCHIPHER by lazy { "net.zetetic:android-database-sqlcipher:${Versions.SQLCHIPHER}" }
     val SQLITE by lazy { "androidx.sqlite:sqlite-ktx:${Versions.SQLIITE}" }
+    val SECURITY_CRYPTO by lazy { "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}" }
 
     // Networking
     val RETROFIT by lazy { "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}" }

@@ -4,11 +4,12 @@ object Versions {
     const val KSP = "1.8.10-1.0.9"
     const val GOOGLE_SERVICES = "4.3.15"
     const val FIREBASE_CRASHLYTICS = "2.9.9"
+    const val SECURITY_CRYPTO = "1.1.0-alpha06"
 
     const val CORE = "1.10.1"
     const val APP_COMPAT = "1.6.1"
     const val MATERIAL = "1.9.0"
-    const val LIVEDATA = "2.6.1"
+    const val LIFECYCLE = "2.6.1"
 
     const val JUNIT = "4.13.2"
     const val JUNIT_EXT = "1.1.5"

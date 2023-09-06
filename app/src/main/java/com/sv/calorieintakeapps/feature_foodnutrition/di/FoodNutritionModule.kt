@@ -14,6 +14,7 @@ import org.koin.dsl.module
 private val repositoryModule = module {
     single<IFoodNutritionRepository> {
         FoodNutritionRepository(
+            localDataSource = get(),
             remoteDataSource = get(),
             foodNutritionSearchPagingSource = get(),
         )
@@ -44,5 +45,5 @@ internal object FoodNutritionModule {
     internal fun load() = loadKoinModules(authModules)
     
     internal fun unload() = unloadKoinModules(authModules)
-
+    
 }

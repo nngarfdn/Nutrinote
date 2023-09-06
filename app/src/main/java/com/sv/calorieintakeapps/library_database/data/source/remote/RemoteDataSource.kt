@@ -13,8 +13,10 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.main.respons
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.UserResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.NilaigiziComApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.request.NilaigiziComLoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.NilaigiziComLoginResponse
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
@@ -386,13 +388,17 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
     
-    suspend fun getFoodNutritionSearch(query: String): Flow<ApiResponse<FoodNutritionSearchResponse>> {
+    suspend fun getFoodNutritionSearch(
+        query: String,
+        token: String,
+    ): Flow<ApiResponse<FoodNutritionSearchResponse>> {
         return flow {
             try {
                 val response = nilaigiziComApiService.getFoodNutritionSearch(
                     query = query,
                     page = 1,
                     pageSize = 10,
+                    token = token,
                 )
                 
                 val dataArray = response.data?.data
@@ -407,12 +413,32 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
     
-    suspend fun getFoodNutritionDetails(foodId: Int): Flow<ApiResponse<FoodNutritionDetailsResponse>> {
+    suspend fun getFoodNutritionDetails(
+        foodId: Int,
+        token: String,
+    ): Flow<ApiResponse<FoodNutritionDetailsResponse>> {
         return flow {
             try {
                 val response = nilaigiziComApiService.getFoodNutritionDetails(
                     foodId = foodId,
+                    token = token,
                 )
+                
+                emit(ApiResponse.Success(response))
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    
+    suspend fun nilaigiziComLogin(
+        email: String,
+        password: String,
+    ): Flow<ApiResponse<NilaigiziComLoginResponse>> {
+        return flow {
+            try {
+                val request = NilaigiziComLoginRequest(email, password)
+                val response = nilaigiziComApiService.postLogin(request)
                 
                 emit(ApiResponse.Success(response))
             } catch (throwable: Throwable) {

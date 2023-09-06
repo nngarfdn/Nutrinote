@@ -10,5 +10,7 @@ interface FoodNutritionUseCase {
     fun search(query: String): Flow<PagingData<FoodNutrition>>
     
     fun getDetails(foodId: Int): Flow<Resource<FoodNutrition>>
+    
+    fun nilaigiziComLogin(): Flow<Resource<Boolean>>
 
 }

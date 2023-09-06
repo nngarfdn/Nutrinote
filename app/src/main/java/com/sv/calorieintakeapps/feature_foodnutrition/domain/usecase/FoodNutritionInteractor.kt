@@ -22,4 +22,8 @@ class FoodNutritionInteractor(
         return foodNutritionSearchRepository.getDetails(foodId)
     }
     
+    override fun nilaigiziComLogin(): Flow<Resource<Boolean>> {
+        return foodNutritionSearchRepository.nilaigiziComLogin()
+    }
+    
 }

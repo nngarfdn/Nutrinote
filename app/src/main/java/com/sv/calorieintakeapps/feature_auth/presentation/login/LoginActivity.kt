@@ -12,41 +12,41 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
-
+    
     private val viewModel: LoginViewModel by viewModel()
-
+    
     private lateinit var binding: ActivityLoginBinding
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         AuthModule.load()
-
+        
         binding.apply {
             btnLogin.setOnClickListener {
                 val email = edtEmail.text.toString()
                 val password = edtPassword.text.toString()
                 viewModel.login(email, password)
             }
-
+            
             btnRegister.setOnClickListener {
                 startActivity(openRegisterIntent())
             }
         }
-
+        
         observeLoginResult()
     }
-
+    
     private fun observeLoginResult() {
         viewModel.loginResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-
-                    }
+                    is Resource.Loading -> {}
+                    
                     is Resource.Success -> {
+                        viewModel.nilaigiziComLogin()
                         startActivity(
                             openHomepageIntent()
                                 .setFlags(
@@ -54,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
                                 )
                         )
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         AuthModule.unload()

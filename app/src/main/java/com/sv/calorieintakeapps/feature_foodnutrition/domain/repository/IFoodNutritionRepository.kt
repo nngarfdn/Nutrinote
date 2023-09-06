@@ -14,4 +14,6 @@ interface IFoodNutritionRepository {
     
     fun getDetails(foodId: Int): Flow<Resource<FoodNutrition>>
     
+    fun nilaigiziComLogin(): Flow<Resource<Boolean>>
+    
 }

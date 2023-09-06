@@ -87,10 +87,16 @@ android {
             "NILAIGIZI_COM_PUBLIC_KEY_3",
             getKeyProperty("NILAIGIZI_COM_PUBLIC_KEY_3")
         )
+        
         buildConfigField(
             "String",
-            "NILAIGIZI_COM_TOKEN",
-            getKeyProperty("NILAIGIZI_COM_TOKEN")
+            "NILAIGIZI_COM_EMAIL",
+            getKeyProperty("NILAIGIZI_COM_EMAIL")
+        )
+        buildConfigField(
+            "String",
+            "NILAIGIZI_COM_PASSWORD",
+            getKeyProperty("NILAIGIZI_COM_PASSWORD")
         )
     }
     
@@ -146,6 +152,7 @@ dependencies {
     implementation(Dependencies.CORE)
     implementation(Dependencies.APP_COMPAT)
     implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.SECURITY_CRYPTO)
     testImplementation(TestDependencies.JUNIT)
     androidTestImplementation(TestDependencies.JUNIT_EXT)
     androidTestImplementation(TestDependencies.ESPRESSO)
@@ -174,7 +181,8 @@ dependencies {
     implementation(Dependencies.COROUTINES_CORE)
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_ROOM)
-    implementation(Dependencies.LIVEDATA)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL)
     /* Features */
     implementation(Dependencies.BALLOON)
     implementation(Dependencies.CODE_SCANNER)

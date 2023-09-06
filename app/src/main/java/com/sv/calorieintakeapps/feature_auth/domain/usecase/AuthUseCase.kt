@@ -13,4 +13,7 @@ interface AuthUseCase {
     ): Flow<Resource<Boolean>>
 
     fun login(email: String, password: String): Flow<Resource<Boolean>>
+    
+    fun nilaigiziComLogin(): Flow<Resource<Boolean>>
+    
 }
