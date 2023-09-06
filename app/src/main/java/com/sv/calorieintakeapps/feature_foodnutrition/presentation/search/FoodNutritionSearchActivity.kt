@@ -8,6 +8,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.databinding.ActivityFoodNutritionSearchBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.di.FoodNutritionModule
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_MERCHANT_ID
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.util.hideKeyboard
 import com.sv.calorieintakeapps.library_common.util.shouldVisible
@@ -32,8 +33,10 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
         
         FoodNutritionModule.load()
         
+        val merchantId = intent.getIntExtra(EXTRA_MERCHANT_ID, -1)
+        
         binding.apply {
-            foodNutritionAdapter = FoodNutritionAdapter().apply {
+            foodNutritionAdapter = FoodNutritionAdapter(merchantId).apply {
                 addLoadStateListener { loadState ->
                     if (loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
                         if (itemCount < 1) {
@@ -73,7 +76,12 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
             
             btnAddNewFood.setOnClickListener {
                 startActivity(
-                    openReportingIntent(null, null, null)
+                    openReportingIntent(
+                        null,
+                        null,
+                        if (merchantId < 0) null else merchantId,
+                        null,
+                    )
                 )
             }
             

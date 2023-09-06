@@ -35,7 +35,7 @@ class FoodDetailActivity : AppCompatActivity() {
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
         val foodImage = intent.getStringExtra(Actions.EXTRA_FOOD_IMAGE).orEmpty()
         val foodLabel = intent.getStringExtra(Actions.EXTRA_FOOD_LABEL).orEmpty()
-        
+        val merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
         
         binding.apply {
             imgDetailFood.load(foodImage)
@@ -79,7 +79,14 @@ class FoodDetailActivity : AppCompatActivity() {
             
             btnBack.setOnClickListener { onBackPressed() }
             btnLaporkan.setOnClickListener {
-                startActivity(openReportingIntent(foodId, foodName, null))
+                startActivity(
+                    openReportingIntent(
+                        foodId,
+                        foodName,
+                        if (merchantId < 0) null else merchantId,
+                        null,
+                    )
+                )
             }
         }
         

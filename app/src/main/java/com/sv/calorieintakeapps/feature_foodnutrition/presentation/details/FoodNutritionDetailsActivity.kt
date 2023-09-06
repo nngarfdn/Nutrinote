@@ -14,8 +14,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FoodNutritionDetailsActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivityFoodNutritionDetailsBinding
-    
     private val viewModel: FoodNutritionDetailsViewModel by viewModel()
+    
+    private var merchantId: Int = -1
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
         FoodNutritionModule.load()
         
         val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
+        merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
         
         binding.apply {
             btnBack.setOnClickListener {
@@ -60,6 +62,7 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
                                             foodId = null,
                                             foodName = food.name,
                                             nilaigiziComFoodId = food.foodId,
+                                            merchantId = if (merchantId < 0) null else merchantId,
                                         )
                                     )
                                 }

@@ -38,7 +38,7 @@ class MerchantMenuActivity : AppCompatActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
             btnAnotherFood.setOnClickListener {
-                startActivity(openFoodNutritionSearchIntent())
+                startActivity(openFoodNutritionSearchIntent(merchantId))
             }
         }
         

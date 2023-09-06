@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             
             binding.cvFoodNutrition.id -> {
-                startActivity(requireContext().openFoodNutritionSearchIntent())
+                startActivity(requireContext().openFoodNutritionSearchIntent(null))
             }
         }
     }

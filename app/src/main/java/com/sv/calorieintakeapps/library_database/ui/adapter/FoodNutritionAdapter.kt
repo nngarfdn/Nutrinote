@@ -10,7 +10,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionD
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 
-class FoodNutritionAdapter :
+class FoodNutritionAdapter(private val merchantId: Int) :
     PagingDataAdapter<FoodNutrition, FoodNutritionAdapter.FoodNutritionViewHolder>(
         FoodNutritionComparator
     ) {
@@ -56,6 +56,7 @@ class FoodNutritionAdapter :
                     context.startActivity(
                         context.openFoodNutritionDetailsIntent(
                             foodId = foodNutrition.foodId,
+                            merchantId = if (merchantId < 0) null else merchantId,
                         )
                     )
                 }

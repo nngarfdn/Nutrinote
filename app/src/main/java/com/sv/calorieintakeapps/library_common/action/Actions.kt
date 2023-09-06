@@ -53,13 +53,18 @@ object Actions {
     
     fun Context?.openFoodNutritionDetailsIntent(
         foodId: Int,
+        merchantId: Int?,
     ): Intent {
         return Intent(this?.applicationContext, FoodNutritionDetailsActivity::class.java)
             .putExtra(EXTRA_FOOD_ID, foodId)
+            .putExtra(EXTRA_MERCHANT_ID, merchantId)
     }
     
-    fun Context?.openFoodNutritionSearchIntent(): Intent {
+    fun Context?.openFoodNutritionSearchIntent(
+        merchantId: Int?,
+    ): Intent {
         return Intent(this?.applicationContext, FoodNutritionSearchActivity::class.java)
+            .putExtra(EXTRA_MERCHANT_ID, merchantId)
     }
     
     fun Context?.openHomepageIntent(): Intent {
@@ -105,11 +110,13 @@ object Actions {
     fun Context?.openReportingIntent(
         foodId: Int?,
         foodName: String?,
+        merchantId: Int?,
         nilaigiziComFoodId: Int?,
     ): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
+            .putExtra(EXTRA_MERCHANT_ID, merchantId)
             .putExtra(EXTRA_NILAIGIZI_COM_FOOD_ID, nilaigiziComFoodId)
     }
     

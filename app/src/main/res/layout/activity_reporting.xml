@@ -71,7 +71,7 @@
                     android:drawableStart="@drawable/ic_food_19"
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:hint="Nama makanan &amp; nama konter (jika ada)"
+                    android:hint="Masukkan nama makanan"
                     android:inputType="textCapWords"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />
