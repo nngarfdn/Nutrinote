@@ -22,10 +22,10 @@ class AdapterHistory(
 ) :
     RecyclerView.Adapter<AdapterHistory.ViewHolder>(),
     Filterable {
-
+    
     private val listItem = ArrayList<Report>()
     private val listItemFiltered = ArrayList<Report>()
-
+    
     var data: List<Report>?
         get() = listItem
         @SuppressLint("NotifyDataSetChanged")
@@ -36,18 +36,18 @@ class AdapterHistory(
             listItemFiltered.addAll(listItem)
             notifyDataSetChanged()
         }
-
+    
     var countryFilterList = listOf<Report>()
-
+    
     init {
         countryFilterList = data!!
     }
-
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding.root, binding, isCompleteReport)
     }
-
+    
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = countryFilterList[position]
         holder.bind(item)
@@ -55,30 +55,30 @@ class AdapterHistory(
             activity.startActivity(
                 holder.itemView.context.openReportDetailsIntent(
                     item.id,
-                    item.foodId,
+                    item.foodId ?: -1,
                     item.foodName
                 )
             )
         }
     }
-
+    
     override fun getItemCount(): Int {
         return countryFilterList.size
     }
-
+    
     class ViewHolder(
         itemView: View,
         private val binding: ItemHistoryBinding,
-        private val isPendingReport: Boolean
+        private val isPendingReport: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Report) {
             binding.apply {
-                if(!item.preImage.isEmpty()){
+                if (!item.preImage.isEmpty()) {
                     imgItemRiwayat.load(item.preImage)
-                }else{
+                } else {
                     imgItemRiwayat.setImageResource(R.drawable.ic_placeholder_24)
                 }
-                txtTitleRiwayat.text = item.foodName
+                txtTitleRiwayat.text = item.foodName.ifBlank { "(Makanan lainnya)" }
                 txtLocationRiwayat.text = item.date
                 if (isPendingReport) imgEditRiwayat.visibility = View.INVISIBLE
                 else {
@@ -94,7 +94,7 @@ class AdapterHistory(
             }
         }
     }
-
+    
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -116,7 +116,7 @@ class AdapterHistory(
                 filterResults.values = countryFilterList
                 return filterResults
             }
-
+            
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 countryFilterList = results?.values as ArrayList<Report>
@@ -124,6 +124,7 @@ class AdapterHistory(
             }
         }
     }
+    
 }
 
 interface HistoryAdapterListener {

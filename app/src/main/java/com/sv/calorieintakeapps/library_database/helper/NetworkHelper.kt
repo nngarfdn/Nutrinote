@@ -1,13 +1,11 @@
 package com.sv.calorieintakeapps.library_database.helper
 
 import com.squareup.moshi.Moshi
-import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import okio.IOException
 import retrofit2.HttpException
-import timber.log.Timber
 
 internal fun parseErrorMessage(throwable: Throwable): String {
-    Timber.tag(RemoteDataSource::class.java.simpleName).e(throwable.toString())
+    throwable.printStackTrace()
     return when (throwable) {
         is IOException -> throwable.message.orEmpty()
         is HttpException -> {
@@ -16,7 +14,8 @@ internal fun parseErrorMessage(throwable: Throwable): String {
                 ?: errorResponse?.getSecondaryApiMessage()
                 ?: throwable.message.orEmpty()
         }
-        else -> throwable.message.orEmpty()
+        
+        else -> throwable.message ?: throwable.localizedMessage ?: throwable.toString()
     }
 }
 

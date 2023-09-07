@@ -7,7 +7,7 @@ data class Food(
     val merchantId: Int = -1,
     val name: String = "",
     val price: String = "",
-    val portion: Int = 0,
+    val portion: String = "",
     val label: FoodLabel = FoodLabel.VERY_GOOD,
     val image: String = "",
 )

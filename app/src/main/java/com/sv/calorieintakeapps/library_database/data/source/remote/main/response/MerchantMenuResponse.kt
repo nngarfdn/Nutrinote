@@ -33,7 +33,7 @@ data class MerchantMenuResponse(
         val price: String? = null,
         
         @Json(name = "porsi")
-        val portion: Int? = null,
+        val portion: String? = null,
         
         @Json(name = "label")
         val label: String? = null,

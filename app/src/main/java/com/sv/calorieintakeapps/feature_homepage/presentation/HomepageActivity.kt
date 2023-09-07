@@ -46,9 +46,6 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
     }
     
     private fun loadFragment(fragment: Fragment) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.flayout)
-        if (currentFragment != null && currentFragment::class.java == fragment::class.java) return
-        
         supportFragmentManager.beginTransaction()
             .replace(R.id.flayout, fragment)
             .commit()

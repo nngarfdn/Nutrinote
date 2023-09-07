@@ -8,6 +8,7 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.main.respons
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantMenuResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.NutrientsResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.PostFoodResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.RegisterResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportsResponse
@@ -94,5 +95,11 @@ interface MainApiService {
         @Query("id") userId: Int,
         @Body body: RequestBody,
     ): Response
+    
+    @POST("add_food")
+    @Headers("API_Key: $GIZI_SECRET_KEY")
+    suspend fun postFood(
+        @Body body: RequestBody,
+    ): PostFoodResponse
     
 }

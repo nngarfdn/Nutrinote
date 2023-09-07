@@ -195,19 +195,72 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
     
-    suspend fun addReport(report: Report): Flow<ApiResponse<ReportResponse>> {
+    suspend fun addReport(
+        report: Report,
+        foodName: String,
+        portionSize: String?,
+        merchantId: Int?,
+    ): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
+                var foodId = report.foodId
+                
+                /* Add Food */
+                val isAddFood = foodId == null
+                if (isAddFood) {
+                    val afMultipartBuilder = MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("name", foodName)
+                        .addFormDataPart("price", "0")
+                        .addFormDataPart("porsi", portionSize!!)
+                        .addFormDataPart("label", "")
+                        .addFormDataPart("is_user_added", "1")
+                    if (merchantId != null) {
+                        afMultipartBuilder.addFormDataPart("id_merchant", merchantId.toString())
+                    }
+                    if (report.preImage.isNotEmpty()) {
+                        val imageFile = File(report.preImage)
+                        val requestImage = imageFile.asRequestBody(contentType)
+                        afMultipartBuilder.addFormDataPart(
+                            "image",
+                            imageFile.name,
+                            requestImage
+                        )
+                    }
+                    
+                    val afRequestBody = afMultipartBuilder.build()
+                    
+                    val afResponse = mainApiService.postFood(afRequestBody)
+                    
+                    if (afResponse.apiStatus == 1) {
+                        foodId = afResponse.data?.id
+                    } else {
+                        emit(ApiResponse.Error(afResponse.apiMessage.orEmpty()))
+                    }
+                }
+                
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("id_user", report.userId.toString())
-                    .addFormDataPart("id_food", report.foodId.toString())
                     .addFormDataPart("date_report", report.date)
                     .addFormDataPart("status_report", report.status.id)
                     .addFormDataPart("mood", report.mood)
+                    .addFormDataPart("id_food", (report.foodId ?: foodId)!!.toString())
                 if (report.percentage != null) {
                     multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                }
+                if (report.nilaigiziComFoodId != null) {
+                    multipartBuilder.addFormDataPart(
+                        "id_food_nilaigizicom",
+                        report.nilaigiziComFoodId.toString()
+                    )
+                }
+                if (report.portionCount != null) {
+                    multipartBuilder.addFormDataPart(
+                        "total_portion",
+                        report.portionCount.toString()
+                    )
                 }
                 
                 if (report.preImage.isNotEmpty()) {
@@ -270,8 +323,23 @@ class RemoteDataSource(
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("date_report", report.date)
                     .addFormDataPart("mood", report.mood)
+                if (report.foodId != null) {
+                    multipartBuilder.addFormDataPart("id_food", report.foodId.toString())
+                }
                 if (report.percentage != null) {
                     multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                }
+                if (report.nilaigiziComFoodId != null) {
+                    multipartBuilder.addFormDataPart(
+                        "id_food_nilaigizicom",
+                        report.nilaigiziComFoodId.toString()
+                    )
+                }
+                if (report.portionCount != null) {
+                    multipartBuilder.addFormDataPart(
+                        "total_portion",
+                        report.portionCount.toString()
+                    )
                 }
                 
                 if (report.preImage.isNotEmpty()) {

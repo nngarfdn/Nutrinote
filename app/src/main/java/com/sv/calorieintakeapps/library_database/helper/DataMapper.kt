@@ -47,7 +47,7 @@ fun mapResponseToDomain(input: MerchantMenuResponse): List<Food> {
             id = item?.id ?: -1,
             merchantId = item?.merchantId ?: -1,
             name = item?.name.orEmpty(),
-            portion = item?.portion ?: 0,
+            portion = item?.portion.orEmpty(),
             label = FoodLabel.new(item?.label.orEmpty()),
             price = item?.price.orEmpty(),
             image = item?.image.orEmpty()
@@ -78,6 +78,8 @@ fun mapResponseToDomain(input: ReportResponse): Report {
             status = ReportStatus.new(this?.status.orEmpty()),
             percentage = this?.percentage ?: 0,
             mood = this?.mood.orEmpty(),
+            nilaigiziComFoodId = this?.nilaigiziComFoodId,
+            portionCount = this?.portionCount,
         )
     }
 }
@@ -95,6 +97,8 @@ fun mapResponseToDomain(input: ReportsResponse): List<Report> {
             status = ReportStatus.new(item?.status.orEmpty()),
             percentage = item?.percentage ?: 0,
             mood = item?.mood.orEmpty(),
+            nilaigiziComFoodId = item?.nilaigiziComFoodId,
+            portionCount = item?.portionCount,
         )
     } ?: listOf()
 }

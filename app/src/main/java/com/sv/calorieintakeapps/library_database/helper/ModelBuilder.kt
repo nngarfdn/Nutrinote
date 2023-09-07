@@ -5,16 +5,18 @@ import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
 
 object ReportBuilder {
-
+    
     fun create(
         userId: Int,
-        foodId: Int,
+        foodId: Int?,
         date: String,
         time: String,
-        percentage : Int?,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
-        postImageUri: String
+        postImageUri: String,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
     ): Report {
         return Report(
             userId = userId,
@@ -23,19 +25,24 @@ object ReportBuilder {
             percentage = percentage,
             mood = mood,
             preImage = preImageUri,
-            postImage = postImageUri
+            postImage = postImageUri,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
         )
     }
-
+    
     fun update(
         id: Int,
         userId: Int,
         date: String,
         time: String,
-        percentage : Int?,
+        percentage: Int?,
         mood: String,
         preImageUri: String,
-        postImageUri: String
+        postImageUri: String,
+        foodId: Int?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
     ): Report {
         return Report(
             id = id,
@@ -44,13 +51,17 @@ object ReportBuilder {
             percentage = percentage,
             mood = mood,
             preImage = preImageUri,
-            postImage = postImageUri
+            postImage = postImageUri,
+            foodId = foodId,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
         )
     }
+    
 }
 
 object UserBuilder {
-
+    
     fun update(
         id: Int,
         name: String,
@@ -59,7 +70,7 @@ object UserBuilder {
         gender: Gender,
         age: Int,
         height: Int,
-        weight: Int
+        weight: Int,
     ): User {
         return User(
             id = id,
@@ -72,4 +83,5 @@ object UserBuilder {
             weight = weight
         )
     }
+    
 }

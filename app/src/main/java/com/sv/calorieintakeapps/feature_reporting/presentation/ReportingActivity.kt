@@ -50,6 +50,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var nilaigiziComFoodId = -1
     private var preImageUri = ""
     private var postImageUri = ""
+    private var merchantId = -1
     
     private var isUpdate = false
     
@@ -73,6 +74,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME)
         nilaigiziComFoodId = intent.getIntExtra(Actions.EXTRA_NILAIGIZI_COM_FOOD_ID, -1)
+        merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
         
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
         
@@ -94,14 +96,17 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 btnDelete.visibility = View.VISIBLE
                 observeEditReportResult()
                 observeGetReportById()
+                
+                edtFoodName.isEnabled = false
             } else {
                 tvTitle.text = "Buat Laporan"
                 btnDelete.visibility = View.GONE
                 observeAddReportResult()
+                
+                edtFoodName.isEnabled = foodName == null
             }
             
             edtFoodName.setText(foodName)
-            edtFoodName.isEnabled = foodName == null
             
             if (nilaigiziComFoodId != -1) {
                 edtPortionSize.setText("100 g")
@@ -159,7 +164,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-                    
+                        binding.btnSave.isEnabled = false
                     }
                     
                     is Resource.Success -> {
@@ -171,7 +176,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     
                     is Resource.Error -> {
+                        binding.btnSave.isEnabled = true
                         showToast(result.message)
+                        //binding.btnSave.performClick()
                     }
                 }
             }
@@ -183,7 +190,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {
-                    
+                        binding.btnSave.isEnabled = false
+                        binding.btnDelete.isEnabled = false
                     }
                     
                     is Resource.Success -> {
@@ -192,6 +200,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     
                     is Resource.Error -> {
+                        binding.btnSave.isEnabled = true
+                        binding.btnDelete.isEnabled = true
                         showToast(result.message)
                     }
                 }
@@ -203,14 +213,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         viewModel.getReportById(reportId).observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-                    
-                    }
+                    is Resource.Loading -> {}
                     
                     is Resource.Success -> {
                         binding.apply {
                             val report = result.data ?: Report()
-                            foodId = report.foodId
+                            foodId = report.foodId ?: -1
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
                             
@@ -230,6 +238,18 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                                 "Sedih/Sakit" -> spinnerMood.setSelection(1)
                                 "Biasa Saja" -> spinnerMood.setSelection(2)
                             }
+                            
+                            edtPortionCount.setText((report.portionCount ?: 1).toString())
+                            nilaigiziComFoodId = report.nilaigiziComFoodId ?: -1
+                            if (report.nilaigiziComFoodId != null) {
+                                edtPortionSize.setText("100 g")
+                                edtPortionSize.isEnabled = false
+                            }
+                            
+                            edtPortionSize.gone()
+                            edtPortionCount.gone()
+                            tvPortionTitle.gone()
+                            tvPortionSizeHelper.gone()
                         }
                     }
                     
@@ -260,22 +280,45 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString()
                 .toInt() else null;
         mood = itemMood[binding.spinnerMood.selectedItemPosition]
+        val foodId = if (foodId != -1) foodId else null
+        val nilaigiziComFoodId = if (nilaigiziComFoodId != -1) nilaigiziComFoodId else null
+        val foodName = binding.edtFoodName.text.toString()
+        val portionSize = binding.edtPortionSize.text.toString()
+        val portionCount = binding.edtPortionCount.text.toString().ifBlank { "1" }.toFloat()
+        val merchantId = if (merchantId != -1) merchantId else null
         
         if (isUpdate) {
             viewModel.editReport(
                 reportId = reportId,
-                date = date, time = time,
+                date = date,
+                time = time,
                 percentage = percentage,
                 mood = mood,
-                preImageUri = preImageUri, postImageUri = postImageUri
+                preImageUri = preImageUri,
+                postImageUri = postImageUri,
+                foodId = foodId,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount,
             )
         } else {
+            if (preImageUri.isEmpty()) {
+                showToast("Foto belum dimasukkan")
+                return
+            }
+            
             viewModel.addReport(
-                foodId = if (foodId != -1) foodId else nilaigiziComFoodId,
-                date = date, time = time,
+                foodId = foodId,
+                date = date,
+                time = time,
                 percentage = percentage,
                 mood = mood,
-                preImageUri = preImageUri, postImageUri = postImageUri
+                preImageUri = preImageUri,
+                postImageUri = postImageUri,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                merchantId = merchantId,
             )
         }
     }
@@ -288,9 +331,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 viewModel.deleteReportById(reportId).observe(this) { result ->
                     if (result != null) {
                         when (result) {
-                            is Resource.Loading -> {
-                            
-                            }
+                            is Resource.Loading -> {}
                             
                             is Resource.Success -> {
                                 showToast("Laporan berhasil dihapus")

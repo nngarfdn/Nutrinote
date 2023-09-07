@@ -74,8 +74,12 @@ class MerchantMenuAdapter : RecyclerView.Adapter<MerchantMenuAdapter.ViewHolder>
             
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                foodFilterList = results?.values as ArrayList<Food>
-                notifyDataSetChanged()
+                try {
+                    foodFilterList = results?.values as ArrayList<Food>
+                    notifyDataSetChanged()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             
         }

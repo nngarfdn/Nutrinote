@@ -15,58 +15,57 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReportDetailsActivity : AppCompatActivity() {
-
+    
     private lateinit var binding: ActivityReportDetailsBinding
     private val viewModel: ReportDetailViewModel by viewModel()
     private lateinit var foodNutrientAdapter: FoodNutrientAdapter
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         ReportDetailsModule.load()
-
+        
         val reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
         val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
-
-        binding.txtName.text = foodName
+        
+        binding.txtName.text = foodName.ifBlank { "(Makanan lainnya)" }
         binding.btnBack.setOnClickListener { onBackPressed() }
-
+        
         foodNutrientAdapter = FoodNutrientAdapter()
-
+        
         observeReportById(reportId)
         observeNutrition(foodId)
     }
-
+    
     @SuppressLint("SetTextI18n")
     private fun observeReportById(reportId: Int) {
         viewModel.getReportById(reportId).observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-
-                    }
+                    is Resource.Loading -> {}
+                    
                     is Resource.Success -> {
                         binding.apply {
                             txtDateTime.text = "${result.data?.date}"
                             val percentage = result.data?.percentage ?: 0
                             foodNutrientAdapter.percentage = percentage
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
-                            if(result.data?.preImage?.isEmpty() == false){
-                                imgSebelum.load(result.data?.preImage)
-                            }else{
+                            if (result.data?.preImage?.isEmpty() == false) {
+                                imgSebelum.load(result.data.preImage)
+                            } else {
                                 imgSebelum.setImageResource(R.drawable.img_no_image_24)
                             }
-                            if(result.data?.postImage?.isEmpty() == false){
-                                imgSesudah.load(result.data?.postImage)
-                            }else{
+                            if (result.data?.postImage?.isEmpty() == false) {
+                                imgSesudah.load(result.data.postImage)
+                            } else {
                                 imgSesudah.setImageResource(R.drawable.img_no_image_24)
                             }
                         }
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -74,15 +73,14 @@ class ReportDetailsActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     @SuppressLint("NotifyDataSetChanged")
     private fun observeNutrition(foodId: Int) {
         viewModel.getFoodNutrientsById(foodId).observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-
-                    }
+                    is Resource.Loading -> {}
+                    
                     is Resource.Success -> {
                         binding.apply {
                             binding.apply {
@@ -96,6 +94,7 @@ class ReportDetailsActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -103,9 +102,10 @@ class ReportDetailsActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         ReportDetailsModule.unload()
     }
+    
 }

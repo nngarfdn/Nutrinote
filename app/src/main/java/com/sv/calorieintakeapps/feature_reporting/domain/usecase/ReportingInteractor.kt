@@ -7,29 +7,41 @@ import kotlinx.coroutines.flow.Flow
 
 class ReportingInteractor(private val reportingRepository: IReportingRepository) :
     ReportingUseCase {
-
+    
     override fun addReport(
-        foodId: Int,
+        foodId: Int?,
         date: String,
         time: String,
         percentage: Int?,
         mood: String,
         preImageUri: String,
-        postImageUri: String
+        postImageUri: String,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        merchantId: Int?,
     ): Flow<Resource<Boolean>> {
         return reportingRepository.addReport(
             foodId = foodId,
-            date = date, time = time,
+            date = date,
+            time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri, postImageUri = postImageUri
+            preImageUri = preImageUri,
+            postImageUri = postImageUri,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
+            foodName = foodName,
+            portionSize = portionSize,
+            merchantId = merchantId,
         )
     }
-
+    
     override fun getReportById(reportId: Int): Flow<Resource<Report>> {
         return reportingRepository.getReportById(reportId)
     }
-
+    
     override fun editReportById(
         reportId: Int,
         date: String,
@@ -37,18 +49,27 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         percentage: Int?,
         mood: String,
         preImageUri: String,
-        postImageUri: String
+        postImageUri: String,
+        foodId: Int?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
     ): Flow<Resource<Boolean>> {
         return reportingRepository.editReportById(
             reportId = reportId,
-            date = date, time = time,
+            date = date,
+            time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri, postImageUri = postImageUri
+            preImageUri = preImageUri,
+            postImageUri = postImageUri,
+            foodId = foodId,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount
         )
     }
-
+    
     override fun deleteReportById(reportId: Int): Flow<Resource<Boolean>> {
         return reportingRepository.deleteReportById(reportId)
     }
+    
 }

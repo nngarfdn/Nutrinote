@@ -50,6 +50,12 @@ data class ReportResponse(
         @Json(name = "mood")
         val mood: String? = null,
         
+        @Json(name = "id_food_nilaigizicom")
+        val nilaigiziComFoodId: Int? = null,
+        
+        @Json(name = "total_portion")
+        val portionCount: Float? = null,
+        
         )
     
 }

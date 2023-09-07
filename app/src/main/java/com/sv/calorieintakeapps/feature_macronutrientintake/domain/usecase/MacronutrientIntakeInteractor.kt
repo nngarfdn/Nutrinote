@@ -64,7 +64,7 @@ class MacronutrientIntakeInteractor(
         activityLevel: Double,
         stressLevel: Double,
     ): Flow<Resource<MacronutrientIntakePercentage>> {
-        val foodIds = reports.map { it.foodId }
+        val foodIds = reports.filter { it.foodId != null }.map { it.foodId!! }
         return macronutrientIntakeRepository.getUserProfile()
             .zip(macronutrientIntakeRepository.getFoodNutrientsByFoodIds(foodIds)) { userProfileResource, foodNutrientsResource ->
                 when (foodNutrientsResource) {
