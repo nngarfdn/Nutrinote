@@ -5,8 +5,8 @@ object Configs {
     const val MIN_SDK = 21
     const val TARGET_SDK = 33
 
-    const val VERSION_CODE = 8
-    const val VERSION_NAME = "0.3.0"
+    const val VERSION_CODE = 11
+    const val VERSION_NAME = "0.4.2"
 
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }

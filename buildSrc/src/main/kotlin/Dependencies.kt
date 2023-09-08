@@ -19,58 +19,58 @@ object Dependencies {
     val MATERIAL by lazy { "com.google.android.material:material:${Versions.MATERIAL}" }
     val LIFECYCLE_LIVEDATA by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE}" }
     val LIFECYCLE_VIEWMODEL by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE}" }
-
+    val SECURITY_CRYPTO by lazy { "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}" }
+    
     // Data storage
     val ROOM_RUNTIME by lazy { "androidx.room:room-runtime:${Versions.ROOM}" }
     val ROOM_COMPILER by lazy { "androidx.room:room-compiler:${Versions.ROOM}" }
-
+    
     // Database encryption
     val SQLCHIPHER by lazy { "net.zetetic:android-database-sqlcipher:${Versions.SQLCHIPHER}" }
     val SQLITE by lazy { "androidx.sqlite:sqlite-ktx:${Versions.SQLIITE}" }
-    val SECURITY_CRYPTO by lazy { "androidx.security:security-crypto:${Versions.SECURITY_CRYPTO}" }
-
+    
     // Networking
     val RETROFIT by lazy { "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}" }
-
+    
     // Parsing the JSON format
     val MOSHI by lazy { "com.squareup.moshi:moshi:${Versions.MOSHI}" }
     val MOSHI_CODEGEN by lazy { "com.squareup.moshi:moshi-kotlin-codegen:${Versions.MOSHI}" }
     val MOSHI_CONVERTER by lazy { "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}" }
-
+    
     // Network logging
     val CHUCKER by lazy { "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}" }
     val CHUCKER_NO_OP by lazy { "com.github.chuckerteam.chucker:library-no-op:${Versions.CHUCKER}" }
-
+    
     // Coroutines Flow
     val COROUTINES_CORE by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}" }
     val COROUTINES_ANDROID by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}" }
     val COROUTINES_ROOM by lazy { "androidx.room:room-ktx:${Versions.ROOM}" }
-
+    
     // Service locator (DI)
     val KOIN_CORE by lazy { "io.insert-koin:koin-core:${Versions.KOIN}" }
     val KOIN_ANDROID by lazy { "io.insert-koin:koin-android:${Versions.KOIN}" }
     val KOIN_ANDROIDX_COMPOSE by lazy { "io.insert-koin:koin-androidx-compose:${Versions.KOIN}" }
-
+    
     // Firebase
     val FIREBASE_BOM by lazy { "com.google.firebase:firebase-bom:${Versions.FIREBASE}" }
     val FIREBASE_ANALYTICS by lazy { "com.google.firebase:firebase-analytics-ktx" }
     val FIREBASE_CRASHLYTICS by lazy { "com.google.firebase:firebase-crashlytics-ktx" }
-
+    
     // Memory leak detection
     val LEAKCANARY by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.LEAKCANARY}" }
     
     // Paging
     val PAGING by lazy { "androidx.paging:paging-runtime:${Versions.PAGING}" }
-
+    
     // Logger
     val TIMBER by lazy { "com.jakewharton.timber:timber:${Versions.TIMBER}" }
-
+    
     // Balloon popup
     val BALLOON by lazy { "com.github.skydoves:balloon:${Versions.BALLOON}" }
-
+    
     // Code scanner
     val CODE_SCANNER by lazy { "com.github.yuriy-budiyev:code-scanner:${Versions.CODE_SCANNER}" }
-
+    
     // Image downloading and caching
     val COIL by lazy { "io.coil-kt:coil:${Versions.COIL}" }
     
