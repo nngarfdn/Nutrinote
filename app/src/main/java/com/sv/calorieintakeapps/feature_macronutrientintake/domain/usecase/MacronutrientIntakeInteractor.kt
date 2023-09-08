@@ -44,7 +44,10 @@ class MacronutrientIntakeInteractor(
                 when (resource) {
                     is Resource.Success -> {
                         val reports = resource.data.orEmpty()
-                            .filter { it.date.split(" ").first() == date }
+                            .filter {
+                                it.status == ReportStatus.COMPLETE &&
+                                        it.date.split(" ").first() == date
+                            }
                         Resource.Success(reports)
                     }
                     
