@@ -19,13 +19,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 private const val RC_PICK_PROFILE_IMAGE = 100
 
 class ProfileActivity : AppCompatActivity() {
-
+    
     private lateinit var binding: ActivityProfileBinding
     private val viewModel: ProfileViewModel by viewModel()
     private var id: Int = 0
     private var profileImageUri = ""
     private var gender = Gender.FEMALE
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -46,13 +46,13 @@ class ProfileActivity : AppCompatActivity() {
                 val age = edtAge.text.toString()
                 val height = edtHeight.text.toString()
                 val weight = edtWeight.text.toString()
-                actionEdit(name, gender, age, pass, profileImageUri,height, weight)
+                actionEdit(name, gender, age, pass, profileImageUri, height, weight)
             }
             btnBack.setOnClickListener { onBackPressed() }
             imageButton.setOnClickListener { chooseImage(RC_PICK_PROFILE_IMAGE) }
         }
     }
-
+    
     private fun actionEdit(
         name: String,
         gender: Gender,
@@ -60,25 +60,27 @@ class ProfileActivity : AppCompatActivity() {
         pass: String,
         profileImage: String,
         height: String,
-        weight: String
+        weight: String,
     ) {
         viewModel.editUserProfile(
             name,
             profileImage,
             gender,
             if (age.isNotEmpty()) age.toInt() else 0,
-            pass, height.toInt(), weight.toInt()
+            pass,
+            if (height.isNotEmpty()) height.toInt() else 0,
+            if (weight.isNotEmpty()) weight.toInt() else 0,
         )
             .observe(this) { result ->
                 if (result != null) {
                     when (result) {
-                        is Resource.Loading -> {
-
-                        }
+                        is Resource.Loading -> {}
+                        
                         is Resource.Success -> {
                             showToast("Profil berhasil disimpan")
                             onBackPressed()
                         }
+                        
                         is Resource.Error -> {
                             showToast(result.message)
                         }
@@ -86,14 +88,13 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
     }
-
+    
     private fun observe() {
         viewModel.userProfile.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
-
-                    }
+                    is Resource.Loading -> {}
+                    
                     is Resource.Success -> {
                         binding.apply {
                             val data = result.data
@@ -110,6 +111,7 @@ class ProfileActivity : AppCompatActivity() {
                             if (data.gender == Gender.FEMALE) spinnerSex.setSelection(1)
                         }
                     }
+                    
                     is Resource.Error -> {
                         showToast(result.message)
                     }
@@ -117,11 +119,11 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     private fun shouldAskPermissions(): Boolean {
         return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
     }
-
+    
     @TargetApi(23)
     private fun askPermissions() {
         val permissions = arrayOf(
@@ -131,13 +133,13 @@ class ProfileActivity : AppCompatActivity() {
         val requestCode = 200
         requestPermissions(permissions, requestCode)
     }
-
+    
     private fun chooseImage(requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
     }
-
+    
     private fun getRealPathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Audio.Media.DATA)
         val cursor = managedQuery(contentUri, proj, null, null, null)
@@ -145,7 +147,7 @@ class ProfileActivity : AppCompatActivity() {
         cursor.moveToFirst()
         return cursor.getString(columnIndex)
     }
-
+    
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -159,7 +161,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
-
+    
     override fun onDestroy() {
         super.onDestroy()
         ProfileModule.unload()
