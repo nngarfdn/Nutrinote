@@ -8,9 +8,11 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.main.respons
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.UserResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
+import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
+import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.domain.model.Food
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
@@ -114,7 +116,9 @@ fun mapResponseToDomain(input: UserResponse): User {
             gender = Gender.new(this?.gender ?: 0),
             age = this?.age ?: 0,
             height = this?.height ?: 0,
-            weight = this?.weight ?: 0
+            weight = this?.weight ?: 0,
+            activityLevel = ActivityLevel.new(this?.activity ?: 1),
+            stressLevel = StressLevel.new(this?.stress ?: 1),
         )
     }
 }

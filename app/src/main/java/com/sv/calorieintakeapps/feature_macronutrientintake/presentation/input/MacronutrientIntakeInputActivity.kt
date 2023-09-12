@@ -6,13 +6,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityMacronutrientIntakeInputBinding
 import com.sv.calorieintakeapps.feature_macronutrientintake.di.MacronurientIntakeModule
 import com.sv.calorieintakeapps.library_common.action.Actions.openMacronutrientIntakeResults
 import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
-import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.helper.toReadableDate
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,68 +34,14 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
             
             btnShowData.setOnClickListener {
                 val date = viewModel.date
-                val activityLevel = viewModel.activityLevel
-                val stressLevel = viewModel.stressLevel
                 
-                if (date != null && activityLevel != null && stressLevel != null) {
+                if (date != null) {
                     startActivity(
                         openMacronutrientIntakeResults(
                             date = date,
-                            activityLevel = activityLevel,
-                            stressLevel = stressLevel,
                         )
                     )
                 }
-            }
-            
-            val activityLevelArray = resources.getStringArray(R.array.activity_level)
-            val spinnerActivityLevelAdapter = ArrayAdapter(
-                this@MacronutrientIntakeInputActivity,
-                android.R.layout.simple_spinner_dropdown_item,
-                activityLevelArray,
-            )
-            spinnerActivityLevel.adapter = spinnerActivityLevelAdapter
-            spinnerActivityLevel.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    if (position >= 0) {
-                        viewModel.activityLevel = ActivityLevel.values()[position].value
-                    }
-                }
-                
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-            if (spinnerActivityLevel.adapter.count > 0) {
-                spinnerActivityLevel.setSelection(0)
-            }
-            
-            val stressLevelArray = resources.getStringArray(R.array.stress_level)
-            val spinnerStressLevelAdapter = ArrayAdapter(
-                this@MacronutrientIntakeInputActivity,
-                android.R.layout.simple_spinner_dropdown_item,
-                stressLevelArray,
-            )
-            spinnerStressLevel.adapter = spinnerStressLevelAdapter
-            spinnerStressLevel.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    if (position >= 0) {
-                        viewModel.stressLevel = StressLevel.values()[position].value
-                    }
-                }
-                
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-            if (spinnerStressLevel.adapter.count > 0) {
-                spinnerStressLevel.setSelection(0)
             }
         }
         

@@ -1,6 +1,8 @@
 package com.sv.calorieintakeapps.library_database.domain.model
 
+import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
+import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 
 data class User(
     val id: Int = -1,
@@ -12,4 +14,6 @@ data class User(
     val age: Int = 0,
     val height: Int = 0,
     val weight: Int = 0,
+    val activityLevel: ActivityLevel? = ActivityLevel.SEDENTARY,
+    val stressLevel: StressLevel? = StressLevel.HEALTHY,
 )

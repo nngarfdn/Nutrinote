@@ -47,6 +47,12 @@ data class UserResponse(
         @Json(name = "weight")
         val weight: Int? = null,
         
+        @Json(name = "activity")
+        val activity: Int? = null,
+        
+        @Json(name = "stress")
+        val stress: Int? = null,
+        
         )
     
 }

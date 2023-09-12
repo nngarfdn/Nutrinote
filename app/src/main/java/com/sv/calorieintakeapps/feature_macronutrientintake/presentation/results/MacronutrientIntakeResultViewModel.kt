@@ -13,17 +13,11 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 class MacronutrientIntakeResultViewModel(useCase: MacronutrientIntakeUseCase) : ViewModel() {
     
     private val date = MutableLiveData<String>()
-    private var activityLevel = 0.0
-    private var stressLevel = 0.0
     
     fun setInput(
         date: String,
-        activityLevel: Double,
-        stressLevel: Double,
     ) {
         this.date.value = date
-        this.activityLevel = activityLevel
-        this.stressLevel = stressLevel
     }
     
     val reports: LiveData<Resource<List<Report>>> =
@@ -37,8 +31,6 @@ class MacronutrientIntakeResultViewModel(useCase: MacronutrientIntakeUseCase) : 
                 result.data?.let { reports ->
                     useCase.getMacronutrientIntakePercentage(
                         reports = reports,
-                        activityLevel = activityLevel,
-                        stressLevel = stressLevel,
                     ).asLiveData()
                 }
             } else {

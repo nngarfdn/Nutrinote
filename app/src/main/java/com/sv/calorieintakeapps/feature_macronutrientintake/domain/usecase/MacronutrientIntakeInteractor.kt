@@ -64,8 +64,6 @@ class MacronutrientIntakeInteractor(
     
     override fun getMacronutrientIntakePercentage(
         reports: List<Report>,
-        activityLevel: Double,
-        stressLevel: Double,
     ): Flow<Resource<MacronutrientIntakePercentage>> {
         val foodIds = reports.filter { it.foodId != null }.map { it.foodId!! }
         return macronutrientIntakeRepository.getUserProfile()
@@ -108,7 +106,9 @@ class MacronutrientIntakeInteractor(
                                 447.6 + (9.25 * user.weight) +
                                         (3.1 * user.height) - (4.33 * user.age)
                             }
-                            caloriesNeeds = bmr * activityLevel * stressLevel
+                            caloriesNeeds = bmr *
+                                    (user.activityLevel?.value ?: 1.0) *
+                                    (user.stressLevel?.value ?: 1.0)
                             proteinNeeds = caloriesNeeds * 0.15 / 4
                             fatNeeds = caloriesNeeds * 0.25 / 9
                             carbsNeeds = caloriesNeeds * 0.6 / 4

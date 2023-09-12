@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
 import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
+import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
+import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,10 +49,50 @@ class ProfileActivity : AppCompatActivity() {
                 val age = edtAge.text.toString()
                 val height = edtHeight.text.toString()
                 val weight = edtWeight.text.toString()
-                actionEdit(name, gender, age, pass, profileImageUri, height, weight)
+                val activityLevel = ActivityLevel.values()[
+                    spinnerActivityLevel.selectedItemPosition
+                ]
+                val stressLevel = StressLevel.values()[
+                    spinnerStressLevel.selectedItemPosition
+                ]
+                
+                actionEdit(
+                    name,
+                    gender,
+                    age,
+                    pass,
+                    profileImageUri,
+                    height,
+                    weight,
+                    activityLevel,
+                    stressLevel,
+                )
             }
             btnBack.setOnClickListener { onBackPressed() }
             imageButton.setOnClickListener { chooseImage(RC_PICK_PROFILE_IMAGE) }
+            
+            // Init spinner activity and stress level
+            val activityLevelArray = resources.getStringArray(R.array.activity_level)
+            val spinnerActivityLevelAdapter = ArrayAdapter(
+                this@ProfileActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                activityLevelArray,
+            )
+            spinnerActivityLevel.adapter = spinnerActivityLevelAdapter
+            if (spinnerActivityLevel.adapter.count > 0) {
+                spinnerActivityLevel.setSelection(0)
+            }
+            
+            val stressLevelArray = resources.getStringArray(R.array.stress_level)
+            val spinnerStressLevelAdapter = ArrayAdapter(
+                this@ProfileActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                stressLevelArray,
+            )
+            spinnerStressLevel.adapter = spinnerStressLevelAdapter
+            if (spinnerStressLevel.adapter.count > 0) {
+                spinnerStressLevel.setSelection(0)
+            }
         }
     }
     
@@ -61,6 +104,8 @@ class ProfileActivity : AppCompatActivity() {
         profileImage: String,
         height: String,
         weight: String,
+        activityLevel: ActivityLevel,
+        stressLevel: StressLevel,
     ) {
         viewModel.editUserProfile(
             name,
@@ -70,6 +115,8 @@ class ProfileActivity : AppCompatActivity() {
             pass,
             if (height.isNotEmpty()) height.toInt() else 0,
             if (weight.isNotEmpty()) weight.toInt() else 0,
+            activityLevel,
+            stressLevel,
         )
             .observe(this) { result ->
                 if (result != null) {
@@ -109,6 +156,12 @@ class ProfileActivity : AppCompatActivity() {
                             data.age.let { edtAge.setText(it.toString()) }
                             if (data.gender == Gender.MALE) spinnerSex.setSelection(0)
                             if (data.gender == Gender.FEMALE) spinnerSex.setSelection(1)
+                            spinnerActivityLevel.setSelection(
+                                data.activityLevel?.id?.minus(1) ?: 0
+                            )
+                            spinnerStressLevel.setSelection(
+                                data.stressLevel?.id?.minus(1) ?: 0
+                            )
                         }
                     }
                     

@@ -26,8 +26,6 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
         MacronurientIntakeModule.load()
         
         val date = intent.getStringExtra(Actions.EXTRA_DATE).orEmpty()
-        val activityLevel = intent.getDoubleExtra(Actions.EXTRA_ACTIVITY_LEVEL, 0.0)
-        val stressLevel = intent.getDoubleExtra(Actions.EXTRA_STRESS_LEVEL, 0.0)
         
         binding.apply {
             btnBack.setOnClickListener {
@@ -44,8 +42,6 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
         
         viewModel.setInput(
             date = date,
-            activityLevel = activityLevel,
-            stressLevel = stressLevel,
         )
         
         observeFoodConsumed()

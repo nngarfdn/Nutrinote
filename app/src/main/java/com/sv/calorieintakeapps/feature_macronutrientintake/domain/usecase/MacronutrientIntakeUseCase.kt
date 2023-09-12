@@ -13,8 +13,6 @@ interface MacronutrientIntakeUseCase {
     
     fun getMacronutrientIntakePercentage(
         reports: List<Report>,
-        activityLevel: Double,
-        stressLevel: Double,
     ): Flow<Resource<MacronutrientIntakePercentage>>
     
 }

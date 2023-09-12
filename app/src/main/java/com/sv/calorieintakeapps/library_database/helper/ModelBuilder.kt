@@ -1,6 +1,8 @@
 package com.sv.calorieintakeapps.library_database.helper
 
+import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
+import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
 
@@ -71,6 +73,8 @@ object UserBuilder {
         age: Int,
         height: Int,
         weight: Int,
+        activityLevel: ActivityLevel,
+        stressLevel: StressLevel,
     ): User {
         return User(
             id = id,
@@ -80,7 +84,9 @@ object UserBuilder {
             gender = gender,
             age = age,
             height = height,
-            weight = weight
+            weight = weight,
+            activityLevel = activityLevel,
+            stressLevel = stressLevel,
         )
     }
     

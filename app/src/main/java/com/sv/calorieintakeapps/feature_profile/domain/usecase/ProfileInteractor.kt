@@ -1,17 +1,19 @@
 package com.sv.calorieintakeapps.feature_profile.domain.usecase
 
 import com.sv.calorieintakeapps.feature_profile.domain.repository.IProfileRepository
+import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
+import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 
 class ProfileInteractor(private val profileRepository: IProfileRepository) : ProfileUseCase {
-
+    
     override fun getUserProfile(): Flow<Resource<User>> {
         return profileRepository.getUserProfile()
     }
-
+    
     override fun editUserProfile(
         name: String,
         photoUri: String,
@@ -19,7 +21,9 @@ class ProfileInteractor(private val profileRepository: IProfileRepository) : Pro
         age: Int,
         password: String,
         height: Int,
-        weight: Int
+        weight: Int,
+        activityLevel: ActivityLevel,
+        stressLevel: StressLevel,
     ): Flow<Resource<Boolean>> {
         return profileRepository.editUserProfile(
             name = name,
@@ -28,7 +32,10 @@ class ProfileInteractor(private val profileRepository: IProfileRepository) : Pro
             age = age,
             password = password,
             height = height,
-            weight = weight
+            weight = weight,
+            activityLevel = activityLevel,
+            stressLevel = stressLevel,
         )
     }
+    
 }

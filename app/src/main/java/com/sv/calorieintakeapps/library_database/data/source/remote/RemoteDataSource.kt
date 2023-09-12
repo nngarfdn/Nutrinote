@@ -470,6 +470,8 @@ class RemoteDataSource(
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("gender", user.gender.id.toString())
+                    .addFormDataPart("activity", user.activityLevel!!.id.toString())
+                    .addFormDataPart("stress", user.stressLevel!!.id.toString())
                 
                 if (user.name.isNotEmpty()) {
                     multipartBuilder.addFormDataPart("name", user.name)

@@ -24,7 +24,6 @@ import com.sv.calorieintakeapps.feature_scanner.presentation.ScanActivity
 
 object Actions {
     
-    const val EXTRA_ACTIVITY_LEVEL = "extra_activity_level"
     const val EXTRA_DATE = "extra_date"
     const val EXTRA_FOOD_ID = "extra_food_id"
     const val EXTRA_FOOD_NAME = "extra_food_name"
@@ -34,7 +33,6 @@ object Actions {
     const val EXTRA_MERCHANT_NAME = "extra_merchant_name"
     const val EXTRA_NILAIGIZI_COM_FOOD_ID = "extra_nilai_gizi_com_food_id"
     const val EXTRA_REPORT_ID = "extra_report_id"
-    const val EXTRA_STRESS_LEVEL = "extra_stress_level"
     
     const val EXTRA_NILAIGIZI_COM_PROTEIN = "extra_nilaigizi_com_protein" // 1
     const val EXTRA_NILAIGIZI_COM_CARBS = "extra_nilaigizi_com_carbs" // 2
@@ -85,14 +83,10 @@ object Actions {
     }
     
     fun Context?.openMacronutrientIntakeResults(
-        activityLevel: Double,
         date: String,
-        stressLevel: Double,
     ): Intent {
         return Intent(this?.applicationContext, MacronutrientIntakeResultsActivity::class.java)
-            .putExtra(EXTRA_ACTIVITY_LEVEL, activityLevel)
             .putExtra(EXTRA_DATE, date)
-            .putExtra(EXTRA_STRESS_LEVEL, stressLevel)
     }
     
     fun Context?.openMerchantListIntent(): Intent {
