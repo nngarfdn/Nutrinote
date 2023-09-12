@@ -213,7 +213,7 @@ class RemoteDataSource(
                 var foodId = report.foodId
                 
                 /* Add Food */
-                val checkFoodResponse = mainApiService.checkFood(report.foodName)
+                val checkFoodResponse = mainApiService.checkFood(foodName)
                 val checkFoodResult = checkFoodResponse.data?.isNotEmpty() == true
                 if (checkFoodResult) {
                     foodId = checkFoodResponse.data?.first()?.id
