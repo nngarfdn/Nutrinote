@@ -95,7 +95,7 @@
                     android:drawableStart="@drawable/ic_portion_size_24"
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:hint="Masukkan ukuran porsi"
+                    android:hint="Masukkan ukuran satu porsi"
                     android:inputType="textCapSentences"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp"
@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Masukkan dalam gram atau ukuran rumah tangga.\nContoh 1: 100 g\nContoh 2: 1 mangkuk"
+                    android:text="Masukkan dalam gram atau ukuran rumah tangga.\nContoh 1: 100 g/\porsi\nContoh 2: 1 mangkuk"
                     android:textSize="12sp" />
 
                 <EditText

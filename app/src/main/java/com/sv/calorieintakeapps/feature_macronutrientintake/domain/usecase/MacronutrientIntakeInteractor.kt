@@ -9,7 +9,7 @@ import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
-import java.text.DecimalFormat
+import java.util.Locale
 
 class MacronutrientIntakeInteractor(
     private val macronutrientIntakeRepository: IMacronutrientIntakeRepository,
@@ -140,8 +140,9 @@ class MacronutrientIntakeInteractor(
     }
     
     private fun Double.roundOff(): Double {
-        val df = DecimalFormat("#.##")
-        return df.format(this).toDouble()
+        return String
+            .format(Locale.ENGLISH, "%.2f", this) // Avoid decimal separator issue
+            .toDouble()
     }
     
 }

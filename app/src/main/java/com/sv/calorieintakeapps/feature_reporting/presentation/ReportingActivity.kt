@@ -16,9 +16,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
-import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.gone
@@ -109,7 +109,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             edtFoodName.setText(foodName)
             
             if (nilaigiziComFoodId != -1) {
-                edtPortionSize.setText("100 g")
+                edtPortionSize.setText("100 g/porsi")
                 edtPortionSize.isEnabled = false
                 tvPortionSizeHelper.gone()
             }
@@ -169,16 +169,17 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     
                     is Resource.Success -> {
                         showToast("Berhasil mengirim laporan")
-//                        applicationContext.openHomepageIntent()
-                        val intent = Intent(this, HomepageActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        startActivity(
+                            openHomepageIntent().setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                                        Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        )
                     }
                     
                     is Resource.Error -> {
                         binding.btnSave.isEnabled = true
                         showToast(result.message)
-                        //binding.btnSave.performClick()
                     }
                 }
             }
@@ -242,7 +243,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtPortionCount.setText((report.portionCount ?: 1).toString())
                             nilaigiziComFoodId = report.nilaigiziComFoodId ?: -1
                             if (report.nilaigiziComFoodId != null) {
-                                edtPortionSize.setText("100 g")
+                                edtPortionSize.setText("100 g/porsi")
                                 edtPortionSize.isEnabled = false
                             }
                             
@@ -301,11 +302,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 portionCount = portionCount,
             )
         } else {
-            if (preImageUri.isEmpty()) {
-                showToast("Foto belum dimasukkan")
-                return
-            }
-            
             viewModel.addReport(
                 foodId = foodId,
                 date = date,

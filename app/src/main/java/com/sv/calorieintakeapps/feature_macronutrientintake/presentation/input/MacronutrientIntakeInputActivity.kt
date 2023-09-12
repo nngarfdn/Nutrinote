@@ -60,17 +60,21 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
             spinnerActivityLevel.adapter = spinnerActivityLevelAdapter
             spinnerActivityLevel.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
+                    parent: AdapterView<*>?,
+                    view: View?,
                     position: Int,
                     id: Long,
                 ) {
-                    viewModel.activityLevel = ActivityLevel.values()[position].value
+                    if (position >= 0) {
+                        viewModel.activityLevel = ActivityLevel.values()[position].value
+                    }
                 }
                 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-            spinnerActivityLevel.setSelection(0)
+            if (spinnerActivityLevel.adapter.count > 0) {
+                spinnerActivityLevel.setSelection(0)
+            }
             
             val stressLevelArray = resources.getStringArray(R.array.stress_level)
             val spinnerStressLevelAdapter = ArrayAdapter(
@@ -81,17 +85,21 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
             spinnerStressLevel.adapter = spinnerStressLevelAdapter
             spinnerStressLevel.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
+                    parent: AdapterView<*>?,
+                    view: View?,
                     position: Int,
                     id: Long,
                 ) {
-                    viewModel.stressLevel = StressLevel.values()[position].value
+                    if (position >= 0) {
+                        viewModel.stressLevel = StressLevel.values()[position].value
+                    }
                 }
                 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-            spinnerStressLevel.setSelection(0)
+            if (spinnerStressLevel.adapter.count > 0) {
+                spinnerStressLevel.setSelection(0)
+            }
         }
         
         viewModel.inputDate.observe(this) { result ->
@@ -110,17 +118,21 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
                             spinnerDate.adapter = spinnerDateAdapter
                             spinnerDate.onItemSelectedListener = object : OnItemSelectedListener {
                                 override fun onItemSelected(
-                                    parent: AdapterView<*>,
-                                    view: View,
+                                    parent: AdapterView<*>?,
+                                    view: View?,
                                     position: Int,
                                     id: Long,
                                 ) {
-                                    viewModel.date = inputDateArray[position]
+                                    if (position >= 0) {
+                                        viewModel.date = inputDateArray[position]
+                                    }
                                 }
                                 
-                                override fun onNothingSelected(parent: AdapterView<*>) {}
+                                override fun onNothingSelected(parent: AdapterView<*>?) {}
                             }
-                            spinnerDate.setSelection(0)
+                            if (spinnerDate.adapter.count > 0) {
+                                spinnerDate.setSelection(0)
+                            }
                             
                             if (inputDateArray.isEmpty()) {
                                 btnShowData.isEnabled = false

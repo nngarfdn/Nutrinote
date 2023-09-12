@@ -57,7 +57,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/poppins_medium"
-            android:text="Kandungan Gizi • Per 100 g"
+            android:text="Kandungan Gizi • 100 g/porsi"
             android:textAlignment="center"
             android:textColor="#272727"
             android:textSize="14sp" />

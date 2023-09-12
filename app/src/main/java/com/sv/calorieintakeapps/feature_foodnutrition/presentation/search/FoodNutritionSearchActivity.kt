@@ -45,7 +45,7 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                         btnAddNewFood.shouldVisible(itemCount < 1)
                     } else if (loadState.refresh is LoadState.Error) {
                         viewModel.nilaigiziComLogin()
-                        showToast("Terjadi kesalahan, coba lagi nanti")
+                        showToast("Terjadi kesalahan, mohon coba lagi")
                     }
                 }
             }

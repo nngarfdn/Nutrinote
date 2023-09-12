@@ -17,6 +17,7 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.NilaigiziComLoginResponse
+import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
@@ -244,7 +245,11 @@ class RemoteDataSource(
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("id_user", report.userId.toString())
                     .addFormDataPart("date_report", report.date)
-                    .addFormDataPart("status_report", report.status.id)
+                    .addFormDataPart(
+                        "status_report",
+                        if (isAddFood) ReportStatus.PENDING.id
+                        else ReportStatus.COMPLETE.id
+                    )
                     .addFormDataPart("mood", report.mood)
                     .addFormDataPart("id_food", (report.foodId ?: foodId)!!.toString())
                 if (report.percentage != null) {

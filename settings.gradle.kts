@@ -15,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Nutrinote"
+rootProject.name = "Nutrinote Gama"
 include(":app")
