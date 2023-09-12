@@ -17,6 +17,12 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
             notifyDataSetChanged()
         }
     
+    var totalPortion = 1f
+        set(values) {
+            field = values
+            notifyDataSetChanged()
+        }
+    
     private var foodNutrients = listOf<FoodNutrient>()
         set(values) {
             field = values
@@ -52,7 +58,7 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
                     foodNutrient.akgDay + if (!foodNutrient.akgDay.equals("-")) " %" else ""
                 txtNutritionValue.text = itemView.context.getString(
                     R.string.nutrient_value,
-                    foodNutrient.value * ((100 - percentage.toDouble()) / 100),
+                    foodNutrient.value * ((100 - percentage.toDouble()) / 100) * totalPortion,
                     foodNutrient.nutrientUnit
                 )
             }

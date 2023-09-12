@@ -83,13 +83,17 @@ class MacronutrientIntakeInteractor(
                                 val consumedPercentage =
                                     (100 - (report.percentage?.toDouble() ?: 0.0)) / 100
                                 totalCalories += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Energi" }
-                                    ?.value ?: 0.0) * consumedPercentage
+                                    ?.value ?: 0.0) * consumedPercentage *
+                                        (report.portionCount ?: 1f)
                                 totalProtein += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Protein" }
-                                    ?.value ?: 0.0) * consumedPercentage
+                                    ?.value ?: 0.0) * consumedPercentage *
+                                        (report.portionCount ?: 1f)
                                 totalFat += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Lemak" }
-                                    ?.value ?: 0.0) * consumedPercentage
+                                    ?.value ?: 0.0) * consumedPercentage *
+                                        (report.portionCount ?: 1f)
                                 totalCarbs += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Karbohidrat" }
-                                    ?.value ?: 0.0) * consumedPercentage
+                                    ?.value ?: 0.0) * consumedPercentage *
+                                        (report.portionCount ?: 1f)
                             }
                         }
                         
