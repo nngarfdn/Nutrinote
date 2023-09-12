@@ -3,6 +3,7 @@ package com.sv.calorieintakeapps.library_database.data.source.remote.main
 import com.sv.calorieintakeapps.BuildConfig.GIZI_SECRET_KEY
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
+import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.CheckFoodResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.LoginResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.MerchantMenuResponse
@@ -108,5 +109,11 @@ interface MainApiService {
     suspend fun postFoodNutrition(
         @Body body: RequestBody,
     ): PostFoodNutritionResponse
+    
+    @GET("check_food")
+    @Headers("API_Key: $GIZI_SECRET_KEY")
+    suspend fun checkFood(
+        @Query("name") foodName: String,
+    ): CheckFoodResponse
     
 }
