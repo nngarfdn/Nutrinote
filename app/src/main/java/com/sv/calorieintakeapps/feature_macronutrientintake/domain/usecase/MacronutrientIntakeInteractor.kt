@@ -82,8 +82,8 @@ class MacronutrientIntakeInteractor(
                             reports.forEach { report ->
                                 val foodNutrientsOfSingleFood = foodNutrients
                                     .filter { it.foodId == report.foodId }
-                                val consumedPercentage = (report.percentage?.toDouble()
-                                    ?: 0.0) / 100
+                                val consumedPercentage =
+                                    (100 - (report.percentage?.toDouble() ?: 0.0)) / 100
                                 totalCalories += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Energi" }
                                     ?.value ?: 0.0) * consumedPercentage
                                 totalProtein += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Protein" }
