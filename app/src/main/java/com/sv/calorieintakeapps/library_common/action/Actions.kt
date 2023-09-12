@@ -36,6 +36,11 @@ object Actions {
     const val EXTRA_REPORT_ID = "extra_report_id"
     const val EXTRA_STRESS_LEVEL = "extra_stress_level"
     
+    const val EXTRA_NILAIGIZI_COM_PROTEIN = "extra_nilaigizi_com_protein" // 1
+    const val EXTRA_NILAIGIZI_COM_CARBS = "extra_nilaigizi_com_carbs" // 2
+    const val EXTRA_NILAIGIZI_COM_CALORIES = "extra_nilaigizi_com_calories" // 3
+    const val EXTRA_NILAIGIZI_COM_FAT = "extra_nilaigizi_com_fat" // 4
+    
     fun Context?.openFoodDetailsIntent(
         merchantName: String,
         foodId: Int,
@@ -112,12 +117,20 @@ object Actions {
         foodName: String?,
         merchantId: Int?,
         nilaigiziComFoodId: Int?,
+        calories: String? = null,
+        protein: String? = null,
+        fat: String? = null,
+        carbs: String? = null,
     ): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
             .putExtra(EXTRA_MERCHANT_ID, merchantId)
             .putExtra(EXTRA_NILAIGIZI_COM_FOOD_ID, nilaigiziComFoodId)
+            .putExtra(EXTRA_NILAIGIZI_COM_CALORIES, calories)
+            .putExtra(EXTRA_NILAIGIZI_COM_PROTEIN, protein)
+            .putExtra(EXTRA_NILAIGIZI_COM_FAT, fat)
+            .putExtra(EXTRA_NILAIGIZI_COM_CARBS, carbs)
     }
     
     fun Context?.openReportEditingIntent(reportId: Int, foodName: String): Intent {

@@ -63,6 +63,10 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
                                             foodName = food.name,
                                             nilaigiziComFoodId = food.foodId,
                                             merchantId = if (merchantId < 0) null else merchantId,
+                                            calories = food.calories.split(" ").first(),
+                                            protein = food.protein.split(" ").first(),
+                                            fat = food.fat.split(" ").first(),
+                                            carbs = food.carbs.split(" ").first(),
                                         )
                                     )
                                 }

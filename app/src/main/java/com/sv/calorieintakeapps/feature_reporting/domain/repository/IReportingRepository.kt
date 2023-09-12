@@ -19,6 +19,10 @@ interface IReportingRepository {
         foodName: String,
         portionSize: String?,
         merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
     ): Flow<Resource<Boolean>>
     
     fun getReportById(reportId: Int): Flow<Resource<Report>>

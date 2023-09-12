@@ -17,6 +17,11 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
     private var portionSize: String? = null
     private var merchantId: Int? = null
     
+    private var calories: String? = null
+    private var protein: String? = null
+    private var fat: String? = null
+    private var carbs: String? = null
+    
     fun addReport(
         foodId: Int?,
         date: String,
@@ -30,10 +35,18 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         foodName: String,
         portionSize: String?,
         merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
     ) {
         this.foodName = foodName
         this.portionSize = portionSize
         this.merchantId = merchantId
+        this.calories = calories
+        this.protein = protein
+        this.carbs = carbs
+        this.fat = fat
         report.value = ReportBuilder.create(
             foodId = foodId,
             userId = -1,
@@ -62,6 +75,10 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 foodName = foodName,
                 portionSize = portionSize,
                 merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
             ).asLiveData()
         }
     

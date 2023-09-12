@@ -21,6 +21,10 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         foodName: String,
         portionSize: String?,
         merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
     ): Flow<Resource<Boolean>> {
         return reportingRepository.addReport(
             foodId = foodId,
@@ -35,6 +39,10 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
             foodName = foodName,
             portionSize = portionSize,
             merchantId = merchantId,
+            calories = calories,
+            protein = protein,
+            fat = fat,
+            carbs = carbs,
         )
     }
     

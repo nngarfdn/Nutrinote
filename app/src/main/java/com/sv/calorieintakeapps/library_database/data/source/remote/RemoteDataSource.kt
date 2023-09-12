@@ -24,6 +24,7 @@ import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -201,6 +202,10 @@ class RemoteDataSource(
         foodName: String,
         portionSize: String?,
         merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
     ): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
@@ -239,6 +244,27 @@ class RemoteDataSource(
                     } else {
                         emit(ApiResponse.Error(afResponse.apiMessage.orEmpty()))
                     }
+                    
+                    addFoodNutrition(
+                        foodId = foodId,
+                        nutritionId = 3,
+                        nutritionValue = calories,
+                    )
+                    addFoodNutrition(
+                        foodId = foodId,
+                        nutritionId = 1,
+                        nutritionValue = protein,
+                    )
+                    addFoodNutrition(
+                        foodId = foodId,
+                        nutritionId = 4,
+                        nutritionValue = fat,
+                    )
+                    addFoodNutrition(
+                        foodId = foodId,
+                        nutritionId = 2,
+                        nutritionValue = carbs,
+                    )
                 }
                 
                 val multipartBuilder = MultipartBody.Builder()
@@ -301,6 +327,23 @@ class RemoteDataSource(
                 emit(ApiResponse.Error(parseErrorMessage(throwable)))
             }
         }.flowOn(Dispatchers.IO)
+    }
+    
+    private suspend fun FlowCollector<ApiResponse<ReportResponse>>.addFoodNutrition(
+        foodId: Int?,
+        nutritionId: Int,
+        nutritionValue: String?,
+    ) {
+        val afnMultipartBuilder = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("value", nutritionValue.orEmpty())
+            .addFormDataPart("id_food", foodId.toString())
+            .addFormDataPart("id_nutrition", nutritionId.toString())
+        val afnRequestBody = afnMultipartBuilder.build()
+        val afnResponse = mainApiService.postFoodNutrition(afnRequestBody)
+        if (afnResponse.apiStatus != 1) {
+            emit(ApiResponse.Error(afnResponse.apiMessage.orEmpty()))
+        }
     }
     
     suspend fun getReportById(userId: Int, reportId: Int): Flow<ApiResponse<ReportResponse>> {

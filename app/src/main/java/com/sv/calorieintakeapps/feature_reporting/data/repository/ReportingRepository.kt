@@ -32,6 +32,10 @@ class ReportingRepository(
         foodName: String,
         portionSize: String?,
         merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
     ): Flow<Resource<Boolean>> {
         return object : NetworkBoundResource<Boolean, ReportResponse>() {
             private var resultDB = false
@@ -63,6 +67,10 @@ class ReportingRepository(
                     foodName = foodName,
                     portionSize = portionSize,
                     merchantId = merchantId,
+                    calories = calories,
+                    protein = protein,
+                    fat = fat,
+                    carbs = carbs,
                 )
             }
             

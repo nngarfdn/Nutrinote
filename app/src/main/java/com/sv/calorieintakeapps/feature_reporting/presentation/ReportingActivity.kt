@@ -18,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CARBS
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FAT
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
@@ -57,6 +61,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var mood = ""
 //    private var percentage: Int? = null;
     
+    private var calories: String? = null
+    private var protein: String? = null
+    private var fat: String? = null
+    private var carbs: String? = null
     
     val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
     
@@ -75,6 +83,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME)
         nilaigiziComFoodId = intent.getIntExtra(Actions.EXTRA_NILAIGIZI_COM_FOOD_ID, -1)
         merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
+        
+        calories = intent.getStringExtra(EXTRA_NILAIGIZI_COM_CALORIES)
+        protein = intent.getStringExtra(EXTRA_NILAIGIZI_COM_PROTEIN)
+        fat = intent.getStringExtra(EXTRA_NILAIGIZI_COM_FAT)
+        carbs = intent.getStringExtra(EXTRA_NILAIGIZI_COM_CARBS)
         
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
         
@@ -315,6 +328,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 foodName = foodName,
                 portionSize = portionSize,
                 merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
             )
         }
     }
