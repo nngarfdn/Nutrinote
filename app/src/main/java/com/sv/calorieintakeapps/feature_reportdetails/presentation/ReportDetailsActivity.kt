@@ -52,8 +52,14 @@ class ReportDetailsActivity : AppCompatActivity() {
                             txtDateTime.text = "${result.data?.date}"
                             val percentage = result.data?.percentage ?: 0
                             foodNutrientAdapter.percentage = percentage
-                            foodNutrientAdapter.totalPortion = result.data?.portionCount ?: 1f
+                            
+                            val portionCount = result.data?.portionCount ?: 1f
+                            foodNutrientAdapter.totalPortion = portionCount
+                            tvConsumedNutrition.text =
+                                "$portionCount porsi"
+                            
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
+                            
                             if (result.data?.preImage?.isEmpty() == false) {
                                 imgSebelum.load(result.data.preImage)
                             } else {

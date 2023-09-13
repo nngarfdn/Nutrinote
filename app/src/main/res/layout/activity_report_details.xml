@@ -73,9 +73,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@+id/food"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Ayam Koloke A"
-                    android:textColor="#9F9F9F"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:text="Ayam Koloke A" />
 
             </RelativeLayout>
 
@@ -102,9 +101,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@+id/kalendar"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="15/9/2021 (14:00)"
-                    android:textColor="#9F9F9F"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    tools:text="15/9/2021 (14:00)" />
 
             </RelativeLayout>
 
@@ -126,24 +124,33 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Persentase sisa hidangan dikonsumsi :" />
+                    android:text="Persentase sisa hidangan dikonsumsi:" />
 
                 <TextView
                     android:id="@+id/txtSisaHidangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="(100 - $data)%" />
+                    tools:text="(100 - $data)%" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kandungan gizi  yang dikonsumsi :" />
+                    android:layout_marginTop="16dp"
+                    android:text="Kandungan gizi yang dikonsumsi:" />
+
+                <TextView
+                    android:id="@+id/tv_consumed_nutrition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="10 porsi - 100 g/porsi" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFoodNutrition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Kalori 288 kal \nProtein 24 g"
                     tools:listitem="@layout/item_food_nutrient" />
