@@ -213,12 +213,13 @@ class RemoteDataSource(
                 var foodId = report.foodId
                 
                 /* Add Food */
-                val checkFoodResponse = mainApiService.checkFood(foodName)
-                val checkFoodResult = checkFoodResponse.data?.isNotEmpty() == true
-                if (checkFoodResult) {
-                    foodId = checkFoodResponse.data?.first()?.id
+                // Prevent duplicate food
+                if (foodId == null) {
+                    val checkFoodResponse = mainApiService.checkFood(foodName)
+                    foodId = checkFoodResponse.data?.firstOrNull()?.id
                 }
                 
+                // Add food request needs verification, except food from nilaigizi.com
                 val isAddFood = foodId == null
                 if (isAddFood) {
                     val afMultipartBuilder = MultipartBody.Builder()
@@ -251,26 +252,29 @@ class RemoteDataSource(
                         emit(ApiResponse.Error(afResponse.apiMessage.orEmpty()))
                     }
                     
-                    addFoodNutrition(
-                        foodId = foodId,
-                        nutritionId = 3,
-                        nutritionValue = calories,
-                    )
-                    addFoodNutrition(
-                        foodId = foodId,
-                        nutritionId = 1,
-                        nutritionValue = protein,
-                    )
-                    addFoodNutrition(
-                        foodId = foodId,
-                        nutritionId = 4,
-                        nutritionValue = fat,
-                    )
-                    addFoodNutrition(
-                        foodId = foodId,
-                        nutritionId = 2,
-                        nutritionValue = carbs,
-                    )
+                    // Manually add food doesn't have nutrition data
+                    if (calories != null) {
+                        addFoodNutrition(
+                            foodId = foodId,
+                            nutritionId = 3,
+                            nutritionValue = calories,
+                        )
+                        addFoodNutrition(
+                            foodId = foodId,
+                            nutritionId = 1,
+                            nutritionValue = protein,
+                        )
+                        addFoodNutrition(
+                            foodId = foodId,
+                            nutritionId = 4,
+                            nutritionValue = fat,
+                        )
+                        addFoodNutrition(
+                            foodId = foodId,
+                            nutritionId = 2,
+                            nutritionValue = carbs,
+                        )
+                    }
                 }
                 
                 val multipartBuilder = MultipartBody.Builder()
@@ -279,7 +283,7 @@ class RemoteDataSource(
                     .addFormDataPart("date_report", report.date)
                     .addFormDataPart(
                         "status_report",
-                        if (isAddFood) ReportStatus.PENDING.id
+                        if (isAddFood && report.nilaigiziComFoodId == null) ReportStatus.PENDING.id
                         else ReportStatus.COMPLETE.id
                     )
                     .addFormDataPart("mood", report.mood)
