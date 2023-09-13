@@ -31,7 +31,7 @@ class ReportDetailsActivity : AppCompatActivity() {
         val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
         
-        binding.txtName.text = foodName.ifBlank { "(Makanan lainnya)" }
+        binding.txtName.text = foodName
         binding.btnBack.setOnClickListener { onBackPressed() }
         
         foodNutrientAdapter = FoodNutrientAdapter()

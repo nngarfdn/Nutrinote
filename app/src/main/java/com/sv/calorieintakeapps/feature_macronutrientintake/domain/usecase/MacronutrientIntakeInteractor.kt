@@ -5,11 +5,11 @@ import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.MacronutrientIntakePercentage
 import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.helper.roundOff
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
-import java.util.Locale
 
 class MacronutrientIntakeInteractor(
     private val macronutrientIntakeRepository: IMacronutrientIntakeRepository,
@@ -141,12 +141,6 @@ class MacronutrientIntakeInteractor(
                     }
                 }
             }
-    }
-    
-    private fun Double.roundOff(): Double {
-        return String
-            .format(Locale.ENGLISH, "%.2f", this) // Avoid decimal separator issue
-            .toDouble()
     }
     
 }
