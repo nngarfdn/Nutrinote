@@ -129,8 +129,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             
             if (foodId != -1) {
                 edtPortionSize.gone()
-                edtPortionCount.gone()
-                tvPortionTitle.gone()
                 tvPortionSizeHelper.gone()
             }
         }
@@ -261,8 +259,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             }
                             
                             edtPortionSize.gone()
-                            edtPortionCount.gone()
-                            tvPortionTitle.gone()
                             tvPortionSizeHelper.gone()
                         }
                     }
