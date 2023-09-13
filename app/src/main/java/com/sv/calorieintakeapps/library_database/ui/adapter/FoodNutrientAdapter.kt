@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ItemFoodNutrientBinding
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
+import com.sv.calorieintakeapps.library_database.helper.roundOff
 
 @SuppressLint("NotifyDataSetChanged")
 class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>() {
     
-    var percentage = 100
+    var percentage = 0
         set(values) {
             field = values
             notifyDataSetChanged()
@@ -54,8 +55,11 @@ class FoodNutrientAdapter : RecyclerView.Adapter<FoodNutrientAdapter.ViewHolder>
         fun bind(foodNutrient: FoodNutrient) {
             binding.apply {
                 txtNutritionName.text = foodNutrient.nutrientName
-                txtPercentageValue.text =
-                    foodNutrient.akgDay + if (!foodNutrient.akgDay.equals("-")) " %" else ""
+                txtPercentageValue.text = try {
+                    "${(foodNutrient.akgDay.toDouble() * totalPortion).roundOff()}%"
+                } catch (e: Exception) {
+                    foodNutrient.akgDay
+                }
                 txtNutritionValue.text = itemView.context.getString(
                     R.string.nutrient_value,
                     foodNutrient.value * ((100 - percentage.toDouble()) / 100) * totalPortion,
