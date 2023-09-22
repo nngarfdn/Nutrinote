@@ -117,6 +117,10 @@ android {
         
         getByName(BuildType.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
