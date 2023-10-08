@@ -16,6 +16,8 @@ interface BuildType {
     companion object {
         const val RELEASE = "release"
         const val DEBUG = "debug"
+        const val ALPHA = "alpha"
+        const val BETA = "beta"
     }
 
     val isAnalyticsEnabled: Boolean
