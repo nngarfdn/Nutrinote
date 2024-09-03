@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote
 
+import com.sv.calorieintakeapps.library_common.util.TAG
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
@@ -24,12 +25,12 @@ import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import timber.log.Timber
 import java.io.File
 
 class RemoteDataSource(
@@ -48,7 +49,8 @@ class RemoteDataSource(
                 val request = RegisterRequest(
                     name = name,
                     email = email,
-                    password = password, passwordConfirmation = passwordConfirmation
+                    password = password,
+                    passwordConfirmation = passwordConfirmation,
                 )
                 val response = mainApiService.postRegister(request)
                 
@@ -65,10 +67,16 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
     
-    suspend fun login(email: String, password: String): Flow<ApiResponse<LoginResponse>> {
+    suspend fun login(
+        email: String,
+        password: String,
+    ): Flow<ApiResponse<LoginResponse>> {
         return flow {
             try {
-                val request = LoginRequest(email, password)
+                val request = LoginRequest(
+                    email = email,
+                    password = password,
+                )
                 val response = mainApiService.postLogin(request)
                 
                 if (response.apiStatus == 1) {
@@ -139,7 +147,10 @@ class RemoteDataSource(
     ): Flow<ApiResponse<FoodNutrientsResponse>> {
         return flow {
             try {
-                val foodNutrientsResponse = mainApiService.getFoodNutrientsById(foodId, userId)
+                val foodNutrientsResponse = mainApiService.getFoodNutrientsById(
+                    foodId = foodId,
+                    userId = userId,
+                )
                 val nutrientsResponse = mainApiService.getAllNutrients()
                 
                 val dataArray = foodNutrientsResponse.foodNutrients
@@ -168,7 +179,10 @@ class RemoteDataSource(
         return flow {
             try {
                 val foodNutrientsResponses = foodIds.map { foodId ->
-                    mainApiService.getFoodNutrientsById(foodId, userId)
+                    mainApiService.getFoodNutrientsById(
+                        foodId = foodId,
+                        userId = userId,
+                    )
                 }
                 val nutrientsResponse = mainApiService.getAllNutrients()
                 
@@ -207,127 +221,167 @@ class RemoteDataSource(
         fat: String?,
         carbs: String?,
     ): Flow<ApiResponse<ReportResponse>> {
+        // If this food id isn't null, then the selected food is from our database
+        var foodId = report.foodId
+        
+        // If not from our database, it can be from nilaigizi.com or manually added
+        // If the proposed food has the same name with food from our database,
+        // then we assume it's the same food
+        // So, we reassign the food id to the food from our database
+        checkFoodDuplication(foodName).let {
+            if (it is ApiResponse.Success) {
+                foodId = it.data
+            } else if (it is ApiResponse.Error) {
+                return flow {
+                    emit(ApiResponse.Error(it.errorMessage))
+                }
+            }
+        }
+        
+        // If the food id is still null, then it really is a new food
+        // So, we add the food to our database first
+        val isManuallyAddedFood = foodId == null && report.nilaigiziComFoodId == null
+        if (foodId == null) {
+            // We get the food id after adding the food to our database
+            addFood(
+                foodName = foodName,
+                image = report.preImage,
+                portionSize = portionSize,
+                merchantId = merchantId,
+            ).let {
+                if (it is ApiResponse.Success) {
+                    foodId = it.data
+                } else if (it is ApiResponse.Error) {
+                    return flow {
+                        emit(ApiResponse.Error(it.errorMessage))
+                    }
+                }
+            }
+            
+            // Note: Manually add food doesn't have nutrition data
+            if (calories != null) {
+                addFoodNutrition(
+                    foodId = foodId,
+                    nutritionId = 3,
+                    nutritionValue = calories,
+                )
+                addFoodNutrition(
+                    foodId = foodId,
+                    nutritionId = 1,
+                    nutritionValue = protein,
+                )
+                addFoodNutrition(
+                    foodId = foodId,
+                    nutritionId = 4,
+                    nutritionValue = fat,
+                )
+                addFoodNutrition(
+                    foodId = foodId,
+                    nutritionId = 2,
+                    nutritionValue = carbs,
+                )
+            }
+        }
+        
+        // Only manually added foods need approval
+        return addReport(
+            foodId = foodId!!,
+            userId = report.userId,
+            portionCount = report.portionCount,
+            date = report.date,
+            percentage = report.percentage,
+            preImage = report.preImage,
+            postImage = report.postImage,
+            nilaigiziComFoodId = report.nilaigiziComFoodId,
+            status = if (isManuallyAddedFood) ReportStatus.PENDING.id else ReportStatus.COMPLETE.id,
+            mood = report.mood,
+        )
+            .flowOn(Dispatchers.IO)
+    }
+    
+    private suspend fun addReport(
+        foodId: Int,
+        userId: Int,
+        portionCount: Float?,
+        date: String,
+        percentage: Int?,
+        preImage: String,
+        postImage: String,
+        nilaigiziComFoodId: Int?,
+        status: String,
+        mood: String,
+    ): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
-                var foodId = report.foodId
-                
-                /* Add Food */
-                // Prevent duplicate food
-                if (foodId == null) {
-                    val checkFoodResponse = mainApiService.checkFood(foodName)
-                    foodId = checkFoodResponse.data?.firstOrNull()?.id
-                }
-                
-                // Add food request needs verification, except food from nilaigizi.com
-                val isAddFood = foodId == null
-                if (isAddFood) {
-                    val afMultipartBuilder = MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart("name", foodName)
-                        .addFormDataPart("price", "0")
-                        .addFormDataPart("porsi", portionSize!!)
-                        .addFormDataPart("label", "")
-                        .addFormDataPart("is_user_added", "1")
-                    if (merchantId != null) {
-                        afMultipartBuilder.addFormDataPart("id_merchant", merchantId.toString())
-                    }
-                    if (report.preImage.isNotEmpty()) {
-                        val imageFile = File(report.preImage)
-                        val requestImage = imageFile.asRequestBody(contentType)
-                        afMultipartBuilder.addFormDataPart(
-                            "image",
-                            imageFile.name,
-                            requestImage
-                        )
-                    }
-                    
-                    val afRequestBody = afMultipartBuilder.build()
-                    
-                    val afResponse = mainApiService.postFood(afRequestBody)
-                    
-                    if (afResponse.apiStatus == 1) {
-                        foodId = afResponse.data?.id
-                    } else {
-                        emit(ApiResponse.Error(afResponse.apiMessage.orEmpty()))
-                    }
-                    
-                    // Manually add food doesn't have nutrition data
-                    if (calories != null) {
-                        addFoodNutrition(
-                            foodId = foodId,
-                            nutritionId = 3,
-                            nutritionValue = calories,
-                        )
-                        addFoodNutrition(
-                            foodId = foodId,
-                            nutritionId = 1,
-                            nutritionValue = protein,
-                        )
-                        addFoodNutrition(
-                            foodId = foodId,
-                            nutritionId = 4,
-                            nutritionValue = fat,
-                        )
-                        addFoodNutrition(
-                            foodId = foodId,
-                            nutritionId = 2,
-                            nutritionValue = carbs,
-                        )
-                    }
-                }
-                
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("id_user", report.userId.toString())
-                    .addFormDataPart("date_report", report.date)
+                    .addFormDataPart(
+                        "id_user",
+                        userId.toString(),
+                    )
+                    .addFormDataPart(
+                        "date_report",
+                        date,
+                    )
                     .addFormDataPart(
                         "status_report",
-                        if (isAddFood && report.nilaigiziComFoodId == null) ReportStatus.PENDING.id
-                        else ReportStatus.COMPLETE.id
+                        status,
                     )
-                    .addFormDataPart("mood", report.mood)
-                    .addFormDataPart("id_food", (report.foodId ?: foodId)!!.toString())
-                if (report.percentage != null) {
-                    multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                    .addFormDataPart(
+                        "mood",
+                        mood,
+                    )
+                    .addFormDataPart(
+                        "id_food",
+                        foodId.toString(),
+                    )
+                if (percentage != null) {
+                    multipartBuilder.addFormDataPart(
+                        "percentage",
+                        percentage.toString(),
+                    )
                 }
-                if (report.nilaigiziComFoodId != null) {
+                if (nilaigiziComFoodId != null) {
                     multipartBuilder.addFormDataPart(
                         "id_food_nilaigizicom",
-                        report.nilaigiziComFoodId.toString()
+                        nilaigiziComFoodId.toString(),
                     )
                 }
-                if (report.portionCount != null) {
+                if (portionCount != null) {
                     multipartBuilder.addFormDataPart(
                         "total_portion",
-                        report.portionCount.toString()
+                        portionCount.toString(),
                     )
                 }
                 
-                if (report.preImage.isNotEmpty()) {
-                    val preImageFile = File(report.preImage)
-                    val requestPreImage = preImageFile.asRequestBody(contentType)
-                    multipartBuilder.addFormDataPart(
-                        "pre_image",
-                        preImageFile.name,
-                        requestPreImage
-                    )
-                }
-                
-                if (report.postImage.isNotEmpty()) {
-                    val postImageFile = File(report.postImage)
-                    val requestPostImage = postImageFile.asRequestBody(contentType)
-                    multipartBuilder.addFormDataPart(
-                        "post_image",
-                        postImageFile.name,
-                        requestPostImage
-                    )
+                try {
+                    if (preImage.isNotEmpty()) {
+                        val preImageFile = File(preImage)
+                        val requestPreImage = preImageFile.asRequestBody(contentType)
+                        multipartBuilder.addFormDataPart(
+                            "pre_image",
+                            preImageFile.name,
+                            requestPreImage,
+                        )
+                    }
+                    
+                    if (postImage.isNotEmpty()) {
+                        val postImageFile = File(postImage)
+                        val requestPostImage = postImageFile.asRequestBody(contentType)
+                        multipartBuilder.addFormDataPart(
+                            "post_image",
+                            postImageFile.name,
+                            requestPostImage,
+                        )
+                    }
+                } catch (e: Exception) {
+                    Timber.tag(TAG).e(e)
                 }
                 
                 val requestBody = multipartBuilder.build()
                 
                 val response = mainApiService.postReport(requestBody)
-                
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
                 } else {
@@ -336,30 +390,121 @@ class RemoteDataSource(
             } catch (throwable: Throwable) {
                 emit(ApiResponse.Error(parseErrorMessage(throwable)))
             }
-        }.flowOn(Dispatchers.IO)
+        }
     }
     
-    private suspend fun FlowCollector<ApiResponse<ReportResponse>>.addFoodNutrition(
+    private suspend fun checkFoodDuplication(foodName: String): ApiResponse<Int?> {
+        return try {
+            val checkFoodResponse = mainApiService.checkFood(foodName)
+            if (checkFoodResponse.apiStatus == 1) {
+                ApiResponse.Success(checkFoodResponse.data?.firstOrNull()?.id)
+            } else {
+                ApiResponse.Error(checkFoodResponse.apiMessage.orEmpty())
+            }
+        } catch (e: Exception) {
+            ApiResponse.Error(parseErrorMessage(e))
+        }
+    }
+    
+    private suspend fun addFood(
+        foodName: String,
+        image: String,
+        portionSize: String?,
+        merchantId: Int?,
+    ): ApiResponse<Int?> {
+        return try {
+            val afMultipartBuilder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    "name",
+                    foodName,
+                )
+                .addFormDataPart(
+                    "price",
+                    "0",
+                )
+                .addFormDataPart(
+                    "porsi",
+                    portionSize!!,
+                )
+                .addFormDataPart(
+                    "label",
+                    "",
+                )
+                .addFormDataPart(
+                    "is_user_added",
+                    "1",
+                )
+            if (merchantId != null) {
+                afMultipartBuilder.addFormDataPart(
+                    "id_merchant",
+                    merchantId.toString(),
+                )
+            }
+            try {
+                if (image.isNotEmpty()) {
+                    val imageFile = File(image)
+                    val contentType = "multipart".toMediaTypeOrNull()
+                    val requestImage = imageFile.asRequestBody(contentType)
+                    afMultipartBuilder.addFormDataPart(
+                        "image",
+                        imageFile.name,
+                        requestImage,
+                    )
+                }
+            } catch (e: Exception) {
+                Timber.tag(TAG).e(e)
+            }
+            
+            val afRequestBody = afMultipartBuilder.build()
+            val afResponse = mainApiService.postFood(afRequestBody)
+            if (afResponse.apiStatus == 1) {
+                ApiResponse.Success(afResponse.data?.id)
+            } else {
+                ApiResponse.Error(afResponse.apiMessage.orEmpty())
+            }
+        } catch (e: Exception) {
+            ApiResponse.Error(parseErrorMessage(e))
+        }
+    }
+    
+    private suspend fun addFoodNutrition(
         foodId: Int?,
         nutritionId: Int,
         nutritionValue: String?,
     ) {
-        val afnMultipartBuilder = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("value", nutritionValue.orEmpty())
-            .addFormDataPart("id_food", foodId.toString())
-            .addFormDataPart("id_nutrition", nutritionId.toString())
-        val afnRequestBody = afnMultipartBuilder.build()
-        val afnResponse = mainApiService.postFoodNutrition(afnRequestBody)
-        if (afnResponse.apiStatus != 1) {
-            emit(ApiResponse.Error(afnResponse.apiMessage.orEmpty()))
+        try {
+            val afnMultipartBuilder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    "value",
+                    nutritionValue.orEmpty(),
+                )
+                .addFormDataPart(
+                    "id_food",
+                    foodId.toString(),
+                )
+                .addFormDataPart(
+                    "id_nutrition",
+                    nutritionId.toString(),
+                )
+            val afnRequestBody = afnMultipartBuilder.build()
+            mainApiService.postFoodNutrition(afnRequestBody)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
     
-    suspend fun getReportById(userId: Int, reportId: Int): Flow<ApiResponse<ReportResponse>> {
+    suspend fun getReportById(
+        userId: Int,
+        reportId: Int,
+    ): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
-                val response = mainApiService.getReportById(userId, reportId)
+                val response = mainApiService.getReportById(
+                    userId,
+                    reportId
+                )
                 
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
@@ -379,13 +524,25 @@ class RemoteDataSource(
                 
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("date_report", report.date)
-                    .addFormDataPart("mood", report.mood)
+                    .addFormDataPart(
+                        "date_report",
+                        report.date
+                    )
+                    .addFormDataPart(
+                        "mood",
+                        report.mood
+                    )
                 if (report.foodId != null) {
-                    multipartBuilder.addFormDataPart("id_food", report.foodId.toString())
+                    multipartBuilder.addFormDataPart(
+                        "id_food",
+                        report.foodId.toString()
+                    )
                 }
                 if (report.percentage != null) {
-                    multipartBuilder.addFormDataPart("percentage", report.percentage.toString())
+                    multipartBuilder.addFormDataPart(
+                        "percentage",
+                        report.percentage.toString()
+                    )
                 }
                 if (report.nilaigiziComFoodId != null) {
                     multipartBuilder.addFormDataPart(
@@ -421,7 +578,10 @@ class RemoteDataSource(
                 }
                 
                 val requestBody = multipartBuilder.build()
-                val response = mainApiService.putReportById(report.id, requestBody)
+                val response = mainApiService.putReportById(
+                    report.id,
+                    requestBody
+                )
                 
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
@@ -473,37 +633,68 @@ class RemoteDataSource(
                 
                 val multipartBuilder = MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("gender", user.gender.id.toString())
-                    .addFormDataPart("activity", user.activityLevel!!.id.toString())
-                    .addFormDataPart("stress", user.stressLevel!!.id.toString())
+                    .addFormDataPart(
+                        "gender",
+                        user.gender.id.toString()
+                    )
+                    .addFormDataPart(
+                        "activity",
+                        user.activityLevel!!.id.toString()
+                    )
+                    .addFormDataPart(
+                        "stress",
+                        user.stressLevel!!.id.toString()
+                    )
                 
                 if (user.name.isNotEmpty()) {
-                    multipartBuilder.addFormDataPart("name", user.name)
+                    multipartBuilder.addFormDataPart(
+                        "name",
+                        user.name
+                    )
                 }
                 
                 if (user.photo.isNotEmpty()) {
                     val photoFile = File(user.photo)
                     val requestPhotoFile = photoFile.asRequestBody(contentType)
-                    multipartBuilder.addFormDataPart("photo", photoFile.name, requestPhotoFile)
+                    multipartBuilder.addFormDataPart(
+                        "photo",
+                        photoFile.name,
+                        requestPhotoFile
+                    )
                 }
                 
                 if (user.password.isNotEmpty()) {
-                    multipartBuilder.addFormDataPart("password", user.password)
+                    multipartBuilder.addFormDataPart(
+                        "password",
+                        user.password
+                    )
                 }
                 
                 if (user.age.toString().isNotEmpty()) {
-                    multipartBuilder.addFormDataPart("age", user.age.toString())
+                    multipartBuilder.addFormDataPart(
+                        "age",
+                        user.age.toString()
+                    )
                 }
                 
                 if (user.height.toString().isNotEmpty()) {
-                    multipartBuilder.addFormDataPart("height", user.height.toString())
+                    multipartBuilder.addFormDataPart(
+                        "height",
+                        user.height.toString()
+                    )
                 }
                 if (user.weight.toString().isNotEmpty()) {
-                    multipartBuilder.addFormDataPart("weight", user.weight.toString())
+                    multipartBuilder.addFormDataPart(
+                        "weight",
+                        user.weight.toString()
+                    )
                 }
                 
                 val requestBody = multipartBuilder.build()
-                val response = mainApiService.putUserProfileById(user.id, requestBody)
+                val response = mainApiService.putUserProfileById(
+                    user.id,
+                    requestBody
+                )
                 
                 if (response.apiStatus == 1) {
                     emit(ApiResponse.Success(response))
@@ -565,7 +756,10 @@ class RemoteDataSource(
     ): Flow<ApiResponse<NilaigiziComLoginResponse>> {
         return flow {
             try {
-                val request = NilaigiziComLoginRequest(email, password)
+                val request = NilaigiziComLoginRequest(
+                    email = email,
+                    password = password,
+                )
                 val response = nilaigiziComApiService.postLogin(request)
                 
                 emit(ApiResponse.Success(response))
