@@ -6,7 +6,7 @@ object Configs {
     const val TARGET_SDK = 33
 
     const val VERSION_CODE = 1 // Only increase this when you want to upload to Play Store
-    const val VERSION_NAME = "1.0.0"
+    const val VERSION_NAME = "1.1.0"
 
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
