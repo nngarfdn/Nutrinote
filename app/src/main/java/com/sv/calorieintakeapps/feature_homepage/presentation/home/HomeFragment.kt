@@ -19,6 +19,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openLoginIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openMacronutrientIntakeInput
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -69,7 +70,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             
             binding.cvReporting.id -> {
-                startActivity(requireContext().openMerchantListIntent())
+                startActivity(requireContext().openReportingIntent(expectSearch = true))
             }
             
             binding.cvMacronutrientIntake.id -> {

@@ -10,6 +10,7 @@ import android.content.Intent
 import com.sv.calorieintakeapps.feature_auth.presentation.login.LoginActivity
 import com.sv.calorieintakeapps.feature_auth.presentation.register.RegisterActivity
 import com.sv.calorieintakeapps.feature_fooddetails.presentation.FoodDetailActivity
+import com.sv.calorieintakeapps.feature_foodnutrition.data.OnClickItemMode
 import com.sv.calorieintakeapps.feature_foodnutrition.presentation.details.FoodNutritionDetailsActivity
 import com.sv.calorieintakeapps.feature_foodnutrition.presentation.search.FoodNutritionSearchActivity
 import com.sv.calorieintakeapps.feature_homepage.presentation.HomepageActivity
@@ -33,7 +34,9 @@ object Actions {
     const val EXTRA_MERCHANT_NAME = "extra_merchant_name"
     const val EXTRA_NILAIGIZI_COM_FOOD_ID = "extra_nilai_gizi_com_food_id"
     const val EXTRA_REPORT_ID = "extra_report_id"
-    
+    const val EXTRA_EXPECT_SEARCH = "extra_expect_search"
+    const val EXTRA_ON_CLICK_ITEM_MODE = "extra_on_click_item_mode"
+
     const val EXTRA_NILAIGIZI_COM_PROTEIN = "extra_nilaigizi_com_protein" // 1
     const val EXTRA_NILAIGIZI_COM_CARBS = "extra_nilaigizi_com_carbs" // 2
     const val EXTRA_NILAIGIZI_COM_CALORIES = "extra_nilaigizi_com_calories" // 3
@@ -65,9 +68,11 @@ object Actions {
     
     fun Context?.openFoodNutritionSearchIntent(
         merchantId: Int?,
+        onClickItemMode: OnClickItemMode = OnClickItemMode.OPEN_DETAIL
     ): Intent {
         return Intent(this?.applicationContext, FoodNutritionSearchActivity::class.java)
             .putExtra(EXTRA_MERCHANT_ID, merchantId)
+            .putExtra(EXTRA_ON_CLICK_ITEM_MODE, onClickItemMode.name)
     }
     
     fun Context?.openHomepageIntent(): Intent {
@@ -107,14 +112,15 @@ object Actions {
     }
     
     fun Context?.openReportingIntent(
-        foodId: Int?,
-        foodName: String?,
-        merchantId: Int?,
-        nilaigiziComFoodId: Int?,
+        foodId: Int? = null,
+        foodName: String? = null,
+        merchantId: Int? = null,
+        nilaigiziComFoodId: Int? = null,
         calories: String? = null,
         protein: String? = null,
         fat: String? = null,
         carbs: String? = null,
+        expectSearch: Boolean = false
     ): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_FOOD_ID, foodId)
@@ -125,6 +131,7 @@ object Actions {
             .putExtra(EXTRA_NILAIGIZI_COM_PROTEIN, protein)
             .putExtra(EXTRA_NILAIGIZI_COM_FAT, fat)
             .putExtra(EXTRA_NILAIGIZI_COM_CARBS, carbs)
+            .putExtra(EXTRA_EXPECT_SEARCH, expectSearch)
     }
     
     fun Context?.openReportEditingIntent(reportId: Int, foodName: String): Intent {

@@ -72,6 +72,7 @@
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/poppins_medium"
                     android:hint="Masukkan nama makanan"
+                    android:focusable="false"
                     android:inputType="textCapWords"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />

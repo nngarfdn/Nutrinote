@@ -10,7 +10,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionD
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 
-class FoodNutritionAdapter(private val merchantId: Int) :
+class FoodNutritionAdapter(private val merchantId: Int, private val onClick: (Int, Int?) -> Unit) :
     PagingDataAdapter<FoodNutrition, FoodNutritionAdapter.FoodNutritionViewHolder>(
         FoodNutritionComparator
     ) {
@@ -26,7 +26,7 @@ class FoodNutritionAdapter(private val merchantId: Int) :
     
     override fun onBindViewHolder(holder: FoodNutritionViewHolder, position: Int) {
         val foodNutrition = getItem(position)
-        foodNutrition?.let { holder.bind(it) }
+        foodNutrition?.let { holder.bind(it, onClick) }
     }
     
     object FoodNutritionComparator : DiffUtil.ItemCallback<FoodNutrition>() {
@@ -47,18 +47,15 @@ class FoodNutritionAdapter(private val merchantId: Int) :
         
         private val context = binding.root.context
         
-        fun bind(foodNutrition: FoodNutrition) {
+        fun bind(foodNutrition: FoodNutrition, onClick: (Int, Int?) -> Unit) {
             binding.apply {
                 imageView.load(foodNutrition.imageUrl)
                 textView.text = foodNutrition.name
                 
                 root.setOnClickListener {
-                    context.startActivity(
-                        context.openFoodNutritionDetailsIntent(
-                            foodId = foodNutrition.foodId,
-                            merchantId = if (merchantId < 0) null else merchantId,
-                        )
-                    )
+                    val foodId = foodNutrition.foodId
+                    val merchantId = if (merchantId < 0) null else merchantId
+                    onClick.invoke(foodId, merchantId)
                 }
             }
         }
