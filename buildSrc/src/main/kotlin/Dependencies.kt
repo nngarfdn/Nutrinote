@@ -79,6 +79,8 @@ object Dependencies {
     
     // Flexbox layout
     val FLEXBOX by lazy { "com.google.android.flexbox:flexbox:${Versions.FLEXBOX}" }
+
+    val YOUTUBE_PLAYER by lazy { "com.pierfrancescosoffritti.androidyoutubeplayer:core:${Versions.YOUTUBE_PLAYER}" }
 }
 
 object TestDependencies {

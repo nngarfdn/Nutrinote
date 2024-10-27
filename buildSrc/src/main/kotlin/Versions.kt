@@ -37,4 +37,6 @@ object Versions {
     const val COIL = "2.4.0"
     const val CURVE_BOTTOM_BAR = "1.0"
     const val FLEXBOX = "3.0.0"
+
+    const val YOUTUBE_PLAYER = "12.1.1"
 }

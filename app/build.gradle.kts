@@ -191,4 +191,5 @@ dependencies {
     implementation(Dependencies.BALLOON)
     implementation(Dependencies.CODE_SCANNER)
     implementation(Dependencies.CURVE_BOTTOM_BAR)
+    implementation(Dependencies.YOUTUBE_PLAYER)
 }

@@ -7,6 +7,7 @@ package com.sv.calorieintakeapps.library_common.action
 
 import android.content.Context
 import android.content.Intent
+import com.sv.calorieintakeapps.app.splash.TutorialActivity
 import com.sv.calorieintakeapps.feature_auth.presentation.login.LoginActivity
 import com.sv.calorieintakeapps.feature_auth.presentation.register.RegisterActivity
 import com.sv.calorieintakeapps.feature_fooddetails.presentation.FoodDetailActivity
@@ -73,6 +74,10 @@ object Actions {
         return Intent(this?.applicationContext, FoodNutritionSearchActivity::class.java)
             .putExtra(EXTRA_MERCHANT_ID, merchantId)
             .putExtra(EXTRA_ON_CLICK_ITEM_MODE, onClickItemMode.name)
+    }
+
+    fun Context?.openTutorialIntent(): Intent {
+        return Intent(this?.applicationContext, TutorialActivity::class.java)
     }
     
     fun Context?.openHomepageIntent(): Intent {

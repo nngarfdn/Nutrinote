@@ -7,6 +7,7 @@ import com.sv.calorieintakeapps.databinding.ActivityLoginBinding
 import com.sv.calorieintakeapps.feature_auth.di.AuthModule
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openRegisterIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openTutorialIntent
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,6 +38,11 @@ class LoginActivity : AppCompatActivity() {
         }
         
         observeLoginResult()
+        binding.apply {
+            edtEmail.setText("nutrinotegama@gmail.com")
+            edtPassword.setText("nutrinotegama@gmail.com")
+            btnLogin.performClick()
+        }
     }
     
     private fun observeLoginResult() {
@@ -48,10 +54,9 @@ class LoginActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         viewModel.nilaigiziComLogin()
                         startActivity(
-                            openHomepageIntent()
-                                .setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                )
+                            openTutorialIntent().setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
                         )
                     }
                     
