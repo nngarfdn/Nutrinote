@@ -9,7 +9,7 @@ import java.io.File
 class ReportingInteractor(private val reportingRepository: IReportingRepository) :
     ReportingUseCase {
     
-    override fun addReport(
+    override suspend fun addReport(
         foodId: Int?,
         date: String,
         time: String,
@@ -27,24 +27,45 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         fat: String?,
         carbs: String?,
     ): Flow<Resource<Boolean>> {
-        return reportingRepository.addReport(
-            foodId = foodId,
-            date = date,
-            time = time,
-            percentage = percentage,
-            mood = mood,
-            preImageFile = preImageFile,
-            postImageFile = postImageFile,
-            nilaigiziComFoodId = nilaigiziComFoodId,
-            portionCount = portionCount,
-            foodName = foodName,
-            portionSize = portionSize,
-            merchantId = merchantId,
-            calories = calories,
-            protein = protein,
-            fat = fat,
-            carbs = carbs,
-        )
+        return if (postImageFile == null) {
+            reportingRepository.addReportToDb(
+                foodId = foodId,
+                date = date,
+                time = time,
+                percentage = percentage,
+                mood = mood,
+                preImageFile = preImageFile,
+                postImageFile = null,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
+            )
+        } else {
+            reportingRepository.addReport(
+                foodId = foodId,
+                date = date,
+                time = time,
+                percentage = percentage,
+                mood = mood,
+                preImageFile = preImageFile,
+                postImageFile = postImageFile,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
+            )
+        }
     }
 
     override fun getReportById(reportId: Int): Flow<Resource<Report>> {

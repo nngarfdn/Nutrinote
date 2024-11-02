@@ -1,9 +1,14 @@
 package com.sv.calorieintakeapps.library_database.data.source.local
 
 import com.sv.calorieintakeapps.library_database.data.source.local.persistence.LoginSessionPreference
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportDao
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEntity
 
-class LocalDataSource(private val loginSessionPreference: LoginSessionPreference) {
-    
+class LocalDataSource(
+    private val loginSessionPreference: LoginSessionPreference,
+    private val reportDao: ReportDao
+) {
+
     fun storeLoginSession(userId: Int, userName: String) {
         loginSessionPreference.userId = userId
         loginSessionPreference.userName = userName
@@ -28,5 +33,12 @@ class LocalDataSource(private val loginSessionPreference: LoginSessionPreference
     fun logout() {
         loginSessionPreference.clear()
     }
-    
+
+    suspend fun insertReport(report: ReportEntity): Long {
+        return reportDao.insert(report)
+    }
+
+    suspend fun getAllReports(): List<ReportEntity> {
+        return reportDao.getAllReports()
+    }
 }

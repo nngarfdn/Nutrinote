@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCase
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.vo.Resource
+import kotlinx.coroutines.flow.single
 import java.io.File
 
 class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewModel() {
@@ -61,12 +64,13 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             portionCount = portionCount,
         )
     }
-    
-    val addReportResult: LiveData<Resource<Boolean>> =
-        report.switchMap {
-            reportingUseCase.addReport(
+
+    val addReportResult: LiveData<Resource<Boolean>> = report.switchMap {
+        liveData {
+            val result = reportingUseCase.addReport(
                 foodId = it.foodId,
-                date = it.getDateOnly(), time = it.getTimeOnly(),
+                date = it.getDateOnly(),
+                time = it.getTimeOnly(),
                 percentage = it.percentage,
                 mood = it.mood,
                 preImageFile = it.preImageFile,
@@ -80,9 +84,10 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 protein = protein,
                 fat = fat,
                 carbs = carbs,
-            ).asLiveData()
+            )
+            emit(result.single())
         }
-    
+    }
     fun getReportById(reportId: Int): LiveData<Resource<Report>> {
         return reportingUseCase.getReportById(reportId).asLiveData()
     }

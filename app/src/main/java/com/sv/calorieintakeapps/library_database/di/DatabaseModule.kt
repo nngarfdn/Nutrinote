@@ -12,6 +12,8 @@ import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_PUBLIC_KEY_2
 import com.sv.calorieintakeapps.BuildConfig.NILAIGIZI_COM_PUBLIC_KEY_3
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.local.persistence.LoginSessionPreference
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportDao
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportDatabase
 import com.sv.calorieintakeapps.library_database.data.source.remote.FoodNutritionSearchPagingSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
@@ -24,10 +26,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val databaseModule = module {
     single { LoginSessionPreference(context = get()) }
+    single { ReportDatabase.getDatabase(context = get()) }
 }
 
 val dataSourceModule = module {
-    single { LocalDataSource(loginSessionPreference = get()) }
+    single { LocalDataSource(loginSessionPreference = get(), reportDao = get<ReportDatabase>().reportDao()) }
     single {
         RemoteDataSource(
             mainApiService = get(),

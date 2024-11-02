@@ -42,5 +42,23 @@ interface IReportingRepository {
     ): Flow<Resource<Boolean>>
     
     fun deleteReportById(reportId: Int): Flow<Resource<Boolean>>
-    
+
+    suspend fun addReportToDb(
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?
+    ): Flow<Resource<Boolean>>
 }

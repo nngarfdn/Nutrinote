@@ -2,6 +2,7 @@ package com.sv.calorieintakeapps.feature_reporting.data.repository
 
 import com.sv.calorieintakeapps.feature_reporting.domain.repository.IReportingRepository
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEntity
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
@@ -172,5 +173,46 @@ class ReportingRepository(
             }
         }.asFlow()
     }
-    
+
+    override suspend fun addReportToDb(
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?
+    ): Flow<Resource<Boolean>> {
+        val userId = localDataSource.getUserId()
+        val reportEntity = ReportBuilder.createReportEntity(
+            userId = userId,
+            foodId = foodId,
+            date = date,
+            time = time,
+            percentage = percentage,
+            mood = mood,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
+            foodName = foodName,
+            portionSize = portionSize,
+            merchantId = merchantId,
+            calories = calories,
+            protein = protein,
+            fat = fat,
+            carbs = carbs,
+        )
+        val result = localDataSource.insertReport(reportEntity)
+        return flowOf(Resource.Success(result > 0))
+    }
 }

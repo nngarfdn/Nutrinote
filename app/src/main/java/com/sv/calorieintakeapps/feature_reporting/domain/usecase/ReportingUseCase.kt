@@ -7,7 +7,7 @@ import java.io.File
 
 interface ReportingUseCase {
     
-    fun addReport(
+    suspend fun addReport(
         foodId: Int?,
         date: String,
         time: String,

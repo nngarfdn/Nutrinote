@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.library_database.helper
 
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEntity
 import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
@@ -31,6 +32,45 @@ object ReportBuilder {
             postImageFile = postImageFile,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
+        )
+    }
+
+    fun createReportEntity(
+        userId: Int,
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String?,
+        portionSize: String?,
+        merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
+    ): ReportEntity {
+        return ReportEntity(
+            userId = userId,
+            foodId = foodId,
+            date = "$date $time",
+            percentage = percentage,
+            mood = mood,
+            preImageFilePath = preImageFile?.path,
+            postImageFilePath = postImageFile?.path,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
+            foodName = foodName ?: "",
+            portionSize = portionSize ?: "",
+            merchantId = merchantId ?: -1,
+            calories = calories ?: "",
+            protein = protein ?: "",
+            fat = fat ?: "",
+            carbs = carbs ?: ""
         )
     }
     
