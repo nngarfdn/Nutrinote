@@ -3,6 +3,7 @@ package com.sv.calorieintakeapps.feature_reporting.domain.usecase
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface ReportingUseCase {
     
@@ -12,8 +13,8 @@ interface ReportingUseCase {
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
         foodName: String,
@@ -33,8 +34,8 @@ interface ReportingUseCase {
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,

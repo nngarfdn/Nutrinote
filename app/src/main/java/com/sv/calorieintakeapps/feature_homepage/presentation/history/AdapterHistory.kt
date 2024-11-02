@@ -88,8 +88,10 @@ class AdapterHistory(
         
         fun bind(item: Report) {
             binding.apply {
-                if (!item.preImage.isEmpty()) {
-                    imgItemRiwayat.load(item.preImage)
+                if (item.preImageFile != null) {
+                    imgItemRiwayat.load(item.preImageFile)
+                } else if (item.preImageUrl.isNotEmpty()) {
+                    imgItemRiwayat.load(item.preImageUrl)
                 } else {
                     imgItemRiwayat.setImageResource(R.drawable.ic_placeholder_24)
                 }
@@ -117,8 +119,7 @@ class AdapterHistory(
                 } else {
                     val resultList = ArrayList<Report>()
                     for (row in data!!) {
-                        if (row.postImage.lowercase(Locale.ROOT)
-                                .contains(charSearch.lowercase(Locale.ROOT))
+                        if (row.postImageUrl.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))
                         ) {
                             resultList.add(row)
                         }

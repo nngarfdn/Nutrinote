@@ -9,6 +9,7 @@ import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCas
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.vo.Resource
+import java.io.File
 
 class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewModel() {
     
@@ -28,8 +29,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
         foodName: String,
@@ -54,8 +55,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri,
-            postImageUri = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
         )
@@ -68,8 +69,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 date = it.getDateOnly(), time = it.getTimeOnly(),
                 percentage = it.percentage,
                 mood = it.mood,
-                preImageUri = it.preImage,
-                postImageUri = it.postImage,
+                preImageFile = it.preImageFile,
+                postImageFile = it.postImageFile,
                 nilaigiziComFoodId = it.nilaigiziComFoodId,
                 portionCount = it.portionCount,
                 foodName = foodName,
@@ -92,8 +93,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
@@ -104,8 +105,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri,
-            postImageUri = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             foodId = foodId,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
@@ -120,8 +121,8 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 time = it.getTimeOnly(),
                 percentage = it.percentage,
                 mood = it.mood,
-                preImageUri = it.preImage,
-                postImageUri = it.postImage,
+                preImageFile = it.preImageFile,
+                postImageFile = it.postImageFile,
                 foodId = it.foodId,
                 nilaigiziComFoodId = it.nilaigiziComFoodId,
                 portionCount = it.portionCount,

@@ -2,15 +2,18 @@ package com.sv.calorieintakeapps.feature_reporting.presentation
 
 import android.Manifest
 import android.R
+import android.app.Activity
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -18,9 +21,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.data.OnClickItemMode
-import com.sv.calorieintakeapps.feature_foodnutrition.presentation.details.FoodNutritionDetailsViewModel
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_EXPECT_SEARCH
@@ -38,6 +41,9 @@ import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -61,8 +67,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var reportId = -1
     private var foodId = -1
     private var nilaigiziComFoodId = -1
-    private var preImageUri = ""
-    private var postImageUri = ""
+    private var preImageUri: Uri? = null
+    private var preImageFile: File? = null
+    private var postImageUri: Uri? = null
+    private var postImageFile: File? = null
     private var merchantId = -1
     private var foodName: String? = null
 
@@ -81,7 +89,84 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
-    
+
+    private val cameraIntentLauncherPreImage = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
+        if (isSaved) {
+            binding.imgPreImage.load(preImageFile)
+        }
+    }
+
+    private val galleryIntentLauncherPreImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri = result.data?.data
+            imageUri?.let {
+                this.preImageUri = it
+                this.preImageFile = uriToFile(this, it)
+                binding.imgPreImage.load(preImageFile)
+            }
+        }
+    }
+
+    private val fileManagerIntentLauncherPreImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            this.preImageUri = it
+            this.preImageFile = uriToFile(this, it)
+            binding.imgPreImage.load(preImageFile)
+        }
+    }
+
+    private val cameraIntentLauncherPostImage = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
+        if (isSaved) {
+            binding.imgPostImage.load(postImageFile)
+        }
+    }
+
+    private val galleryIntentLauncherPostImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri = result.data?.data
+            imageUri?.let {
+                this.postImageUri = it
+                this.postImageFile = uriToFile(this, it)
+                binding.imgPostImage.load(postImageFile)
+            }
+        }
+    }
+
+    private val fileManagerIntentLauncherPostImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            this.postImageUri = it
+            this.postImageFile = uriToFile(this, it)
+            binding.imgPostImage.load(postImageFile)
+        }
+    }
+
+    private fun uriToFile(context: Context, uri: Uri): File? {
+        // Get the content resolver
+        val contentResolver: ContentResolver = context.contentResolver
+
+        // Create a temporary file to save the content from URI
+        val file = File(context.cacheDir, "temp_image_file.jpg") // Adjust name or extension as needed
+        try {
+            // Open an input stream from the URI
+            val inputStream: InputStream? = contentResolver.openInputStream(uri)
+            // Create an output stream to write the file
+            val outputStream = FileOutputStream(file)
+
+            // Copy the content from the input stream to the output stream
+            inputStream?.copyTo(outputStream)
+
+            // Close the streams
+            inputStream?.close()
+            outputStream.close()
+
+            return file // Return the file created
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportingBinding.inflate(layoutInflater)
@@ -110,12 +195,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     if (nilaigiziComFoodId != -1) {
                         edtPortionSize.setText("100 g/porsi")
                         edtPortionSize.isEnabled = false
-                        tvPortionSizeHelper.gone()
                     }
 
                     if (foodId != -1) {
                         edtPortionSize.gone()
-                        tvPortionSizeHelper.gone()
                     }
                 }
             }
@@ -191,12 +274,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             if (nilaigiziComFoodId != -1) {
                 edtPortionSize.setText("100 g/porsi")
                 edtPortionSize.isEnabled = false
-                tvPortionSizeHelper.gone()
             }
 
             if (foodId != -1) {
                 edtPortionSize.gone()
-                tvPortionSizeHelper.gone()
             }
 
             if (expectSearch) {
@@ -206,6 +287,66 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
         }
+    }
+
+    private fun showImagePickerDialog(viewId: Int) {
+        val options = arrayOf("Camera", "Gallery", "File Manager")
+        val dialog = AlertDialog.Builder(this).setTitle("Select Image Source")
+        when(viewId) {
+            binding.btnPreImage.id -> {
+                dialog.setItems(options) { _, which ->
+                        when (which) {
+                            0 -> openCameraPreImage()
+                            1 -> openGalleryPreImage()
+                            2 -> openFileManagerPreImage()
+                        }
+                    }
+                    .show()
+
+            }
+            binding.btnPostImage.id -> {
+                dialog.setItems(options) { _, which ->
+                        when (which) {
+                            0 -> openCameraPostImage()
+                            1 -> openGalleryPostImage()
+                            2 -> openFileManagerPostImage()
+                        }
+                    }
+                    .show()
+            }
+        }
+    }
+
+    private fun openCameraPreImage() {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        preImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
+        preImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", preImageFile!!)
+        cameraIntentLauncherPreImage.launch(preImageUri)
+    }
+
+    private fun openGalleryPreImage() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryIntentLauncherPreImage.launch(galleryIntent)
+    }
+
+    private fun openFileManagerPreImage() {
+        fileManagerIntentLauncherPreImage.launch("image/*")
+    }
+
+    private fun openCameraPostImage() {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        postImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
+        postImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", postImageFile!!)
+        cameraIntentLauncherPostImage.launch(postImageUri)
+    }
+
+    private fun openGalleryPostImage() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryIntentLauncherPostImage.launch(galleryIntent)
+    }
+
+    private fun openFileManagerPostImage() {
+        fileManagerIntentLauncherPostImage.launch("image/*")
     }
 
     inner class MinMaxFilter() : InputFilter {
@@ -309,13 +450,17 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtTime.setText(report.getTimeOnly())
                             
                             edtPercent.setText(report.percentage.toString())
-                            if (!report.preImage.isEmpty()) {
-                                imgPreImage.load(report.preImage)
+                            if (report.preImageFile != null) {
+                                imgPreImage.load(report.preImageFile)
+                            } else if (report.preImageUrl.isNotEmpty()) {
+                                imgPreImage.load(report.preImageUrl)
                             } else {
                                 imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
-                            if (!report.postImage.isEmpty()) {
-                                imgPostImage.load(report.postImage)
+                            if (report.postImageFile != null) {
+                                imgPostImage.load(report.postImageFile)
+                            } else if (report.preImageUrl.isNotEmpty()) {
+                                imgPostImage.load(report.postImageUrl)
                             } else {
                                 imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
@@ -333,7 +478,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             }
                             
                             edtPortionSize.gone()
-                            tvPortionSizeHelper.gone()
                         }
                     }
                     
@@ -350,8 +494,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             binding.edtDate.id -> showDatePicker()
             binding.edtTime.id -> showTimePicker()
             binding.edtPercent.id -> view as EditText
-            binding.btnPostImage.id -> chooseImage(RC_PICK_POST_IMAGE)
-            binding.btnPreImage.id -> chooseImage(RC_PICK_PRE_IMAGE)
+            binding.btnPreImage.id -> showImagePickerDialog(binding.btnPreImage.id)
+            binding.btnPostImage.id -> showImagePickerDialog(binding.btnPostImage.id)
             binding.btnSave.id -> saveReport()
             binding.btnDelete.id -> deleteReport()
         }
@@ -378,8 +522,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 time = time,
                 percentage = percentage,
                 mood = mood,
-                preImageUri = preImageUri,
-                postImageUri = postImageUri,
+                preImageFile = preImageFile,
+                postImageFile = postImageFile,
                 foodId = foodId,
                 nilaigiziComFoodId = nilaigiziComFoodId,
                 portionCount = portionCount,
@@ -391,8 +535,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 time = time,
                 percentage = percentage,
                 mood = mood,
-                preImageUri = preImageUri,
-                postImageUri = postImageUri,
+                preImageFile = preImageFile,
+                postImageFile = postImageFile,
                 nilaigiziComFoodId = nilaigiziComFoodId,
                 portionCount = portionCount,
                 foodName = foodName,
@@ -461,38 +605,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
-    }
-    
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            val imageUri = data?.data
-            when (requestCode) {
-                RC_PICK_PRE_IMAGE -> {
-                    val dir = getRealPathFromURI(imageUri)
-                    if (dir != null) {
-                        this.preImageUri = dir
-                    }
-                    binding.imgPreImage.load(imageUri)
-                }
-                
-                RC_PICK_POST_IMAGE -> {
-                    val dir = getRealPathFromURI(imageUri)
-                    if (dir != null) {
-                        this.postImageUri = dir
-                    }
-                    binding.imgPostImage.load(imageUri)
-                }
-            }
-        }
-    }
-    
-    private fun getRealPathFromURI(contentUri: Uri?): String? {
-        val proj = arrayOf(MediaStore.Audio.Media.DATA)
-        val cursor = managedQuery(contentUri, proj, null, null, null)
-        val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-        cursor.moveToFirst()
-        return cursor.getString(columnIndex)
     }
     
     override fun onDestroy() {

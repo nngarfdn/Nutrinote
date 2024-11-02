@@ -232,12 +232,11 @@ class RemoteDataSource(
                     if (merchantId != null) {
                         afMultipartBuilder.addFormDataPart("id_merchant", merchantId.toString())
                     }
-                    if (report.preImage.isNotEmpty()) {
-                        val imageFile = File(report.preImage)
-                        val requestImage = imageFile.asRequestBody(contentType)
+                    if (report.preImageFile != null) {
+                        val requestImage = report.preImageFile.asRequestBody(contentType)
                         afMultipartBuilder.addFormDataPart(
                             "image",
-                            imageFile.name,
+                            report.preImageFile.name,
                             requestImage
                         )
                     }
@@ -304,22 +303,20 @@ class RemoteDataSource(
                     )
                 }
                 
-                if (report.preImage.isNotEmpty()) {
-                    val preImageFile = File(report.preImage)
-                    val requestPreImage = preImageFile.asRequestBody(contentType)
+                if (report.preImageFile != null) {
+                    val requestPreImage = report.preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "pre_image",
-                        preImageFile.name,
+                        report.preImageFile.name,
                         requestPreImage
                     )
                 }
                 
-                if (report.postImage.isNotEmpty()) {
-                    val postImageFile = File(report.postImage)
-                    val requestPostImage = postImageFile.asRequestBody(contentType)
+                if (report.postImageFile != null) {
+                    val requestPostImage = report.postImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "post_image",
-                        postImageFile.name,
+                        report.postImageFile.name,
                         requestPostImage
                     )
                 }
@@ -400,22 +397,20 @@ class RemoteDataSource(
                     )
                 }
                 
-                if (report.preImage.isNotEmpty()) {
-                    val preImageFile = File(report.preImage)
-                    val requestPreImage = preImageFile.asRequestBody(contentType)
+                if (report.preImageFile != null) {
+                    val requestPreImage = report.preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "pre_image",
-                        preImageFile.name,
+                        report.preImageFile.name,
                         requestPreImage
                     )
                 }
-                
-                if (report.postImage.isNotEmpty()) {
-                    val postImageFile = File(report.postImage)
-                    val requestPostImage = postImageFile.asRequestBody(contentType)
+
+                if (report.postImageFile != null) {
+                    val requestPostImage = report.postImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
                         "post_image",
-                        postImageFile.name,
+                        report.postImageFile.name,
                         requestPostImage
                     )
                 }

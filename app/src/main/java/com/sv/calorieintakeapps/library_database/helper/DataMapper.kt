@@ -74,14 +74,14 @@ fun mapResponseToDomain(input: ReportResponse): Report {
             userId = this?.userId ?: -1,
             foodId = this?.foodId ?: -1,
             foodName = this?.foodName.orEmpty(),
-            postImage = this?.postImage.orEmpty(),
-            preImage = this?.preImage.orEmpty(),
             date = this?.date.orEmpty(),
             status = ReportStatus.new(this?.status.orEmpty()),
             percentage = this?.percentage ?: 0,
             mood = this?.mood.orEmpty(),
             nilaigiziComFoodId = this?.nilaigiziComFoodId,
             portionCount = this?.portionCount,
+            preImageUrl = this?.preImage.orEmpty(),
+            postImageUrl = this?.postImage.orEmpty(),
         )
     }
 }
@@ -93,14 +93,14 @@ fun mapResponseToDomain(input: ReportsResponse): List<Report> {
             userId = item?.userId ?: -1,
             foodId = item?.foodId ?: -1,
             foodName = item?.foodName.orEmpty(),
-            postImage = item?.postImage.orEmpty(),
-            preImage = item?.preImage.orEmpty(),
             date = item?.date.orEmpty(),
             status = ReportStatus.new(item?.status.orEmpty()),
             percentage = item?.percentage ?: 0,
             mood = item?.mood.orEmpty(),
             nilaigiziComFoodId = item?.nilaigiziComFoodId,
             portionCount = item?.portionCount,
+            preImageUrl = item?.preImage.orEmpty(),
+            postImageUrl = item?.postImage.orEmpty(),
         )
     } ?: listOf()
 }

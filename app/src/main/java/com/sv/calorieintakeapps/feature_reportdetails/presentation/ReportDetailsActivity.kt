@@ -60,13 +60,18 @@ class ReportDetailsActivity : AppCompatActivity() {
                             
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
                             
-                            if (result.data?.preImage?.isEmpty() == false) {
-                                imgSebelum.load(result.data.preImage)
+                            if (result.data?.preImageFile != null) {
+                                imgSebelum.load(result.data.preImageFile)
+                            } else if (result.data?.preImageUrl?.isNotEmpty() == true) {
+                                imgSebelum.load(result.data.preImageUrl)
                             } else {
                                 imgSebelum.setImageResource(R.drawable.img_no_image_24)
                             }
-                            if (result.data?.postImage?.isEmpty() == false) {
-                                imgSesudah.load(result.data.postImage)
+
+                            if (result.data?.postImageFile != null) {
+                                imgSesudah.load(result.data.postImageFile)
+                            } else if (result.data?.preImageUrl?.isNotEmpty() == true) {
+                                imgSesudah.load(result.data.postImageUrl)
                             } else {
                                 imgSesudah.setImageResource(R.drawable.img_no_image_24)
                             }

@@ -13,6 +13,7 @@ import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import java.io.File
 
 class ReportingRepository(
     private val localDataSource: LocalDataSource,
@@ -25,8 +26,8 @@ class ReportingRepository(
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
         foodName: String,
@@ -57,8 +58,8 @@ class ReportingRepository(
                     time = time,
                     percentage = percentage,
                     mood = mood,
-                    preImageUri = preImageUri,
-                    postImageUri = postImageUri,
+                    preImageFile = preImageFile,
+                    postImageFile = postImageFile,
                     nilaigiziComFoodId = nilaigiziComFoodId,
                     portionCount = portionCount,
                 )
@@ -109,8 +110,8 @@ class ReportingRepository(
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
@@ -135,8 +136,8 @@ class ReportingRepository(
                     time = time,
                     percentage = percentage,
                     mood = mood,
-                    preImageUri = preImageUri,
-                    postImageUri = postImageUri,
+                    preImageFile = preImageFile,
+                    postImageFile = postImageFile,
                     foodId = foodId,
                     nilaigiziComFoodId = nilaigiziComFoodId,
                     portionCount = portionCount,

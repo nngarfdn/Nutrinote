@@ -4,6 +4,7 @@ import com.sv.calorieintakeapps.feature_reporting.domain.repository.IReportingRe
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 class ReportingInteractor(private val reportingRepository: IReportingRepository) :
     ReportingUseCase {
@@ -14,8 +15,8 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
         foodName: String,
@@ -32,8 +33,8 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
             time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri,
-            postImageUri = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
             foodName = foodName,
@@ -45,7 +46,7 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
             carbs = carbs,
         )
     }
-    
+
     override fun getReportById(reportId: Int): Flow<Resource<Report>> {
         return reportingRepository.getReportById(reportId)
     }
@@ -56,8 +57,8 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
@@ -68,8 +69,8 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
             time = time,
             percentage = percentage,
             mood = mood,
-            preImageUri = preImageUri,
-            postImageUri = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             foodId = foodId,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount

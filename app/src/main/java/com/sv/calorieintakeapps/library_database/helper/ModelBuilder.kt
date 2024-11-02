@@ -5,6 +5,7 @@ import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
+import java.io.File
 
 object ReportBuilder {
     
@@ -15,8 +16,8 @@ object ReportBuilder {
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
     ): Report {
@@ -26,8 +27,8 @@ object ReportBuilder {
             date = "$date $time",
             percentage = percentage,
             mood = mood,
-            preImage = preImageUri,
-            postImage = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
         )
@@ -40,8 +41,8 @@ object ReportBuilder {
         time: String,
         percentage: Int?,
         mood: String,
-        preImageUri: String,
-        postImageUri: String,
+        preImageFile: File?,
+        postImageFile: File?,
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
@@ -52,8 +53,8 @@ object ReportBuilder {
             date = "$date $time",
             percentage = percentage,
             mood = mood,
-            preImage = preImageUri,
-            postImage = postImageUri,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
             foodId = foodId,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
