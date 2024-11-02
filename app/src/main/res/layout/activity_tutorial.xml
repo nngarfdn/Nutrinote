@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_tutorial"
-        app:videoId="jNQXAC9IVRw" />
+        app:videoId="wHd7PjQx3BI" />
 
     <Button
         android:id="@+id/btn_home_page"
