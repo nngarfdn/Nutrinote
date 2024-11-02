@@ -9,10 +9,6 @@
         android:title="@string/home" />
 
     <item
-        android:enabled="false"
-        android:title="" />
-
-    <item
         android:id="@+id/menu_report_history"
         android:icon="@drawable/ic_history_24"
         android:title="@string/history" />
