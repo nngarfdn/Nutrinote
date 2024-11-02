@@ -181,6 +181,8 @@
                     android:id="@+id/edt_percent"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:background="@drawable/edt_primary"
                     android:drawableStart="@drawable/ic_leftovers_24"
                     android:drawablePadding="8dp"
@@ -202,6 +204,7 @@
                     android:textSize="13sp" />
 
                 <LinearLayout
+                    android:id="@+id/btn_0_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -224,6 +227,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_25_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -246,6 +250,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_50_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -268,6 +273,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_75_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -290,6 +296,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_95_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -312,6 +319,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_100_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"

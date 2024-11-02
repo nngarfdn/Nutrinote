@@ -152,6 +152,24 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             btnSave.setOnClickListener(this@ReportingActivity)
             btnDelete.setOnClickListener(this@ReportingActivity)
             btnBack.setOnClickListener { onBackPressed() }
+            btn0Percent.setOnClickListener {
+                edtPercent.setText("0")
+            }
+            btn25Percent.setOnClickListener {
+                edtPercent.setText("25")
+            }
+            btn50Percent.setOnClickListener {
+                edtPercent.setText("50")
+            }
+            btn75Percent.setOnClickListener {
+                edtPercent.setText("75")
+            }
+            btn95Percent.setOnClickListener {
+                edtPercent.setText("95")
+            }
+            btn100Percent.setOnClickListener {
+                edtPercent.setText("100")
+            }
 
             if (isUpdate) {
                 tvTitle.text = "Edit Laporan"
