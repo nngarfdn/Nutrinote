@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityProfileBinding
+import com.sv.calorieintakeapps.feature_profile.BMI
+import com.sv.calorieintakeapps.feature_profile.BMICategory
 import com.sv.calorieintakeapps.feature_profile.di.ProfileModule
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
@@ -18,6 +20,8 @@ import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 private const val RC_PICK_PROFILE_IMAGE = 100
 
@@ -95,7 +99,22 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
-    
+
+    private fun calculateBMI(weightKg: Float, heightM: Float): String {
+        val bmi = BMI.calculate(weightKg, heightM)
+        val roundedBmi = BigDecimal(bmi.toString()).setScale(1, RoundingMode.HALF_UP).toFloat()
+        val bmiCategory = BMI.getBMICategory(weightKg, heightM)
+        val bmiCategoryDisplay = when(bmiCategory) {
+            BMICategory.VERY_UNDERWEIGHT -> "Sangat Kurus"
+            BMICategory.UNDERWEIGHT -> "Kurus"
+            BMICategory.NORMAL -> "Normal"
+            BMICategory.OVERWEIGHT -> "Gemuk"
+            BMICategory.OBESITY -> "Obesitas"
+            BMICategory.NA -> "N/A"
+        }
+        return "$bmiCategoryDisplay ($roundedBmi)"
+    }
+
     private fun actionEdit(
         name: String,
         gender: Gender,
@@ -125,6 +144,12 @@ class ProfileActivity : AppCompatActivity() {
                         
                         is Resource.Success -> {
                             showToast("Profil berhasil disimpan")
+                            binding.apply {
+                                val weightKg = edtWeight.text.toString().toFloat() // in kg
+                                val heightM = edtHeight.text.toString().toFloat() / 100 // in meter
+                                val bmi = calculateBMI(weightKg, heightM)
+                                edtImt.setText(bmi)
+                            }
                             onBackPressed()
                         }
                         
@@ -153,6 +178,10 @@ class ProfileActivity : AppCompatActivity() {
                             edtEmail.setText(data.email)
                             edtWeight.setText(data.weight.toString())
                             edtHeight.setText(data.height.toString())
+                            val weightKg = data.weight.toFloat() // in kg
+                            val heightM = data.height.toFloat() / 100 // in meter
+                            val bmi = calculateBMI(weightKg, heightM)
+                            edtImt.setText(bmi)
                             data.age.let { edtAge.setText(it.toString()) }
                             if (data.gender == Gender.MALE) spinnerSex.setSelection(0)
                             if (data.gender == Gender.FEMALE) spinnerSex.setSelection(1)
