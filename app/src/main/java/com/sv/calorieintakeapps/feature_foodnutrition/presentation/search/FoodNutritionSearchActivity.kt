@@ -2,7 +2,6 @@ package com.sv.calorieintakeapps.feature_foodnutrition.presentation.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.databinding.ActivityFoodNutritionSearchBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.data.OnClickItemMode
 import com.sv.calorieintakeapps.feature_foodnutrition.di.FoodNutritionModule
-import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_ID
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_NAME
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_MERCHANT_ID
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
@@ -23,7 +21,6 @@ import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_ON_CLICK_ITE
 import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionDetailsIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.util.hideKeyboard
-import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.shouldVisible
 import com.sv.calorieintakeapps.library_common.util.showKeyboard
 import com.sv.calorieintakeapps.library_common.util.showToast
@@ -58,13 +55,7 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                     }
                     OnClickItemMode.RETURN_DATA -> {
                         viewModel.setFoodId(foodId)
-                        val returnIntent = Intent().apply {
-                            putExtra(EXTRA_FOOD_ID, foodId)
-                            putExtra(EXTRA_MERCHANT_ID, merchantId)
-                        }
-                        observeFoodNutritionDetails(returnIntent) {
-                            finish()
-                        }
+                        observeFoodNutritionDetail()
                     }
                     null -> {}
                 }
@@ -125,13 +116,14 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeFoodNutritionDetails(returnIntent: Intent, onDataReceived: () -> Unit) {
+    private fun observeFoodNutritionDetail() {
         viewModel.foodNutrition.observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {}
 
                     is Resource.Success -> {
+                        val returnIntent = Intent()
                         result.data?.let { food ->
                             returnIntent
                                 .putExtra(EXTRA_FOOD_NAME, food.name)
@@ -142,7 +134,7 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                                 .putExtra(EXTRA_NILAIGIZI_COM_CARBS, food.carbs)
                         }
                         setResult(RESULT_OK, returnIntent)
-                        onDataReceived.invoke()
+                        finish()
                     }
 
                     is Resource.Error -> {
