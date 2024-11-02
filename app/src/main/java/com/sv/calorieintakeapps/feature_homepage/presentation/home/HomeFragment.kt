@@ -43,8 +43,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         
         binding.apply {
             imgProfile.setOnClickListener(this@HomeFragment)
-            cvMerchantMenu.setOnClickListener(this@HomeFragment)
-            cvReporting.setOnClickListener(this@HomeFragment)
             cvMacronutrientIntake.setOnClickListener(this@HomeFragment)
             cvFoodNutrition.setOnClickListener(this@HomeFragment)
         }
@@ -63,14 +61,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         when (view.id) {
             binding.imgProfile.id -> {
                 balloonProfile.showAlignBottom(binding.imgProfile)
-            }
-            
-            binding.cvMerchantMenu.id -> {
-                startActivity(requireContext().openMerchantListIntent())
-            }
-            
-            binding.cvReporting.id -> {
-                startActivity(requireContext().openReportingIntent(expectSearch = true))
             }
             
             binding.cvMacronutrientIntake.id -> {
