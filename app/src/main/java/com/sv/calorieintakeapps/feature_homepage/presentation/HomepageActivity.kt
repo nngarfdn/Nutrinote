@@ -10,7 +10,7 @@ import com.sv.calorieintakeapps.R
 import com.sv.calorieintakeapps.databinding.ActivityHomepageBinding
 import com.sv.calorieintakeapps.feature_homepage.presentation.history.HistoryFragment
 import com.sv.calorieintakeapps.feature_homepage.presentation.home.HomeFragment
-import com.sv.calorieintakeapps.library_common.action.Actions.openScannerIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 
 class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     View.OnClickListener {
@@ -23,17 +23,16 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
         setContentView(binding.root)
         
         binding.apply {
-            navbarHomepage.inflateMenu(R.menu.menu_homepage)
             navbarHomepage.setOnItemSelectedListener(this@HomepageActivity)
             navbarHomepage.selectedItemId = R.id.menu_home
             
-            btnScan.setOnClickListener(this@HomepageActivity)
+            btnReport.setOnClickListener(this@HomepageActivity)
         }
     }
     
     override fun onClick(view: View) {
         when (view.id) {
-            binding.btnScan.id -> startActivity(openScannerIntent())
+            binding.btnReport.id -> startActivity(openReportingIntent(expectSearch = true))
         }
     }
     
