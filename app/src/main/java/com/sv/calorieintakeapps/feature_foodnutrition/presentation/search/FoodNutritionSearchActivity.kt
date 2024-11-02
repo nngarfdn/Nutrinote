@@ -106,6 +106,7 @@ class FoodNutritionSearchActivity : AppCompatActivity() {
                         null,
                         if (merchantId < 0) null else merchantId,
                         null,
+                        expectSearch = true
                     )
                 )
             }
