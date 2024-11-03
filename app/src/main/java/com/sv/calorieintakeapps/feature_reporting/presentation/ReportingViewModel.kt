@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
 import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCase
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
@@ -107,7 +106,23 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        merchantId: Int?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
+        isFromLocalDb: Boolean,
     ) {
+        this.foodName = foodName
+        this.portionSize = portionSize
+        this.merchantId = merchantId
+        this.calories = calories
+        this.protein = protein
+        this.carbs = carbs
+        this.fat = fat
+        this.isFromLocalDb = isFromLocalDb
         report.value = ReportBuilder.update(
             id = reportId, userId = -1,
             date = date,
@@ -119,23 +134,43 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             foodId = foodId,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
+            foodName = foodName,
+            portionSize = portionSize,
+            calories = calories,
+            protein = protein,
+            fat = fat,
+            carbs = carbs,
         )
     }
+
+    private var isFromLocalDb: Boolean = false
     
     val editReportResult: LiveData<Resource<Boolean>> =
         report.switchMap {
-            reportingUseCase.editReportById(
-                reportId = it.id,
-                date = it.getDateOnly(),
-                time = it.getTimeOnly(),
-                percentage = it.percentage,
-                mood = it.mood,
-                preImageFile = it.preImageFile,
-                postImageFile = it.postImageFile,
-                foodId = it.foodId,
-                nilaigiziComFoodId = it.nilaigiziComFoodId,
-                portionCount = it.portionCount,
-            ).asLiveData()
+            liveData {
+                val result = reportingUseCase.editReportById(
+                    reportId = it.id,
+                    date = it.getDateOnly(),
+                    time = it.getTimeOnly(),
+                    percentage = it.percentage,
+                    mood = it.mood,
+                    preImageFile = it.preImageFile,
+                    postImageFile = it.postImageFile,
+                    foodId = it.foodId,
+                    nilaigiziComFoodId = it.nilaigiziComFoodId,
+                    portionCount = it.portionCount,
+                    foodName = foodName,
+                    portionSize = portionSize,
+                    calories = calories,
+                    protein = protein,
+                    fat = fat,
+                    carbs = carbs,
+                    isFromLocalDb = isFromLocalDb,
+                )
+                result.collectLatest {
+                    emit(it)
+                }
+            }
         }
     
     fun deleteReportById(reportId: Int): LiveData<Resource<Boolean>> {

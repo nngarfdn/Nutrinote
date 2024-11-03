@@ -9,7 +9,7 @@ interface ReportDao {
     suspend fun insert(report: ReportEntity): Long
 
     @Update
-    suspend fun update(report: ReportEntity)
+    suspend fun update(report: ReportEntity): Int
 
     @Delete
     suspend fun delete(report: ReportEntity)

@@ -28,7 +28,7 @@ interface ReportingUseCase {
     
     suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>>
     
-    fun editReportById(
+    suspend fun editReportById(
         reportId: Int,
         date: String,
         time: String,
@@ -39,6 +39,13 @@ interface ReportingUseCase {
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
+        isFromLocalDb: Boolean,
     ): Flow<Resource<Boolean>>
     
     fun deleteReportById(reportId: Int): Flow<Resource<Boolean>>

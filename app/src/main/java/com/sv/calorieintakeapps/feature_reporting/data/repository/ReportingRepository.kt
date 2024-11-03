@@ -207,13 +207,54 @@ class ReportingRepository(
             portionCount = portionCount,
             foodName = foodName,
             portionSize = portionSize,
-            merchantId = merchantId,
             calories = calories,
             protein = protein,
             fat = fat,
             carbs = carbs,
         )
         val result = localDataSource.insertReport(reportEntity)
+        return flowOf(Resource.Success(result > 0))
+    }
+
+    override suspend fun editReportToDb(
+        roomId: Int,
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?
+    ): Flow<Resource<Boolean>> {
+        val userId = localDataSource.getUserId()
+        val reportEntity = ReportBuilder.createReportEntity(
+            userId = userId,
+            foodId = foodId,
+            date = date,
+            time = time,
+            percentage = percentage,
+            mood = mood,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
+            foodName = foodName,
+            portionSize = portionSize,
+            calories = calories,
+            protein = protein,
+            fat = fat,
+            carbs = carbs,
+        ).copy(roomId = roomId)
+
+        val result = localDataSource.updateReport(reportEntity)
         return flowOf(Resource.Success(result > 0))
     }
 

@@ -38,6 +38,10 @@ class LocalDataSource(
         return reportDao.insert(report)
     }
 
+    suspend fun updateReport(report: ReportEntity): Int {
+        return reportDao.update(report)
+    }
+
     suspend fun getAllReports(): List<ReportEntity> {
         return reportDao.getAllReports()
     }

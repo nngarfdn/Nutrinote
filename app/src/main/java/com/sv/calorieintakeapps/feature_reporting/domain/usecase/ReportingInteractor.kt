@@ -76,7 +76,7 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         }
     }
     
-    override fun editReportById(
+    override suspend fun editReportById(
         reportId: Int,
         date: String,
         time: String,
@@ -87,19 +87,47 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?,
+        isFromLocalDb: Boolean,
     ): Flow<Resource<Boolean>> {
-        return reportingRepository.editReportById(
-            reportId = reportId,
-            date = date,
-            time = time,
-            percentage = percentage,
-            mood = mood,
-            preImageFile = preImageFile,
-            postImageFile = postImageFile,
-            foodId = foodId,
-            nilaigiziComFoodId = nilaigiziComFoodId,
-            portionCount = portionCount
-        )
+        return if (isFromLocalDb) {
+            reportingRepository.editReportToDb(
+                roomId = reportId,
+                foodId = foodId,
+                date = date,
+                time = time,
+                percentage = percentage,
+                mood = mood,
+                preImageFile = preImageFile,
+                postImageFile = null,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
+            )
+        } else {
+            reportingRepository.editReportById(
+                reportId = reportId,
+                date = date,
+                time = time,
+                percentage = percentage,
+                mood = mood,
+                preImageFile = preImageFile,
+                postImageFile = postImageFile,
+                foodId = foodId,
+                nilaigiziComFoodId = nilaigiziComFoodId,
+                portionCount = portionCount
+            )
+        }
     }
     
     override fun deleteReportById(reportId: Int): Flow<Resource<Boolean>> {

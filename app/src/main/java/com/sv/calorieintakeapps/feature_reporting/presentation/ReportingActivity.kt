@@ -14,7 +14,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -530,6 +529,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 foodId = foodId,
                 nilaigiziComFoodId = nilaigiziComFoodId,
                 portionCount = portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
+                isFromLocalDb = isFromLocalDb,
             )
         } else {
             reportingViewModel.addReport(

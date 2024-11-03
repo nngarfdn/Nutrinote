@@ -63,4 +63,23 @@ interface IReportingRepository {
     ): Flow<Resource<Boolean>>
 
     suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>>
+
+    suspend fun editReportToDb(
+        roomId: Int,
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float?,
+        foodName: String,
+        portionSize: String?,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?
+    ): Flow<Resource<Boolean>>
 }

@@ -48,7 +48,6 @@ object ReportBuilder {
         portionCount: Float?,
         foodName: String?,
         portionSize: String?,
-        merchantId: Int?,
         calories: String?,
         protein: String?,
         fat: String?,
@@ -66,7 +65,6 @@ object ReportBuilder {
             portionCount = portionCount,
             foodName = foodName ?: "",
             portionSize = portionSize ?: "",
-            merchantId = merchantId ?: -1,
             calories = calories ?: "",
             protein = protein ?: "",
             fat = fat ?: "",
@@ -86,6 +84,12 @@ object ReportBuilder {
         foodId: Int?,
         nilaigiziComFoodId: Int?,
         portionCount: Float?,
+        foodName: String? = null,
+        portionSize: String? = null,
+        calories: String? = null,
+        protein: String? = null,
+        fat: String? = null,
+        carbs: String? = null,
     ): Report {
         return Report(
             id = id,
@@ -98,6 +102,12 @@ object ReportBuilder {
             foodId = foodId,
             nilaigiziComFoodId = nilaigiziComFoodId,
             portionCount = portionCount,
+            foodName = foodName ?: "",
+            portionSize = portionSize ?: "",
+            calories = calories ?: "",
+            protein = protein ?: "",
+            fat = fat ?: "",
+            carbs = carbs ?: "",
         )
     }
     
