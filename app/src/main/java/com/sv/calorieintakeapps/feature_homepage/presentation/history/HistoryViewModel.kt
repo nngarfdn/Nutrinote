@@ -35,6 +35,11 @@ class HistoryViewModel(useCase: HomepageUseCase, localDataSource: LocalDataSourc
                 preImageFile = File(item.preImageFilePath ?: ""),
                 postImageFile = File(item.postImageFilePath ?: ""),
                 roomId = item.roomId,
+                portionSize = item.portionSize,
+                calories = item.calories,
+                protein = item.protein,
+                fat = item.fat,
+                carbs = item.carbs,
             )
         }
         emit(list)

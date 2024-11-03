@@ -140,11 +140,25 @@ object Actions {
             .putExtra(EXTRA_EXPECT_SEARCH, expectSearch)
     }
     
-    fun Context?.openReportEditingIntent(reportId: Int, foodName: String, isFromLocalDb: Boolean = false): Intent {
+    fun Context?.openReportEditingIntent(
+        reportId: Int,
+        foodName: String,
+        isFromLocalDb: Boolean = false,
+        nilaigiziComFoodId: Int? = null,
+        calories: String? = null,
+        protein: String? = null,
+        fat: String? = null,
+        carbs: String? = null,
+    ): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_REPORT_ID, reportId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
             .putExtra(EXTRA_IS_FROM_LOCAL_DB, isFromLocalDb)
+            .putExtra(EXTRA_NILAIGIZI_COM_FOOD_ID, nilaigiziComFoodId)
+            .putExtra(EXTRA_NILAIGIZI_COM_CALORIES, calories)
+            .putExtra(EXTRA_NILAIGIZI_COM_PROTEIN, protein)
+            .putExtra(EXTRA_NILAIGIZI_COM_FAT, fat)
+            .putExtra(EXTRA_NILAIGIZI_COM_CARBS, carbs)
     }
     
     fun Context?.openReportDetailsIntent(reportId: Int, foodId: Int, foodName: String, isFromLocalDb: Boolean = false): Intent {

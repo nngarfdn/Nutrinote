@@ -108,7 +108,12 @@ class AdapterHistory(
                         itemView.context.openReportEditingIntent(
                             reportId!!,
                             item.foodName,
-                            isFromLocalDb
+                            isFromLocalDb,
+                            nilaigiziComFoodId = item.nilaigiziComFoodId,
+                            calories = item.calories.split(" ").first(),
+                            protein = item.protein.split(" ").first(),
+                            fat = item.fat.split(" ").first(),
+                            carbs = item.carbs.split(" ").first(),
                         )
                     )
                 }

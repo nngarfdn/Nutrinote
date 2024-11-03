@@ -14,6 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText

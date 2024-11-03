@@ -19,6 +19,11 @@ data class Report(
     val preImageUrl: String = "",
     val postImageUrl: String = "",
     val roomId: Int? = null,
+    val portionSize: String = "",
+    val calories: String = "",
+    val protein: String = "",
+    val fat: String = "",
+    val carbs: String = "",
 ) {
     
     fun getDateOnly(): String {
