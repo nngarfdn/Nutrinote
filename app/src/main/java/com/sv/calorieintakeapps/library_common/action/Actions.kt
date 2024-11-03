@@ -144,6 +144,7 @@ object Actions {
         reportId: Int,
         foodName: String,
         isFromLocalDb: Boolean = false,
+        foodId: Int,
         nilaigiziComFoodId: Int? = null,
         calories: String? = null,
         protein: String? = null,
@@ -154,6 +155,7 @@ object Actions {
             .putExtra(EXTRA_REPORT_ID, reportId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
             .putExtra(EXTRA_IS_FROM_LOCAL_DB, isFromLocalDb)
+            .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_NILAIGIZI_COM_FOOD_ID, nilaigiziComFoodId)
             .putExtra(EXTRA_NILAIGIZI_COM_CALORIES, calories)
             .putExtra(EXTRA_NILAIGIZI_COM_PROTEIN, protein)

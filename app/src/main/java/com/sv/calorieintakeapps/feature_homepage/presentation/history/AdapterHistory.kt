@@ -109,6 +109,7 @@ class AdapterHistory(
                             reportId!!,
                             item.foodName,
                             isFromLocalDb,
+                            foodId =  item.foodId ?: -1,
                             nilaigiziComFoodId = item.nilaigiziComFoodId,
                             calories = item.calories.split(" ").first(),
                             protein = item.protein.split(" ").first(),
