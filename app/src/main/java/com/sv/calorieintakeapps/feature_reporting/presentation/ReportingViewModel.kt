@@ -85,7 +85,9 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
                 fat = fat,
                 carbs = carbs,
             )
-            emit(result.single())
+            result.collectLatest {
+                emit(it)
+            }
         }
     }
 
