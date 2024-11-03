@@ -41,4 +41,8 @@ class LocalDataSource(
     suspend fun getAllReports(): List<ReportEntity> {
         return reportDao.getAllReports()
     }
+
+    suspend fun getReportById(reportId: Int): ReportEntity? {
+        return reportDao.getReportById(reportId)
+    }
 }

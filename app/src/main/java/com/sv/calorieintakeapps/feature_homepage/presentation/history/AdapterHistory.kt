@@ -18,7 +18,7 @@ import java.util.*
 
 class AdapterHistory(
     private val activity: Activity,
-    private val isCompleteReport: Boolean,
+    private val isCompletedReport: Boolean,
 ) :
     RecyclerView.Adapter<AdapterHistory.ViewHolder>(),
     Filterable {
@@ -55,7 +55,7 @@ class AdapterHistory(
         return ViewHolder(
             binding.root,
             binding,
-            isCompleteReport
+            isCompletedReport
         )
     }
     
@@ -66,11 +66,14 @@ class AdapterHistory(
         val item = countryFilterList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
+            val getDataFromLocalDb = !isCompletedReport
+            val reportId = if (isCompletedReport) item.id else item.roomId
             activity.startActivity(
                 holder.itemView.context.openReportDetailsIntent(
-                    item.id,
+                    reportId!!,
                     item.foodId ?: -1,
-                    item.foodName
+                    item.foodName,
+                    getDataFromLocalDb
                 )
             )
         }
@@ -83,7 +86,7 @@ class AdapterHistory(
     class ViewHolder(
         itemView: View,
         private val binding: ItemHistoryBinding,
-        private val isPendingReport: Boolean,
+        private val isCompletedReport: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         
         fun bind(item: Report) {

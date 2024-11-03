@@ -9,8 +9,12 @@ import kotlinx.coroutines.flow.Flow
 class ReportDetailsInteractor(private val reportDetailsRepository: IReportDetailsRepository) :
     ReportDetailsUseCase {
 
-    override fun getReportById(reportId: Int): Flow<Resource<Report>> {
-        return reportDetailsRepository.getReportById(reportId)
+    override suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>> {
+        return if (isFromLocalDb) {
+            reportDetailsRepository.getReportByIdFromLocalDb(reportId)
+        } else {
+            reportDetailsRepository.getReportById(reportId)
+        }
     }
 
     override fun getFoodNutrientsById(foodId: Int): Flow<Resource<List<FoodNutrient>>> {

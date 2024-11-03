@@ -30,19 +30,20 @@ class ReportDetailsActivity : AppCompatActivity() {
         val reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
         val foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         val foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME).orEmpty()
-        
+        val isFromLocalDb = intent.getBooleanExtra(Actions.EXTRA_IS_FROM_LOCAL_DB, false)
+
         binding.txtName.text = foodName
         binding.btnBack.setOnClickListener { onBackPressed() }
         
         foodNutrientAdapter = FoodNutrientAdapter()
         
-        observeReportById(reportId)
+        observeReportById(reportId, isFromLocalDb)
         observeNutrition(foodId)
     }
     
     @SuppressLint("SetTextI18n")
-    private fun observeReportById(reportId: Int) {
-        viewModel.getReportById(reportId).observe(this) { result ->
+    private fun observeReportById(reportId: Int, isFromLocalDb: Boolean) {
+        viewModel.getReportById(reportId, isFromLocalDb).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {}

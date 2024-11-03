@@ -18,6 +18,7 @@ data class Report(
     val portionCount: Float? = null,
     val preImageUrl: String = "",
     val postImageUrl: String = "",
+    val roomId: Int? = null,
 ) {
     
     fun getDateOnly(): String {

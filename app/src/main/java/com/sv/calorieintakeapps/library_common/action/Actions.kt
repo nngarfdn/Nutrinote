@@ -37,6 +37,7 @@ object Actions {
     const val EXTRA_REPORT_ID = "extra_report_id"
     const val EXTRA_EXPECT_SEARCH = "extra_expect_search"
     const val EXTRA_ON_CLICK_ITEM_MODE = "extra_on_click_item_mode"
+    const val EXTRA_IS_FROM_LOCAL_DB = "extra_is_from_local_db"
 
     const val EXTRA_NILAIGIZI_COM_PROTEIN = "extra_nilaigizi_com_protein" // 1
     const val EXTRA_NILAIGIZI_COM_CARBS = "extra_nilaigizi_com_carbs" // 2
@@ -145,11 +146,12 @@ object Actions {
             .putExtra(EXTRA_FOOD_NAME, foodName)
     }
     
-    fun Context?.openReportDetailsIntent(reportId: Int, foodId: Int, foodName: String): Intent {
+    fun Context?.openReportDetailsIntent(reportId: Int, foodId: Int, foodName: String, isFromLocalDb: Boolean = false): Intent {
         return Intent(this?.applicationContext, ReportDetailsActivity::class.java)
             .putExtra(EXTRA_REPORT_ID, reportId)
             .putExtra(EXTRA_FOOD_ID, foodId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
+            .putExtra(EXTRA_IS_FROM_LOCAL_DB, isFromLocalDb)
     }
     
     fun Context?.openScannerIntent(): Intent {
