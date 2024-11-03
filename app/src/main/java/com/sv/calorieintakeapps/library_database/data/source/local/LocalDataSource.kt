@@ -49,4 +49,8 @@ class LocalDataSource(
     suspend fun getReportById(reportId: Int): ReportEntity? {
         return reportDao.getReportById(reportId)
     }
+
+    suspend fun deleteReportById(reportId: Int): Int {
+        return reportDao.deleteById(reportId)
+    }
 }

@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.feature_reporting.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,11 +12,10 @@ import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.single
 import java.io.File
 
 class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewModel() {
-    
+
     private val report = MutableLiveData<Report>()
     private var foodName: String = ""
     private var portionSize: String? = null
@@ -178,5 +178,81 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
     fun deleteReportById(reportId: Int): LiveData<Resource<Boolean>> {
         return reportingUseCase.deleteReportById(reportId).asLiveData()
     }
-    
+
+    private suspend fun deleteReportByIdFromLocal(reportId: Int): LiveData<Resource<Boolean>> {
+        return reportingUseCase.deleteReportByIdFromLocal(reportId).asLiveData()
+    }
+
+    fun editFromLocalDbToServer(
+        roomId: Int,
+        foodId: Int?,
+        date: String,
+        time: String,
+        percentage: Int?,
+        mood: String,
+        preImageFile: File?,
+        postImageFile: File?,
+        nilaigiziComFoodId: Int?,
+        portionCount: Float,
+        foodName: String,
+        portionSize: String,
+        calories: String?,
+        protein: String?,
+        fat: String?,
+        carbs: String?
+    ) {
+        this.foodName = foodName
+        this.portionSize = portionSize
+        this.calories = calories
+        this.protein = protein
+        this.carbs = carbs
+        this.fat = fat
+        reportRoomIdDeletation.value = roomId
+        dbToServerReport.value = ReportBuilder.create(
+            foodId = foodId,
+            userId = -1,
+            date = date,
+            time = time,
+            percentage = percentage,
+            mood = mood,
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
+            nilaigiziComFoodId = nilaigiziComFoodId,
+            portionCount = portionCount,
+        )
+    }
+
+    private val dbToServerReport = MutableLiveData<Report>()
+
+    private var reportRoomIdDeletation = MutableLiveData<Int>()
+
+    val dbDeleteResult: LiveData<Resource<Boolean>> = reportRoomIdDeletation.switchMap {
+        liveData { deleteReportByIdFromLocal(it) }
+    }
+
+    val dbToServerReportResult: LiveData<Resource<Boolean>> = dbToServerReport.switchMap {
+        liveData {
+            val result = reportingUseCase.addReport(
+                foodId = it.foodId,
+                date = it.getDateOnly(),
+                time = it.getTimeOnly(),
+                percentage = it.percentage,
+                mood = it.mood,
+                preImageFile = it.preImageFile,
+                postImageFile = it.postImageFile,
+                nilaigiziComFoodId = it.nilaigiziComFoodId,
+                portionCount = it.portionCount,
+                foodName = foodName,
+                portionSize = portionSize,
+                merchantId = merchantId,
+                calories = calories,
+                protein = protein,
+                fat = fat,
+                carbs = carbs,
+            )
+            result.collectLatest {
+                emit(it)
+            }
+        }
+    }
 }

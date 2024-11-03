@@ -261,7 +261,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 btnDelete.visibility = View.VISIBLE
                 observeEditReportResult()
                 observeGetReportById()
-
+                observeDbDelete()
+                observeDbToServerReportResult()
                 edtFoodName.isEnabled = false
             } else {
                 tvTitle.text = "Buat Laporan"
@@ -413,6 +414,33 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             }
         }
     }
+
+    private fun observeDbToServerReportResult() {
+        reportingViewModel.dbToServerReportResult.observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Resource.Loading -> {
+                        binding.btnSave.isEnabled = false
+                    }
+
+                    is Resource.Success -> {
+                        showToast("Berhasil mengirim laporan")
+                        startActivity(
+                            openHomepageIntent().setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                                        Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        binding.btnSave.isEnabled = true
+                        showToast(result.message)
+                    }
+                }
+            }
+        }
+    }
     
     private fun observeEditReportResult() {
         reportingViewModel.editReportResult.observe(this) { result ->
@@ -454,6 +482,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             edtPercent.setText(report.percentage.toString())
                             if (report.preImageFile != null) {
                                 imgPreImage.load(report.preImageFile)
+                                preImageFile = report.preImageFile
                             } else if (report.preImageUrl.isNotEmpty()) {
                                 imgPreImage.load(report.preImageUrl)
                             } else {
@@ -461,6 +490,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             }
                             if (report.postImageFile != null) {
                                 imgPostImage.load(report.postImageFile)
+                                postImageFile = report.postImageFile
                             } else if (report.preImageUrl.isNotEmpty()) {
                                 imgPostImage.load(report.postImageUrl)
                             } else {
@@ -488,6 +518,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     }
                 }
             }
+        }
+    }
+
+    private fun observeDbDelete() {
+        reportingViewModel.dbDeleteResult.observe(this) {
         }
     }
     
@@ -518,26 +553,47 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val merchantId = if (merchantId != -1) merchantId else null
         
         if (isUpdate) {
-            reportingViewModel.editReport(
-                reportId = reportId,
-                date = date,
-                time = time,
-                percentage = percentage,
-                mood = mood,
-                preImageFile = preImageFile,
-                postImageFile = postImageFile,
-                foodId = foodId,
-                nilaigiziComFoodId = nilaigiziComFoodId,
-                portionCount = portionCount,
-                foodName = foodName,
-                portionSize = portionSize,
-                merchantId = merchantId,
-                calories = calories,
-                protein = protein,
-                fat = fat,
-                carbs = carbs,
-                isFromLocalDb = isFromLocalDb,
-            )
+            if (postImageFile != null && isFromLocalDb) {
+                reportingViewModel.editFromLocalDbToServer(
+                    roomId = reportId,
+                    foodId = foodId,
+                    date = date,
+                    time = time,
+                    percentage = percentage,
+                    mood = mood,
+                    preImageFile = preImageFile,
+                    postImageFile = postImageFile,
+                    nilaigiziComFoodId = nilaigiziComFoodId,
+                    portionCount = portionCount,
+                    foodName = foodName,
+                    portionSize = portionSize,
+                    calories = calories,
+                    protein = protein,
+                    fat = fat,
+                    carbs = carbs,
+                )
+            } else {
+                reportingViewModel.editReport(
+                    reportId = reportId,
+                    date = date,
+                    time = time,
+                    percentage = percentage,
+                    mood = mood,
+                    preImageFile = preImageFile,
+                    postImageFile = postImageFile,
+                    foodId = foodId,
+                    nilaigiziComFoodId = nilaigiziComFoodId,
+                    portionCount = portionCount,
+                    foodName = foodName,
+                    portionSize = portionSize,
+                    merchantId = merchantId,
+                    calories = calories,
+                    protein = protein,
+                    fat = fat,
+                    carbs = carbs,
+                    isFromLocalDb = isFromLocalDb,
+                )
+            }
         } else {
             reportingViewModel.addReport(
                 foodId = foodId,

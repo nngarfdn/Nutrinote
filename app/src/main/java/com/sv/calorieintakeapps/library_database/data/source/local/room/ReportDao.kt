@@ -11,8 +11,8 @@ interface ReportDao {
     @Update
     suspend fun update(report: ReportEntity): Int
 
-    @Delete
-    suspend fun delete(report: ReportEntity)
+    @Query("DELETE FROM report_table WHERE roomId = :roomId")
+    suspend fun deleteById(roomId: Int): Int
 
     @Query("SELECT * FROM report_table WHERE roomId = :roomId")
     suspend fun getReportById(roomId: Int): ReportEntity?

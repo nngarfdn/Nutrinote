@@ -133,5 +133,8 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
     override fun deleteReportById(reportId: Int): Flow<Resource<Boolean>> {
         return reportingRepository.deleteReportById(reportId)
     }
-    
+
+    override suspend fun deleteReportByIdFromLocal(reportId: Int): Flow<Resource<Boolean>> {
+        return reportingRepository.deleteReportByIdFromLocal(reportId)
+    }
 }

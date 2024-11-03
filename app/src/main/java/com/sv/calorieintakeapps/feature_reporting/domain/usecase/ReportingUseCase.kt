@@ -49,5 +49,6 @@ interface ReportingUseCase {
     ): Flow<Resource<Boolean>>
     
     fun deleteReportById(reportId: Int): Flow<Resource<Boolean>>
-    
+
+    suspend fun deleteReportByIdFromLocal(reportId: Int): Flow<Resource<Boolean>>
 }

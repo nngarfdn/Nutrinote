@@ -258,6 +258,11 @@ class ReportingRepository(
         return flowOf(Resource.Success(result > 0))
     }
 
+    override suspend fun deleteReportByIdFromLocal(reportId: Int): Flow<Resource<Boolean>> {
+        val result = localDataSource.deleteReportById(reportId)
+        return flowOf(Resource.Success(result > 0))
+    }
+
     override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>> {
         val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
         val report = Report(

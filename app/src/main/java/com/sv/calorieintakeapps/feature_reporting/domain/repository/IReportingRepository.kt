@@ -82,4 +82,6 @@ interface IReportingRepository {
         fat: String?,
         carbs: String?
     ): Flow<Resource<Boolean>>
+
+    suspend fun deleteReportByIdFromLocal(reportId: Int): Flow<Resource<Boolean>>
 }
