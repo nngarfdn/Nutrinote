@@ -61,4 +61,6 @@ interface IReportingRepository {
         fat: String?,
         carbs: String?
     ): Flow<Resource<Boolean>>
+
+    suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>>
 }

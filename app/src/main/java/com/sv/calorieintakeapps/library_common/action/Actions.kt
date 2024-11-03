@@ -140,10 +140,11 @@ object Actions {
             .putExtra(EXTRA_EXPECT_SEARCH, expectSearch)
     }
     
-    fun Context?.openReportEditingIntent(reportId: Int, foodName: String): Intent {
+    fun Context?.openReportEditingIntent(reportId: Int, foodName: String, isFromLocalDb: Boolean = false): Intent {
         return Intent(this?.applicationContext, ReportingActivity::class.java)
             .putExtra(EXTRA_REPORT_ID, reportId)
             .putExtra(EXTRA_FOOD_NAME, foodName)
+            .putExtra(EXTRA_IS_FROM_LOCAL_DB, isFromLocalDb)
     }
     
     fun Context?.openReportDetailsIntent(reportId: Int, foodId: Int, foodName: String, isFromLocalDb: Boolean = false): Intent {

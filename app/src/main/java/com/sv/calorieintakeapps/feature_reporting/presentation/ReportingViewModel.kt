@@ -11,6 +11,7 @@ import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCas
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.vo.Resource
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.single
 import java.io.File
 
@@ -88,8 +89,11 @@ class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewM
             emit(result.single())
         }
     }
-    fun getReportById(reportId: Int): LiveData<Resource<Report>> {
-        return reportingUseCase.getReportById(reportId).asLiveData()
+
+    fun getReportById(reportId: Int, isFromLocalDb: Boolean): LiveData<Resource<Report>> = liveData {
+        reportingUseCase.getReportById(reportId, isFromLocalDb).collectLatest {
+            emit(it)
+        }
     }
     
     fun editReport(

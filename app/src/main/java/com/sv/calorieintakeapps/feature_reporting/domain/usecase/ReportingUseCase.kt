@@ -26,7 +26,7 @@ interface ReportingUseCase {
         carbs: String?,
     ): Flow<Resource<Boolean>>
     
-    fun getReportById(reportId: Int): Flow<Resource<Report>>
+    suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>>
     
     fun editReportById(
         reportId: Int,

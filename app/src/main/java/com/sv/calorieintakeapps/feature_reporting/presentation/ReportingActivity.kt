@@ -75,7 +75,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var foodName: String? = null
 
     private var isUpdate = false
-    
+    private var isFromLocalDb = false
+
     private var mood = ""
 //    private var percentage: Int? = null;
     
@@ -203,7 +204,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
         }
-        
+
+        isFromLocalDb = intent.getBooleanExtra(Actions.EXTRA_IS_FROM_LOCAL_DB, false)
         isUpdate = intent.hasExtra(Actions.EXTRA_REPORT_ID)
         reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
         foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
@@ -437,7 +439,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     }
     
     private fun observeGetReportById() {
-        reportingViewModel.getReportById(reportId).observe(this) { result ->
+        reportingViewModel.getReportById(reportId, isFromLocalDb).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Resource.Loading -> {}

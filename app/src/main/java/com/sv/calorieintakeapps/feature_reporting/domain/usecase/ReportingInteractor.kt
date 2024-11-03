@@ -68,8 +68,12 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         }
     }
 
-    override fun getReportById(reportId: Int): Flow<Resource<Report>> {
-        return reportingRepository.getReportById(reportId)
+    override suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>> {
+        return if (isFromLocalDb) {
+            reportingRepository.getReportByIdFromLocalDb(reportId)
+        } else {
+            reportingRepository.getReportById(reportId)
+        }
     }
     
     override fun editReportById(

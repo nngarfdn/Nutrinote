@@ -66,14 +66,14 @@ class AdapterHistory(
         val item = countryFilterList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
-            val getDataFromLocalDb = !isCompletedReport
+            val isFromLocalDb = !isCompletedReport
             val reportId = if (isCompletedReport) item.id else item.roomId
             activity.startActivity(
                 holder.itemView.context.openReportDetailsIntent(
                     reportId!!,
                     item.foodId ?: -1,
                     item.foodName,
-                    getDataFromLocalDb
+                    isFromLocalDb
                 )
             )
         }
@@ -102,10 +102,13 @@ class AdapterHistory(
                 txtLocationRiwayat.text = item.date
                 
                 imgEditRiwayat.setOnClickListener {
+                    val isFromLocalDb = !isCompletedReport
+                    val reportId = if (isCompletedReport) item.id else item.roomId
                     it.context.startActivity(
                         itemView.context.openReportEditingIntent(
-                            item.id,
-                            item.foodName
+                            reportId!!,
+                            item.foodName,
+                            isFromLocalDb
                         )
                     )
                 }

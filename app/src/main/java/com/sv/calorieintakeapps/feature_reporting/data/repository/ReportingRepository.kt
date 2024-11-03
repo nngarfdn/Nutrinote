@@ -6,6 +6,7 @@ import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEn
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
+import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
@@ -214,5 +215,24 @@ class ReportingRepository(
         )
         val result = localDataSource.insertReport(reportEntity)
         return flowOf(Resource.Success(result > 0))
+    }
+
+    override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>> {
+        val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
+        val report = Report(
+            id = reportEntity.id ?: -1,
+            userId = reportEntity.userId ?: -1,
+            foodId = reportEntity.foodId ?: -1,
+            foodName = reportEntity.foodName.orEmpty(),
+            date = reportEntity.date.orEmpty(),
+            status = ReportStatus.PENDING,
+            percentage = reportEntity.percentage ?: 0,
+            mood = reportEntity.mood.orEmpty(),
+            nilaigiziComFoodId = reportEntity.nilaigiziComFoodId,
+            portionCount = reportEntity.portionCount,
+            preImageFile = File(reportEntity.preImageFilePath ?: ""),
+            postImageFile = File(reportEntity.postImageFilePath ?: ""),
+        )
+        return flowOf(Resource.Success(report))
     }
 }
