@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote
 
+import android.util.Log
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
@@ -17,6 +18,9 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.NilaigiziComLoginResponse
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtApiService
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFoodDetail
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
@@ -31,10 +35,12 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import kotlin.random.Random
 
 class RemoteDataSource(
     private val mainApiService: MainApiService,
     private val nilaigiziComApiService: NilaigiziComApiService,
+    private val urtApiService: UrtApiService,
 ) {
     
     suspend fun register(
@@ -569,5 +575,39 @@ class RemoteDataSource(
             }
         }.flowOn(Dispatchers.IO)
     }
-    
+
+    suspend fun searchUrtFood(
+        foodName: String,
+    ): Flow<ApiResponse<List<UrtFood>>> {
+        return flow {
+            try {
+                val responses = urtApiService.searchFood(foodName)
+                Log.d("FIKRI4857", responses.size.toString())
+                if (responses.isNotEmpty()) {
+                    emit(ApiResponse.Success(responses))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getUrtFoodDetail(
+        foodId: Int,
+    ): Flow<ApiResponse<UrtFoodDetail>> {
+        return flow {
+            try {
+                val response = urtApiService.getFoodDetail(foodId)
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (throwable: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(throwable)))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

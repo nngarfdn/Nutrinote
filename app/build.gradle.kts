@@ -98,6 +98,16 @@ android {
             "NILAIGIZI_COM_PASSWORD",
             getKeyProperty("NILAIGIZI_COM_PASSWORD")
         )
+        buildConfigField(
+            "String",
+            "URT_BASE_URL",
+            getKeyProperty("URT_BASE_URL")
+        )
+        buildConfigField(
+            "String",
+            "URT_PUBLIC_KEY",
+            getKeyProperty("URT_PUBLIC_KEY")
+        )
     }
     
     buildTypes {

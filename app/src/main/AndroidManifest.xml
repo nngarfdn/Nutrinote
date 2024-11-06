@@ -40,6 +40,9 @@
         <activity
             android:name=".feature_foodnutrition.presentation.search.FoodNutritionSearchActivity"
             android:exported="false" />
+        <activity
+            android:name=".feature_reporting.presentation.UrtFoodSearchActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="firebase_analytics_collection_enabled"

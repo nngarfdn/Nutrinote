@@ -7,14 +7,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.paging.PagingData
 import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCase
+import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
+import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
+import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import java.io.File
 
-class ReportingViewModel(private val reportingUseCase: ReportingUseCase) : ViewModel() {
+class ReportingViewModel(private val reportingUseCase: ReportingUseCase, private val remoteDataSource: RemoteDataSource) : ViewModel() {
 
     private val report = MutableLiveData<Report>()
     private var foodName: String = ""

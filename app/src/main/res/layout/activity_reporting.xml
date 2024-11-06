@@ -88,6 +88,60 @@
                     android:textColor="@color/grey"
                     android:textSize="13sp" />
 
+                <CheckBox
+                    android:id="@+id/cb_use_urt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menggunakan porsi URT?"
+                    />
+
+                <EditText
+                    android:id="@+id/edt_urt_food_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_food_19"
+                    android:drawablePadding="8dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Cari nama makanan untuk mendapat URT"
+                    android:focusable="false"
+                    android:inputType="textCapWords"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp" />
+
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/urt_dropdown_layout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:background="@drawable/edt_primary"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Select an option"-->
+<!--                    android:layout_marginVertical="4dp"-->
+<!--                    app:endIconMode="dropdown_menu"-->
+<!--                    app:endIconTint="@color/black"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:backgroundTint="@color/white"-->
+<!--                    android:focusable="false"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">-->
+
+<!--                    <com.google.android.material.textfield.MaterialAutoCompleteTextView-->
+<!--                        android:id="@+id/urt_dropdown"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:focusable="false"-->
+<!--                        android:layout_height="wrap_content" />-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+                <Spinner
+                    android:id="@+id/urt_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginVertical="8dp"
+                    android:visibility="gone"
+                    android:background="@drawable/edt_primary"
+                    android:paddingHorizontal="16dp" />
+
                 <EditText
                     android:id="@+id/edt_portion_size"
                     android:layout_width="match_parent"
@@ -135,6 +189,13 @@
                     android:textColor="@color/grey"
                     android:textSize="13sp" />
 
+                <Spinner
+                    android:id="@+id/sesi_makan_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/edt_primary"
+                    android:paddingHorizontal="16dp" />
+
                 <EditText
                     android:id="@+id/edt_time"
                     android:layout_width="match_parent"
@@ -144,6 +205,7 @@
                     android:drawableStart="@drawable/ic_time_18"
                     android:drawablePadding="8dp"
                     android:focusable="false"
+                    android:visibility="gone"
                     android:fontFamily="@font/poppins_medium"
                     android:hint="Masukkan jam"
                     android:inputType="none"

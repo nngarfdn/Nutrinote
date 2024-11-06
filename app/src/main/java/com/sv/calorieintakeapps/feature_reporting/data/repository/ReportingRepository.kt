@@ -1,5 +1,6 @@
 package com.sv.calorieintakeapps.feature_reporting.data.repository
 
+import android.util.Log
 import com.sv.calorieintakeapps.feature_reporting.domain.repository.IReportingRepository
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEntity
@@ -212,6 +213,7 @@ class ReportingRepository(
             fat = fat,
             carbs = carbs,
         )
+        Log.d("FIKRI421", reportEntity.preImageFilePath.toString())
         val result = localDataSource.insertReport(reportEntity)
         return flowOf(Resource.Success(result > 0))
     }
@@ -265,6 +267,8 @@ class ReportingRepository(
 
     override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>> {
         val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
+        val preImageFile = if (!reportEntity.preImageFilePath.isNullOrEmpty()) File(reportEntity.preImageFilePath) else null
+        val postImageFile = if (!reportEntity.postImageFilePath.isNullOrEmpty()) File(reportEntity.postImageFilePath) else null
         val report = Report(
             id = reportEntity.id ?: -1,
             userId = reportEntity.userId ?: -1,
@@ -276,8 +280,8 @@ class ReportingRepository(
             mood = reportEntity.mood.orEmpty(),
             nilaigiziComFoodId = reportEntity.nilaigiziComFoodId,
             portionCount = reportEntity.portionCount,
-            preImageFile = File(reportEntity.preImageFilePath ?: ""),
-            postImageFile = File(reportEntity.postImageFilePath ?: ""),
+            preImageFile = preImageFile,
+            postImageFile = postImageFile,
         )
         return flowOf(Resource.Success(report))
     }

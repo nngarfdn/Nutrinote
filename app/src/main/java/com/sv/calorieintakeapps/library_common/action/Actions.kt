@@ -22,6 +22,7 @@ import com.sv.calorieintakeapps.feature_merchantmenu.presentation.MerchantMenuAc
 import com.sv.calorieintakeapps.feature_profile.presentation.ProfileActivity
 import com.sv.calorieintakeapps.feature_reportdetails.presentation.ReportDetailsActivity
 import com.sv.calorieintakeapps.feature_reporting.presentation.ReportingActivity
+import com.sv.calorieintakeapps.feature_reporting.presentation.UrtFoodSearchActivity
 import com.sv.calorieintakeapps.feature_scanner.presentation.ScanActivity
 
 object Actions {
@@ -43,6 +44,8 @@ object Actions {
     const val EXTRA_NILAIGIZI_COM_CARBS = "extra_nilaigizi_com_carbs" // 2
     const val EXTRA_NILAIGIZI_COM_CALORIES = "extra_nilaigizi_com_calories" // 3
     const val EXTRA_NILAIGIZI_COM_FAT = "extra_nilaigizi_com_fat" // 4
+
+    const val EXTRA_URT_LIST = "extra_urt_list"
     
     fun Context?.openFoodDetailsIntent(
         merchantName: String,
@@ -79,6 +82,10 @@ object Actions {
 
     fun Context?.openTutorialIntent(): Intent {
         return Intent(this?.applicationContext, TutorialActivity::class.java)
+    }
+
+    fun Context?.openUrtFoodSearchIntent(): Intent {
+        return Intent(this?.applicationContext, UrtFoodSearchActivity::class.java)
     }
     
     fun Context?.openHomepageIntent(): Intent {

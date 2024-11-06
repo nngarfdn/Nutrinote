@@ -14,7 +14,9 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
@@ -22,6 +24,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_foodnutrition.data.OnClickItemMode
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
@@ -33,11 +38,14 @@ import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_CO
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
 import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionSearchIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
 import com.sv.calorieintakeapps.library_common.util.gone
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.Urt
+import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,6 +85,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var isUpdate = false
     private var isFromLocalDb = false
 
+    private var urtList: List<Urt> = emptyList()
+    private lateinit var moshiAdapter: JsonAdapter<List<Urt>>
+
     private var mood = ""
 //    private var percentage: Int? = null;
     
@@ -88,6 +99,8 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private var expectSearch: Boolean = false
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+
+    private lateinit var urtFoodActivityResultLauncher: ActivityResultLauncher<Intent>
 
     val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
 
@@ -177,6 +190,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         
         shouldAskStoragePermission(RC_READ_EXTERNAL_STORAGE_PERMISSION)
 
+
+        val moshi = Moshi.Builder().build()
+        val listType = Types.newParameterizedType(List::class.java, Urt::class.java)
+        moshiAdapter = moshi.adapter(listType)
+
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -195,12 +213,53 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
                     if (nilaigiziComFoodId != -1) {
                         edtPortionSize.setText("100 g/porsi")
-                        edtPortionSize.isEnabled = false
+//                        edtPortionSize.isEnabled = false
                     }
 
                     if (foodId != -1) {
                         edtPortionSize.gone()
                     }
+                }
+            }
+        }
+
+        urtFoodActivityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val urtListAsString = result.data!!.getStringExtra(Actions.EXTRA_URT_LIST) ?: ""
+                urtList = moshiAdapter.fromJson(urtListAsString) ?: emptyList()
+                binding.apply {
+                    val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
+                    urtDropdown.setAdapter(adapter)
+
+                    // Handle selection to access the original FoodItem object
+                    urtDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            val selectedFood = urtList[position]
+                            val selectedFoodItem = urtList.find { it.name == selectedFood.name }
+                            selectedFoodItem?.let {
+                                binding.edtPortionSize.setText(it.gramMlPerPorsi)
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                        }
+
+                    }
+//                    urtDropdown.setOnItemClickListener { parent, _, position, _ ->
+//                        val selectedFood = parent.getItemAtPosition(position) as Urt
+//                        val selectedFoodItem = urtList.find { it.name == selectedFood.name }
+//                        selectedFoodItem?.let {
+//                            binding.edtPortionSize.setText(it.gramMlPerPorsi)
+//                        }
+//                    }
                 }
             }
         }
@@ -228,6 +287,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
         arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.apply {
+            edtUrtFoodName.setOnClickListener {
+                urtFoodActivityResultLauncher.launch(openUrtFoodSearchIntent())
+            }
             spinnerMood.adapter = arrayAdapter
             edtDate.setOnClickListener(this@ReportingActivity)
             edtTime.setOnClickListener(this@ReportingActivity)
@@ -236,6 +298,52 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             btnPostImage.setOnClickListener(this@ReportingActivity)
             btnSave.setOnClickListener(this@ReportingActivity)
             btnDelete.setOnClickListener(this@ReportingActivity)
+            val sesiMakanList = listOf(
+                SesiMakan("Sahur (02.00-04.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 2) }),
+                SesiMakan("Sarapan (05.00-09.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 5) }),
+                SesiMakan("Selingan pagi (09.01-11.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 10) }),
+                SesiMakan("Makan siang (11.01-14.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 12) }),
+                SesiMakan("Selingan sore (14.01-18.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 15) }),
+                SesiMakan("Makan malam (18.01-21.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 19) }),
+                SesiMakan("Selingan malam (21.01-01.59)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 22) }),
+            )
+            val jamAdapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, sesiMakanList)
+            sesiMakanDropdown.setAdapter(jamAdapter)
+
+            // Handle selection to access the original FoodItem object
+//            urtDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>?,
+//                    view: View?,
+//                    position: Int,
+//                    id: Long
+//                ) {
+//                    val selectedFood = sesiMakanList[position]
+//                    val selectedFoodItem = sesiMakanList.find { it.name == selectedFood.name }
+//                    selectedFoodItem?.let {
+//                        binding.edtPortionSize.setText(it.gramMlPerPorsi)
+//                    }
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//                }
+
+//            }
+            urtList = listOf(Urt(0, "Pilih jenis urt"))
+            val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
+            urtDropdown.setAdapter(adapter)
+            cbUseUrt.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    edtUrtFoodName.visibility = View.VISIBLE
+                    urtDropdown.visibility = View.VISIBLE
+                    edtPortionSize.visibility = View.GONE
+                } else {
+                    edtUrtFoodName.visibility = View.GONE
+                    urtDropdown.visibility = View.GONE
+                    edtPortionSize.visibility = View.VISIBLE
+                }
+            }
             btnBack.setOnClickListener { onBackPressed() }
             btn0Percent.setOnClickListener {
                 edtPercent.setText("0")
@@ -276,7 +384,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
             if (nilaigiziComFoodId != -1) {
                 edtPortionSize.setText("100 g/porsi")
-                edtPortionSize.isEnabled = false
+//                edtPortionSize.isEnabled = false
             }
 
             if (foodId != -1) {
@@ -478,7 +586,31 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             foodId = report.foodId ?: -1
                             edtDate.setText(report.getDateOnly())
                             edtTime.setText(report.getTimeOnly())
-                            
+                            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+                            val date = dateFormat.parse(report.date)
+                            val calendar = Calendar.getInstance()
+                            if (date != null) {
+                                calendar.time = date
+                                // Now calendar holds the date and time from the string
+                                println("Year: ${calendar.get(Calendar.YEAR)}")
+                                println("Month: ${calendar.get(Calendar.MONTH) + 1}") // Month is 0-based
+                                println("Day: ${calendar.get(Calendar.DAY_OF_MONTH)}")
+                                println("Hour: ${calendar.get(Calendar.HOUR_OF_DAY)}")
+                                println("Minute: ${calendar.get(Calendar.MINUTE)}")
+                            } else {
+                                println("Failed to parse date string.")
+                            }
+                            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                            when(hour) {
+                                2 -> sesiMakanDropdown.setSelection(0)
+                                5 -> sesiMakanDropdown.setSelection(1)
+                                10 -> sesiMakanDropdown.setSelection(2)
+                                12 -> sesiMakanDropdown.setSelection(3)
+                                15 -> sesiMakanDropdown.setSelection(4)
+                                19 -> sesiMakanDropdown.setSelection(5)
+                                22 -> sesiMakanDropdown.setSelection(6)
+                            }
+
                             edtPercent.setText(report.percentage.toString())
                             if (report.preImageFile != null) {
                                 imgPreImage.load(report.preImageFile)
@@ -540,6 +672,10 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
+
+        val dateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
+        val a = dateFormat.format((binding.sesiMakanDropdown.selectedItem as SesiMakan).jam.time)
+        binding.edtTime.setText(a)
         val time = binding.edtTime.text.toString()
         val percentage: Int? =
             if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString()

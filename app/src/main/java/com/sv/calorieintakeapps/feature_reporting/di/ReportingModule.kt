@@ -24,7 +24,7 @@ private val useCaseModule = module {
 }
 
 private val viewModelModule = module {
-    viewModel { ReportingViewModel(reportingUseCase = get()) }
+    viewModel { ReportingViewModel(reportingUseCase = get(), remoteDataSource = get()) }
 }
 
 internal object ReportingModule {
