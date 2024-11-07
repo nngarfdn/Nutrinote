@@ -84,6 +84,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
 
     private var isUpdate = false
     private var isFromLocalDb = false
+    private var realPortionCount: Float = 0f
 
     private var urtList: List<Urt> = emptyList()
     private lateinit var moshiAdapter: JsonAdapter<List<Urt>>
@@ -686,7 +687,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val foodName = binding.edtFoodName.text.toString()
         val portionSize = binding.edtPortionSize.text.toString()
         val portionCount = binding.edtPortionCount.text.toString().ifBlank { "1" }.toFloat()
+        val urt = (binding.urtDropdown.selectedItem as Urt).gramMlPerPorsi?.toFloat() ?: 0f
+        if (binding.cbUseUrt.isChecked) {
+            realPortionCount = (urt / 100) * portionCount
+        } else {
+            realPortionCount = portionCount
+        }
         val merchantId = if (merchantId != -1) merchantId else null
+        Log.d("FIKRI5256", realPortionCount.toString())
         
         if (isUpdate) {
             if (postImageFile != null && isFromLocalDb) {
@@ -700,7 +708,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     preImageFile = preImageFile,
                     postImageFile = postImageFile,
                     nilaigiziComFoodId = nilaigiziComFoodId,
-                    portionCount = portionCount,
+                    portionCount = realPortionCount,
                     foodName = foodName,
                     portionSize = portionSize,
                     calories = calories,
@@ -719,7 +727,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     postImageFile = postImageFile,
                     foodId = foodId,
                     nilaigiziComFoodId = nilaigiziComFoodId,
-                    portionCount = portionCount,
+                    portionCount = realPortionCount,
                     foodName = foodName,
                     portionSize = portionSize,
                     merchantId = merchantId,
@@ -740,7 +748,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 preImageFile = preImageFile,
                 postImageFile = postImageFile,
                 nilaigiziComFoodId = nilaigiziComFoodId,
-                portionCount = portionCount,
+                portionCount = realPortionCount,
                 foodName = foodName,
                 portionSize = portionSize,
                 merchantId = merchantId,

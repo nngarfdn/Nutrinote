@@ -303,6 +303,7 @@ class RemoteDataSource(
                     )
                 }
                 if (report.portionCount != null) {
+                    Log.d("FIKRI49483", report.portionCount.toString())
                     multipartBuilder.addFormDataPart(
                         "total_portion",
                         report.portionCount.toString()
