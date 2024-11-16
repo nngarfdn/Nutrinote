@@ -48,17 +48,23 @@ class ReportDetailsRepository(
         val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
         val report = Report(
             id = reportEntity.id ?: -1,
-            userId = reportEntity.userId ?: -1,
-            foodId = reportEntity.foodId ?: -1,
+            userId = -1,
             foodName = reportEntity.foodName.orEmpty(),
             date = reportEntity.date.orEmpty(),
-            status = ReportStatus.PENDING,
             percentage = reportEntity.percentage ?: 0,
             mood = reportEntity.mood.orEmpty(),
-            nilaigiziComFoodId = reportEntity.nilaigiziComFoodId,
-            portionCount = reportEntity.portionCount,
             preImageFile = File(reportEntity.preImageFilePath ?: ""),
             postImageFile = File(reportEntity.postImageFilePath ?: ""),
+            air = reportEntity.air,
+            calories = reportEntity.calories,
+            carbs = reportEntity.carbs,
+            fat = reportEntity.fat,
+            protein = reportEntity.protein,
+            gramPerUrt = reportEntity.gramPerUrt,
+            gramTotalDikonsumsi = reportEntity.gramTotalDikonsumsi,
+            isUsingUrt = reportEntity.isUsingUrt,
+            porsiUrt = reportEntity.porsiUrt,
+            idMakananNewApi = reportEntity.idMakanananNewApi,
         )
         return flowOf(Resource.Success(report))
     }

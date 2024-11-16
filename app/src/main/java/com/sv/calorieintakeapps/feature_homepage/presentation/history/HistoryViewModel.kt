@@ -9,7 +9,6 @@ import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCas
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.Report
-import com.sv.calorieintakeapps.library_database.helper.ReportBuilder
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.asFlow
 import java.io.File
@@ -23,23 +22,23 @@ class HistoryViewModel(useCase: HomepageUseCase, localDataSource: LocalDataSourc
         val list = localDataSource.getAllReports().map { item ->
             Report(
                 id = item.id ?: -1,
-                userId = item.userId ?: -1,
-                foodId = item.foodId ?: -1,
-                foodName = item.foodName.orEmpty(),
-                date = item.date.orEmpty(),
-                status = ReportStatus.PENDING,
+                foodName = item.foodName,
+                date = item.date,
                 percentage = item.percentage ?: 0,
-                mood = item.mood.orEmpty(),
-                nilaigiziComFoodId = item.nilaigiziComFoodId,
-                portionCount = item.portionCount,
+                mood = item.mood,
                 preImageFile = File(item.preImageFilePath ?: ""),
                 postImageFile = File(item.postImageFilePath ?: ""),
                 roomId = item.roomId,
-                portionSize = item.portionSize,
                 calories = item.calories,
                 protein = item.protein,
                 fat = item.fat,
                 carbs = item.carbs,
+                air = item.air,
+                gramPerUrt = item.gramPerUrt,
+                gramTotalDikonsumsi = item.gramTotalDikonsumsi,
+                isUsingUrt = item.isUsingUrt,
+                porsiUrt = item.porsiUrt,
+                idMakananNewApi = item.idMakanananNewApi
             )
         }
         emit(list)

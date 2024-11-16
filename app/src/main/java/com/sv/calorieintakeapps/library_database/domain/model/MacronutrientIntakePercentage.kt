@@ -9,6 +9,8 @@ data class MacronutrientIntakePercentage(
     val fatIntake: Double,
     val carbsNeeds: Double,
     val carbsIntake: Double,
+    val waterNeeds: Double,
+    val waterIntake: Double,
 ) {
     
     val caloriesPercentage: Int
@@ -19,6 +21,8 @@ data class MacronutrientIntakePercentage(
         get() = getPercentageNeedsIntake(fatNeeds, fatIntake)
     val carbsPercentage: Int
         get() = getPercentageNeedsIntake(carbsNeeds, carbsIntake)
+    val waterPercentage: Int
+        get() = getPercentageNeedsIntake(waterNeeds, waterIntake)
     
     private fun getPercentageNeedsIntake(needs: Double, intake: Double): Int {
         return if (needs == 0.0) {

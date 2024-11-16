@@ -24,6 +24,10 @@ interface ReportingUseCase {
         protein: String?,
         fat: String?,
         carbs: String?,
+        gramTotalDikonsumsi: Float,
+        isUsingUrt: Boolean,
+        gramPerUrt: Float,
+        porsiUrt: Int,
     ): Flow<Resource<Boolean>>
     
     suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>>

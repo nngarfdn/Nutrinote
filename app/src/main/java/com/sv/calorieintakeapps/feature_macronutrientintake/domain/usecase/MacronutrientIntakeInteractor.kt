@@ -21,7 +21,6 @@ class MacronutrientIntakeInteractor(
                 when (resource) {
                     is Resource.Success -> {
                         val dates = resource.data.orEmpty()
-                            .filter { it.status == ReportStatus.COMPLETE }
                             .map { it.date.split(" ").first() }
                             .distinct()
                         Resource.Success(dates)
@@ -45,7 +44,6 @@ class MacronutrientIntakeInteractor(
                     is Resource.Success -> {
                         val reports = resource.data.orEmpty()
                             .filter {
-                                it.status == ReportStatus.COMPLETE &&
                                         it.date.split(" ").first() == date
                             }
                         Resource.Success(reports)
@@ -65,43 +63,29 @@ class MacronutrientIntakeInteractor(
     override fun getMacronutrientIntakePercentage(
         reports: List<Report>,
     ): Flow<Resource<MacronutrientIntakePercentage>> {
-        val foodIds = reports.filter { it.foodId != null }.map { it.foodId!! }
-        return macronutrientIntakeRepository.getUserProfile()
-            .zip(macronutrientIntakeRepository.getFoodNutrientsByFoodIds(foodIds)) { userProfileResource, foodNutrientsResource ->
-                when (foodNutrientsResource) {
-                    is Resource.Success -> {
+        return macronutrientIntakeRepository.getUserProfile().map { userProfileResource ->
                         var totalCalories = 0.0
                         var totalProtein = 0.0
                         var totalFat = 0.0
                         var totalCarbs = 0.0
-                        
-                        foodNutrientsResource.data?.let { foodNutrients ->
-                            foodNutrients.distinct()
+                        var totalWater = 0.0
+
                             reports.forEach { report ->
-                                val foodNutrientsOfSingleFood = foodNutrients
-                                    .filter { it.foodId == report.foodId }
                                 val consumedPercentage =
                                     (100 - (report.percentage?.toDouble() ?: 0.0)) / 100
-                                totalCalories += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Energi" }
-                                    ?.value ?: 0.0) * consumedPercentage *
-                                        (report.portionCount ?: 1f)
-                                totalProtein += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Protein" }
-                                    ?.value ?: 0.0) * consumedPercentage *
-                                        (report.portionCount ?: 1f)
-                                totalFat += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Lemak" }
-                                    ?.value ?: 0.0) * consumedPercentage *
-                                        (report.portionCount ?: 1f)
-                                totalCarbs += (foodNutrientsOfSingleFood.firstOrNull { it.nutrientName == "Karbohidrat" }
-                                    ?.value ?: 0.0) * consumedPercentage *
-                                        (report.portionCount ?: 1f)
+                                totalCalories += report.calories.toFloat() * consumedPercentage
+                                totalProtein += report.protein.toFloat() * consumedPercentage
+                                totalFat += report.fat.toFloat() * consumedPercentage
+                                totalCarbs += report.carbs.toFloat() * consumedPercentage
+                                totalWater += report.air.toFloat() * consumedPercentage
                             }
-                        }
-                        
+
                         var caloriesNeeds = 0.0
                         var proteinNeeds = 0.0
                         var fatNeeds = 0.0
                         var carbsNeeds = 0.0
-                        
+                        var waterNeeds = 2000
+
                         userProfileResource.data?.let { user ->
                             val bmr = if (user.gender == Gender.MALE) {
                                 88.4 + (13.4 * user.weight) +
@@ -128,19 +112,11 @@ class MacronutrientIntakeInteractor(
                                 fatIntake = totalFat.roundOff(),
                                 carbsNeeds = carbsNeeds.roundOff(),
                                 carbsIntake = totalCarbs.roundOff(),
+                                waterIntake = totalWater.roundOff(),
+                                waterNeeds = waterNeeds.toDouble()
                             )
                         )
-                    }
-                    
-                    is Resource.Error -> {
-                        Resource.Error(foodNutrientsResource.message.orEmpty())
-                    }
-                    
-                    is Resource.Loading -> {
-                        Resource.Loading()
-                    }
                 }
             }
     }
     
-}

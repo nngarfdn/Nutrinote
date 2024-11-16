@@ -68,7 +68,7 @@ interface MainApiService {
     @GET("get_detail_report")
     @Headers("API_Key: $GIZI_SECRET_KEY")
     suspend fun getReportById(
-        @Query("id_user") userId: Int,
+//        @Query("id_user") userId: Int,
         @Query("id") reportId: Int,
     ): ReportResponse
     

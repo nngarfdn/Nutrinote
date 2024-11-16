@@ -38,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
         }
         
         observeLoginResult()
-        binding.apply {
-            edtEmail.setText("nutrinotegama@gmail.com")
-            edtPassword.setText("nutrinotegama@gmail.com")
-            btnLogin.performClick()
-        }
+//        binding.apply {
+//            edtEmail.setText("nutrinotegama@gmail.com")
+//            edtPassword.setText("nutrinotegama@gmail.com")
+//            btnLogin.performClick()
+//        }
     }
     
     private fun observeLoginResult() {

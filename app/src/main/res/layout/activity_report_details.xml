@@ -140,11 +140,55 @@
                     android:text="Kandungan gizi yang dikonsumsi:" />
 
                 <TextView
+                    android:id="@+id/tv_gram_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    tools:text="100 gram" />
+
+                <TextView
                     android:id="@+id/tv_consumed_nutrition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    tools:text="10 porsi - 100 g/porsi" />
+                    android:visibility="gone"
+                    tools:text="10 porsi" />
+
+                <TextView
+                    android:id="@+id/tv_karbo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="karbo" />
+
+                <TextView
+                    android:id="@+id/tv_calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="kalori" />
+
+                <TextView
+                    android:id="@+id/tv_protein"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="protein" />
+
+                <TextView
+                    android:id="@+id/tv_fat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="fat" />
+
+                <TextView
+                    android:id="@+id/tv_air"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="air" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFoodNutrition"

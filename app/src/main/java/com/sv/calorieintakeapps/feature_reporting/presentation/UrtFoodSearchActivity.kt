@@ -12,7 +12,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.sv.calorieintakeapps.databinding.ActivityUrtFoodSearchBinding
 import com.sv.calorieintakeapps.feature_reporting.di.UrtFoodModule
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_ID
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_NAME
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_AIR
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CARBS
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FAT
@@ -115,7 +117,13 @@ class UrtFoodSearchActivity : AppCompatActivity() {
                         result.data.let { food ->
                             val urtAsString = moshiAdapter.toJson(food.urt)
                             returnIntent.putExtra(EXTRA_URT_LIST, urtAsString)
-                            Log.d("FIKRI5738", urtAsString)
+                            returnIntent.putExtra(EXTRA_FOOD_NAME, food.name)
+                            returnIntent.putExtra(EXTRA_FOOD_ID, food.id)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_CALORIES, food.energi)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_PROTEIN, food.protein)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_FAT, food.lemak)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_CARBS, food.karbohidrat)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_AIR, food.air)
                         }
                         setResult(RESULT_OK, returnIntent)
                         finish()

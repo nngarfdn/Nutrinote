@@ -71,7 +71,6 @@ class AdapterHistory(
             activity.startActivity(
                 holder.itemView.context.openReportDetailsIntent(
                     reportId!!,
-                    item.foodId ?: -1,
                     item.foodName,
                     isFromLocalDb
                 )
@@ -109,8 +108,6 @@ class AdapterHistory(
                             reportId!!,
                             item.foodName,
                             isFromLocalDb,
-                            foodId =  item.foodId ?: -1,
-                            nilaigiziComFoodId = item.nilaigiziComFoodId,
                             calories = item.calories.split(" ").first(),
                             protein = item.protein.split(" ").first(),
                             fat = item.fat.split(" ").first(),

@@ -13,6 +13,6 @@ data class ReportsResponse(
     val apiMessage: String? = null,
     
     @Json(name = "data")
-    val reports: List<ReportResponse.Report?>? = null,
+    var reports: List<ReportResponse.Report?>? = null,
     
     )

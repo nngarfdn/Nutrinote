@@ -24,6 +24,10 @@ interface IReportingRepository {
         protein: String?,
         fat: String?,
         carbs: String?,
+        gramTotalDikonsumsi: Float,
+        isUsingUrt: Boolean,
+        gramPerUrt: Float,
+        porsiUrt: Int,
     ): Flow<Resource<Boolean>>
     
     fun getReportById(reportId: Int): Flow<Resource<Report>>

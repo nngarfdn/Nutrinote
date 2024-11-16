@@ -26,6 +26,10 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         protein: String?,
         fat: String?,
         carbs: String?,
+        gramTotalDikonsumsi: Float,
+        isUsingUrt: Boolean,
+        gramPerUrt: Float,
+        porsiUrt: Int,
     ): Flow<Resource<Boolean>> {
         return if (postImageFile == null) {
             reportingRepository.addReportToDb(
@@ -64,6 +68,10 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
                 protein = protein,
                 fat = fat,
                 carbs = carbs,
+                gramTotalDikonsumsi = gramTotalDikonsumsi,
+                isUsingUrt = isUsingUrt,
+                gramPerUrt = gramPerUrt,
+                porsiUrt = porsiUrt,
             )
         }
     }

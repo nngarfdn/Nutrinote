@@ -13,7 +13,7 @@ data class ReportResponse(
     val apiMessage: String? = null,
     
     @Json(name = "data")
-    val report: Report? = null,
+    var report: Report? = null,
     
     ) {
     
@@ -29,7 +29,7 @@ data class ReportResponse(
         @Json(name = "id_food")
         val foodId: Int? = null,
         
-        @Json(name = "food_name")
+        @Json(name = "nama_makanan")
         val foodName: String? = null,
         
         @Json(name = "status_report")
@@ -55,7 +55,38 @@ data class ReportResponse(
         
         @Json(name = "total_portion")
         val portionCount: Float? = null,
-        
+
+        @Json(name = "total_karbohidrat")
+        val totalKarbo: Float? = null,
+
+        @Json(name = "total_protein")
+        val totalProtein: Float? = null,
+
+        @Json(name = "total_lemak")
+        val totalLemak: Float? = null,
+
+        @Json(name = "total_energi")
+        val totalEnergi: Float? = null,
+
+        @Json(name = "total_air")
+        val totalAir: Float? = null,
+
+        @Json(name = "gram_total_dikonsumsi")
+        val gramTotalDikonsumsi: Float? = null,
+
+        @Json(name = "is_menggunakan_urt")
+        val isUsingUrtInt: Int? = null,
+
+        var isUsingUrt: Boolean? = null,
+
+        @Json(name = "gram_tiap_urt")
+        val gramPerUrt: Float? = null,
+
+        @Json(name = "porsi_urt")
+        val porsiUrt: Float? = null,
+
+        @Json(name = "id_makanan_new_api")
+        val idMakananNewApi: Int? = null,
         )
     
 }

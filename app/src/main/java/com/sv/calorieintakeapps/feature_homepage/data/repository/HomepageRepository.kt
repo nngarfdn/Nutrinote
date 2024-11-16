@@ -45,8 +45,7 @@ class HomepageRepository(
 
             override suspend fun saveCallResult(data: ReportsResponse) {
                 val reports = mapResponseToDomain(data)
-                val filteredReports = reports.filter { it.status == reportStatus }
-                resultDB = filteredReports
+                resultDB = reports
             }
         }.asFlow()
     }

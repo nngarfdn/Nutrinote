@@ -2,6 +2,7 @@ package com.sv.calorieintakeapps.feature_reportdetails.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.R
@@ -38,7 +39,7 @@ class ReportDetailsActivity : AppCompatActivity() {
         foodNutrientAdapter = FoodNutrientAdapter()
         
         observeReportById(reportId, isFromLocalDb)
-        observeNutrition(foodId)
+//        observeNutrition(foodId)
     }
     
     @SuppressLint("SetTextI18n")
@@ -54,11 +55,24 @@ class ReportDetailsActivity : AppCompatActivity() {
                             val percentage = result.data?.percentage ?: 0
                             foodNutrientAdapter.percentage = percentage
                             
-                            val portionCount = result.data?.portionCount ?: 1f
-                            foodNutrientAdapter.totalPortion = portionCount
-                            tvConsumedNutrition.text =
-                                "$portionCount porsi"
-                            
+                            val gramTotal = result.data?.gramTotalDikonsumsi
+                            val porsiDimakan = result.data?.porsiUrt?.toFloat() ?: 0f
+                            val gramPerUrt = result.data?.gramPerUrt
+                            foodNutrientAdapter.totalPortion = porsiDimakan
+//                            if (result.data?.isUsingUrt == true) {
+//                                tvConsumedNutrition.visibility = View.GONE
+//                            } else {
+//                                tvConsumedNutrition.visibility = View.VISIBLE
+//                            }
+                            tvGramTotal.text = "Gram total dikonsumsi: $gramTotal g"
+                            tvConsumedNutrition.text = "Porsi dimakan: $porsiDimakan"
+                            tvConsumedNutrition.text = "Gram tiap URT: $gramPerUrt"
+                            tvKarbo.text = "Karbohidrat: ${result.data?.carbs ?: 0} g"
+                            tvFat.text = "Lemak: ${result.data?.fat ?: 0} g"
+                            tvProtein.text = "Protein: ${result.data?.protein ?: 0} g"
+                            tvCalories.text = "Kalori: ${result.data?.calories ?: 0} g"
+                            tvAir.text = "Air: ${result.data?.air ?: 0} ml"
+
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
                             
                             if (result.data?.preImageFile != null) {

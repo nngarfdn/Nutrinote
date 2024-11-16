@@ -28,26 +28,24 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
-import com.sv.calorieintakeapps.feature_foodnutrition.data.OnClickItemMode
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_EXPECT_SEARCH
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_ID
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_NAME
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_AIR
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CARBS
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FAT
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
-import com.sv.calorieintakeapps.library_common.action.Actions.openFoodNutritionSearchIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_URT_LIST
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
-import com.sv.calorieintakeapps.library_common.ui.dialog.TimePickerFragment
-import com.sv.calorieintakeapps.library_common.util.gone
 import com.sv.calorieintakeapps.library_common.util.load
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.data.source.remote.urt.Urt
-import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
-import com.sv.calorieintakeapps.library_database.domain.model.Report
-import com.sv.calorieintakeapps.library_database.vo.Resource
+import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -67,43 +65,40 @@ private const val TIME_PICKER_TAG = "TimePicker"
 private const val DATE_FORMAT = "yyyy-MM-dd"
 private const val TIME_FORMAT = "HH:mm:00"
 
-class ReportingActivity : AppCompatActivity(), View.OnClickListener,
-    DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
+class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragment.DialogDateListener {
     
     private lateinit var binding: ActivityReportingBinding
     private val reportingViewModel: ReportingViewModel by viewModel()
     private var reportId = -1
-    private var foodId = -1
-    private var nilaigiziComFoodId = -1
     private var preImageUri: Uri? = null
     private var preImageFile: File? = null
     private var postImageUri: Uri? = null
     private var postImageFile: File? = null
-    private var merchantId = -1
     private var foodName: String? = null
-
     private var isUpdate = false
     private var isFromLocalDb = false
-    private var realPortionCount: Float = 0f
-
     private var urtList: List<Urt> = emptyList()
     private lateinit var moshiAdapter: JsonAdapter<List<Urt>>
-
     private var mood = ""
-//    private var percentage: Int? = null;
-    
+    private var expectSearch: Boolean = false
+    private var idMakanananNewApi: Int = -1
+    private var gramPerUrt: Float = 0F
+
     private var calories: String? = null
     private var protein: String? = null
     private var fat: String? = null
     private var carbs: String? = null
+    private var air: String? = null
 
-    private var expectSearch: Boolean = false
+    private var caloriesBase: String? = null
+    private var proteinBase: String? = null
+    private var fatBase: String? = null
+    private var carbsBase: String? = null
+    private var airBase: String? = null
 
-    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
 
     private lateinit var urtFoodActivityResultLauncher: ActivityResultLauncher<Intent>
-
-    val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
 
     private val cameraIntentLauncherPreImage = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
         if (isSaved) {
@@ -181,48 +176,16 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         return null
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
         ReportingModule.load()
-        
         shouldAskStoragePermission(RC_READ_EXTERNAL_STORAGE_PERMISSION)
-
 
         val moshi = Moshi.Builder().build()
         val listType = Types.newParameterizedType(List::class.java, Urt::class.java)
         moshiAdapter = moshi.adapter(listType)
-
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                foodId = result.data!!.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
-                foodName = result.data!!.getStringExtra(Actions.EXTRA_FOOD_NAME)
-                nilaigiziComFoodId = result.data!!.getIntExtra(Actions.EXTRA_NILAIGIZI_COM_FOOD_ID, -1)
-                merchantId = result.data!!.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
-                calories = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CALORIES)
-                protein = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_PROTEIN)
-                fat = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_FAT)
-                carbs = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CARBS)
-
-                binding.apply {
-                    edtFoodName.setText(foodName)
-
-                    if (nilaigiziComFoodId != -1) {
-                        edtPortionSize.setText("100 g/porsi")
-//                        edtPortionSize.isEnabled = false
-                    }
-
-                    if (foodId != -1) {
-                        edtPortionSize.gone()
-                    }
-                }
-            }
-        }
 
         urtFoodActivityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -230,6 +193,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
             if (result.resultCode == RESULT_OK && result.data != null) {
                 val urtListAsString = result.data!!.getStringExtra(Actions.EXTRA_URT_LIST) ?: ""
                 urtList = moshiAdapter.fromJson(urtListAsString) ?: emptyList()
+                foodName = result.data!!.getStringExtra(Actions.EXTRA_FOOD_NAME)
+                binding.edtFoodName.setText(foodName)
+                idMakanananNewApi = result.data!!.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
+                caloriesBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CALORIES)
+                proteinBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_PROTEIN)
+                carbsBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CARBS)
+                fatBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_FAT)
+                airBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_AIR)
                 binding.apply {
                     val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
                     urtDropdown.setAdapter(adapter)
@@ -244,9 +215,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                         ) {
                             val selectedFood = urtList[position]
                             val selectedFoodItem = urtList.find { it.name == selectedFood.name }
-                            selectedFoodItem?.let {
-                                binding.edtPortionSize.setText(it.gramMlPerPorsi)
-                            }
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -254,13 +222,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                         }
 
                     }
-//                    urtDropdown.setOnItemClickListener { parent, _, position, _ ->
-//                        val selectedFood = parent.getItemAtPosition(position) as Urt
-//                        val selectedFoodItem = urtList.find { it.name == selectedFood.name }
-//                        selectedFoodItem?.let {
-//                            binding.edtPortionSize.setText(it.gramMlPerPorsi)
-//                        }
-//                    }
                 }
             }
         }
@@ -268,15 +229,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         isFromLocalDb = intent.getBooleanExtra(Actions.EXTRA_IS_FROM_LOCAL_DB, false)
         isUpdate = intent.hasExtra(Actions.EXTRA_REPORT_ID)
         reportId = intent.getIntExtra(Actions.EXTRA_REPORT_ID, -1)
-        foodId = intent.getIntExtra(Actions.EXTRA_FOOD_ID, -1)
         foodName = intent.getStringExtra(Actions.EXTRA_FOOD_NAME)
-        nilaigiziComFoodId = intent.getIntExtra(Actions.EXTRA_NILAIGIZI_COM_FOOD_ID, -1)
-        merchantId = intent.getIntExtra(Actions.EXTRA_MERCHANT_ID, -1)
-        
-        calories = intent.getStringExtra(EXTRA_NILAIGIZI_COM_CALORIES)
-        protein = intent.getStringExtra(EXTRA_NILAIGIZI_COM_PROTEIN)
-        fat = intent.getStringExtra(EXTRA_NILAIGIZI_COM_FAT)
-        carbs = intent.getStringExtra(EXTRA_NILAIGIZI_COM_CARBS)
         expectSearch = intent.getBooleanExtra(EXTRA_EXPECT_SEARCH, false)
         
         bindUI()
@@ -285,15 +238,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     private fun bindUI() {
         binding.edtPercent.filters = arrayOf<InputFilter>(MinMaxFilter(0, 100))
 
-        val arrayAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, itemMood)
-        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.apply {
-            edtUrtFoodName.setOnClickListener {
-                urtFoodActivityResultLauncher.launch(openUrtFoodSearchIntent())
+            spinnerMood.adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_spinner_item, itemMood).apply {
+                setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             }
-            spinnerMood.adapter = arrayAdapter
             edtDate.setOnClickListener(this@ReportingActivity)
-            edtTime.setOnClickListener(this@ReportingActivity)
             edtPercent.setOnClickListener(this@ReportingActivity)
             btnPreImage.setOnClickListener(this@ReportingActivity)
             btnPostImage.setOnClickListener(this@ReportingActivity)
@@ -308,43 +257,24 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 SesiMakan("Makan malam (18.01-21.00)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 19) }),
                 SesiMakan("Selingan malam (21.01-01.59)", Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 22) }),
             )
-            val jamAdapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, sesiMakanList)
-            sesiMakanDropdown.setAdapter(jamAdapter)
-
-            // Handle selection to access the original FoodItem object
-//            urtDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>?,
-//                    view: View?,
-//                    position: Int,
-//                    id: Long
-//                ) {
-//                    val selectedFood = sesiMakanList[position]
-//                    val selectedFoodItem = sesiMakanList.find { it.name == selectedFood.name }
-//                    selectedFoodItem?.let {
-//                        binding.edtPortionSize.setText(it.gramMlPerPorsi)
-//                    }
-//                }
-//
-//                override fun onNothingSelected(parent: AdapterView<*>?) {
-//
-//                }
-
-//            }
+            sesiMakanDropdown.adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, sesiMakanList)
             urtList = listOf(Urt(0, "Pilih jenis urt"))
-            val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
-            urtDropdown.setAdapter(adapter)
-            cbUseUrt.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    edtUrtFoodName.visibility = View.VISIBLE
+            urtDropdown.adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
+
+            cbUseUrt.setOnCheckedChangeListener { buttonView, isUsingUrt ->
+                if (isUsingUrt) {
                     urtDropdown.visibility = View.VISIBLE
-                    edtPortionSize.visibility = View.GONE
+                    edtPortionCount.visibility = View.VISIBLE
+                    edtGramTotalDikonsumsi.visibility = View.GONE
+
                 } else {
-                    edtUrtFoodName.visibility = View.GONE
                     urtDropdown.visibility = View.GONE
-                    edtPortionSize.visibility = View.VISIBLE
+                    edtPortionCount.visibility = View.GONE
+                    edtGramTotalDikonsumsi.visibility = View.VISIBLE
                 }
             }
+            edtPortionCount.visibility = View.GONE
+            urtDropdown.visibility = View.GONE
             btnBack.setOnClickListener { onBackPressed() }
             btn0Percent.setOnClickListener {
                 edtPercent.setText("0")
@@ -372,30 +302,21 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 observeGetReportById()
                 observeDbDelete()
                 observeDbToServerReportResult()
+                observerUrtFoodDetail()
+                observeDbToDbReportResult()
                 edtFoodName.isEnabled = false
             } else {
                 tvTitle.text = "Buat Laporan"
                 btnDelete.visibility = View.GONE
                 observeAddReportResult()
-
-                edtFoodName.isEnabled = foodName == null
             }
 
             edtFoodName.setText(foodName)
 
-            if (nilaigiziComFoodId != -1) {
-                edtPortionSize.setText("100 g/porsi")
-//                edtPortionSize.isEnabled = false
-            }
-
-            if (foodId != -1) {
-                edtPortionSize.gone()
-            }
-
             if (expectSearch) {
                 edtFoodName.isClickable = true
                 edtFoodName.setOnClickListener {
-                    activityResultLauncher.launch(openFoodNutritionSearchIntent(null, OnClickItemMode.RETURN_DATA))
+                    urtFoodActivityResultLauncher.launch(openUrtFoodSearchIntent())
                 }
             }
         }
@@ -501,11 +422,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         reportingViewModel.addReportResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
+                    ApiResponse.Empty -> {
                         binding.btnSave.isEnabled = false
                     }
-                    
-                    is Resource.Success -> {
+                    is ApiResponse.Error -> {
+                        binding.btnSave.isEnabled = true
+                        showToast(result.errorMessage)
+                    }
+                    is ApiResponse.Success -> {
                         showToast("Berhasil mengirim laporan")
                         startActivity(
                             openHomepageIntent().setFlags(
@@ -513,11 +437,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                                         Intent.FLAG_ACTIVITY_NEW_TASK
                             )
                         )
-                    }
-                    
-                    is Resource.Error -> {
-                        binding.btnSave.isEnabled = true
-                        showToast(result.message)
                     }
                 }
             }
@@ -528,11 +447,14 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         reportingViewModel.dbToServerReportResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
+                    ApiResponse.Empty -> {
                         binding.btnSave.isEnabled = false
                     }
-
-                    is Resource.Success -> {
+                    is ApiResponse.Error -> {
+                        binding.btnSave.isEnabled = true
+                        showToast(result.errorMessage)
+                    }
+                    is ApiResponse.Success -> {
                         showToast("Berhasil mengirim laporan")
                         startActivity(
                             openHomepageIntent().setFlags(
@@ -541,10 +463,30 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             )
                         )
                     }
+                }
+            }
+        }
+    }
 
-                    is Resource.Error -> {
+    private fun observeDbToDbReportResult() {
+        reportingViewModel.dbToDbResult.observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    ApiResponse.Empty -> {
+                        binding.btnSave.isEnabled = false
+                    }
+                    is ApiResponse.Error -> {
                         binding.btnSave.isEnabled = true
-                        showToast(result.message)
+                        showToast(result.errorMessage)
+                    }
+                    is ApiResponse.Success -> {
+                        showToast("Berhasil mengirim laporan")
+                        startActivity(
+                            openHomepageIntent().setFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                                        Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        )
                     }
                 }
             }
@@ -555,44 +497,103 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         reportingViewModel.editReportResult.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {
+                    ApiResponse.Empty -> {
                         binding.btnSave.isEnabled = false
                         binding.btnDelete.isEnabled = false
                     }
-                    
-                    is Resource.Success -> {
-                        showToast("Berhasil mengedit laporan")
-                        onBackPressed()
-                    }
-                    
-                    is Resource.Error -> {
+                    is ApiResponse.Error -> {
                         binding.btnSave.isEnabled = true
                         binding.btnDelete.isEnabled = true
-                        showToast(result.message)
+                        showToast(result.errorMessage)
+                    }
+                    is ApiResponse.Success -> {
+                        showToast("Berhasil mengedit laporan")
+                        onBackPressed()
                     }
                 }
             }
         }
     }
-    
+
+
+    private fun observerUrtFoodDetail() {
+        reportingViewModel.foodDetailResult.observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    ApiResponse.Empty -> {}
+                    is ApiResponse.Error -> showToast(result.errorMessage)
+                    is ApiResponse.Success -> {
+                        result.data.let { food ->
+                            urtList = food.urt ?: emptyList()
+                            val selectedItem = urtList.indexOfFirst { it.gramMlPerPorsi?.toFloatOrNull() == gramPerUrt  }
+                            val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
+
+                            binding.urtDropdown.setAdapter(adapter)
+                            binding.urtDropdown.setSelection(selectedItem)
+
+
+                            // Handle selection to access the original FoodItem object
+                            binding.urtDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    val selectedFood = urtList[position]
+                                    val selectedFoodItem = urtList.find { it.name == selectedFood.name }
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                                }
+
+                            }
+                            caloriesBase = food.energi
+                            proteinBase = food.protein
+                            fatBase = food.lemak
+                            carbsBase = food.karbohidrat
+                            airBase = food.air
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun observeGetReportById() {
+        Log.d("FIKRI42858", isFromLocalDb.toString())
         reportingViewModel.getReportById(reportId, isFromLocalDb).observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {}
-                    
-                    is Resource.Success -> {
+                    ApiResponse.Empty -> {}
+                    is ApiResponse.Error -> {
+                        showToast(result.errorMessage)
+                    }
+                    is ApiResponse.Success -> {
                         binding.apply {
-                            val report = result.data ?: Report()
-                            foodId = report.foodId ?: -1
-                            edtDate.setText(report.getDateOnly())
-                            edtTime.setText(report.getTimeOnly())
+                            val report = result.data
+
+                            idMakanananNewApi = report.idMakananNewApi
+                            // set food name
+                            edtFoodName.setText(report.foodName)
+                            // set is using urt
+                            cbUseUrt.isChecked = report.isUsingUrt
+                            if (report.isUsingUrt) {
+                                gramPerUrt = report.gramPerUrt
+                                reportingViewModel.setFoodDetailId(report.idMakananNewApi)
+                                edtPortionCount.setText(report.porsiUrt.toString())
+                                // search urt with id
+                            } else {
+                                reportingViewModel.setFoodDetailId(report.idMakananNewApi)
+                                edtGramTotalDikonsumsi.setText(report.gramTotalDikonsumsi.toString())
+                            }
+                            // set time
                             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
                             val date = dateFormat.parse(report.date)
                             val calendar = Calendar.getInstance()
                             if (date != null) {
                                 calendar.time = date
-                                // Now calendar holds the date and time from the string
                                 println("Year: ${calendar.get(Calendar.YEAR)}")
                                 println("Month: ${calendar.get(Calendar.MONTH) + 1}") // Month is 0-based
                                 println("Day: ${calendar.get(Calendar.DAY_OF_MONTH)}")
@@ -612,7 +613,11 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                                 22 -> sesiMakanDropdown.setSelection(6)
                             }
 
+                            // set date
+                            edtDate.setText(report.getDateOnly())
+                            // set percent consumed
                             edtPercent.setText(report.percentage.toString())
+                            // set image before
                             if (report.preImageFile != null) {
                                 imgPreImage.load(report.preImageFile)
                                 preImageFile = report.preImageFile
@@ -621,6 +626,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             } else {
                                 imgPreImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
+                            // set image after
                             if (report.postImageFile != null) {
                                 imgPostImage.load(report.postImageFile)
                                 postImageFile = report.postImageFile
@@ -629,25 +635,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                             } else {
                                 imgPostImage.setImageResource(com.sv.calorieintakeapps.R.drawable.img_no_image_24)
                             }
+                            // set mood
                             when (report.mood) {
                                 "Senang/Semangat" -> spinnerMood.setSelection(0)
                                 "Sedih/Sakit" -> spinnerMood.setSelection(1)
                                 "Biasa Saja" -> spinnerMood.setSelection(2)
                             }
-                            
-                            edtPortionCount.setText((report.portionCount ?: 1).toString())
-                            nilaigiziComFoodId = report.nilaigiziComFoodId ?: -1
-                            if (report.nilaigiziComFoodId != null) {
-                                edtPortionSize.setText("100 g/porsi")
-                                edtPortionSize.isEnabled = false
-                            }
-                            
-                            edtPortionSize.gone()
                         }
-                    }
-                    
-                    is Resource.Error -> {
-                        showToast(result.message)
                     }
                 }
             }
@@ -662,7 +656,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(view: View?) {
         when (view?.id) {
             binding.edtDate.id -> showDatePicker()
-            binding.edtTime.id -> showTimePicker()
             binding.edtPercent.id -> view as EditText
             binding.btnPreImage.id -> showImagePickerDialog(binding.btnPreImage.id)
             binding.btnPostImage.id -> showImagePickerDialog(binding.btnPostImage.id)
@@ -673,49 +666,127 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
     
     private fun saveReport() {
         val date = binding.edtDate.text.toString()
+        val timeFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
+        val time = timeFormat.format((binding.sesiMakanDropdown.selectedItem as SesiMakan).jam.time)
 
-        val dateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        val a = dateFormat.format((binding.sesiMakanDropdown.selectedItem as SesiMakan).jam.time)
-        binding.edtTime.setText(a)
-        val time = binding.edtTime.text.toString()
-        val percentage: Int? =
-            if (!binding.edtPercent.text.toString().isEmpty()) binding.edtPercent.text.toString()
-                .toInt() else null;
+        val strPercent = binding.edtPercent.text.toString()
+        val percentage: Int? = strPercent.toIntOrNull()
+
         mood = itemMood[binding.spinnerMood.selectedItemPosition]
-        val foodId = if (foodId != -1) foodId else null
-        val nilaigiziComFoodId = if (nilaigiziComFoodId != -1) nilaigiziComFoodId else null
+
         val foodName = binding.edtFoodName.text.toString()
-        val portionSize = binding.edtPortionSize.text.toString()
-        val portionCount = binding.edtPortionCount.text.toString().ifBlank { "1" }.toFloat()
-        val urt = (binding.urtDropdown.selectedItem as Urt).gramMlPerPorsi?.toFloat() ?: 0f
-        if (binding.cbUseUrt.isChecked) {
-            realPortionCount = (urt / 100) * portionCount
+        var gramTotalDikonsumsi = 0f
+        val isUsingUrt = binding.cbUseUrt.isChecked
+        val gramPerUrt = (binding.urtDropdown.selectedItem as? Urt)?.gramMlPerPorsi?.toFloat() ?: 0f
+        val porsiUrt = binding.edtPortionCount.text.toString().toIntOrNull() ?: 0
+
+        var totalCalories = 0f
+        var totalProtein = 0f
+        var totalFat = 0f
+        var totalCarbs = 0f
+        var totalAir = 0f
+
+        if (isUsingUrt) {
+            gramTotalDikonsumsi = gramPerUrt * porsiUrt
+            val multiplier = gramTotalDikonsumsi / 100
+            totalCalories = (caloriesBase?.toFloat() ?: 0f) * multiplier
+            totalProtein = (proteinBase?.toFloat() ?: 0f) * multiplier
+            totalFat = (fatBase?.toFloat() ?: 0f) * multiplier
+            totalCarbs = (carbsBase?.toFloat() ?: 0f) * multiplier
+            totalAir = (airBase?.toFloat() ?: 0f) * multiplier
+
+            if (strPercent.isNotEmpty()) {
+                totalCalories = totalCalories * (100 - percentage!!) / 100
+                totalProtein = totalProtein * (100 - percentage) / 100
+                totalFat = totalFat * (100 - percentage) / 100
+                totalCarbs = totalCarbs * (100 - percentage) / 100
+                totalAir = totalAir * (100 - percentage) / 100
+            }
         } else {
-            realPortionCount = portionCount
+            gramTotalDikonsumsi = binding.edtGramTotalDikonsumsi.text.toString().toFloatOrNull() ?: 0f
+            val multiplier = gramTotalDikonsumsi / 100
+            totalCalories = (caloriesBase?.toFloat() ?: 0f) * multiplier
+
+            Log.d("FIKRI424243 cal", totalCalories.toString())
+            Log.d("FIKRI424243 calbase", caloriesBase.toString())
+            totalProtein = (proteinBase?.toFloat() ?: 0f) * multiplier
+            totalFat = (fatBase?.toFloat() ?: 0f) * multiplier
+            totalCarbs = (carbsBase?.toFloat() ?: 0f) * multiplier
+            totalAir = (airBase?.toFloat() ?: 0f) * multiplier
+
+            if (strPercent.isNotEmpty()) {
+                totalCalories = totalCalories * (100 - percentage!!) / 100
+                Log.d("FIKRI424243 cal", totalCalories.toString())
+                totalProtein = totalProtein * (100 - percentage) / 100
+                totalFat = totalFat * (100 - percentage) / 100
+                totalCarbs = totalCarbs * (100 - percentage) / 100
+                totalAir = totalAir * (100 - percentage) / 100
+            }
         }
-        val merchantId = if (merchantId != -1) merchantId else null
-        Log.d("FIKRI5256", realPortionCount.toString())
-        
+
+        Log.d("FIKRI4243 foodname", foodName)
+        Log.d("FIKRI4243 date", date)
+        Log.d("FIKRI4243 time", time)
+        Log.d("FIKRI4243 percent", percentage.toString())
+        Log.d("FIKRI4243 preimage", preImageFile?.path.toString())
+        Log.d("FIKRI4243 postimage", postImageFile?.path.toString())
+        Log.d("FIKRI4243 calories", totalCalories.toString())
+        Log.d("FIKRI4243 protein", totalProtein.toString())
+        Log.d("FIKRI4243 fat", totalFat.toString())
+        Log.d("FIKRI4243 carbs", totalCarbs.toString())
+        Log.d("FIKRI4243 air", totalAir.toString())
+        Log.d("FIKRI4243 gramtot", gramTotalDikonsumsi.toString())
+        Log.d("FIKRI4243 iusingurt", isUsingUrt.toString())
+        Log.d("FIKRI4243 gramperurt", gramPerUrt.toString())
+        Log.d("FIKRI4243 porsiurt", porsiUrt.toString())
+        Log.d("FIKRI4243 idmakananapi", idMakanananNewApi.toString())
+
         if (isUpdate) {
-            if (postImageFile != null && isFromLocalDb) {
-                reportingViewModel.editFromLocalDbToServer(
-                    roomId = reportId,
-                    foodId = foodId,
-                    date = date,
-                    time = time,
-                    percentage = percentage,
-                    mood = mood,
-                    preImageFile = preImageFile,
-                    postImageFile = postImageFile,
-                    nilaigiziComFoodId = nilaigiziComFoodId,
-                    portionCount = realPortionCount,
-                    foodName = foodName,
-                    portionSize = portionSize,
-                    calories = calories,
-                    protein = protein,
-                    fat = fat,
-                    carbs = carbs,
-                )
+            if (isFromLocalDb) {
+                if (strPercent.isEmpty()) {
+                    reportingViewModel.editFromLocalDbToLocalDb(
+                        roomId = reportId,
+                        date = date,
+                        time = time,
+                        percentage = percentage,
+                        mood = mood,
+                        preImageFile = preImageFile,
+                        postImageFile = postImageFile,
+                        foodName = foodName,
+                        calories = totalCalories.toString(),
+                        protein = totalProtein.toString(),
+                        fat = totalFat.toString(),
+                        carbs = totalCarbs.toString(),
+                        air = totalAir.toString(),
+                        gramTotalDikonsumsi = gramTotalDikonsumsi,
+                        isUsingUrt = isUsingUrt,
+                        gramPerUrt = gramPerUrt,
+                        porsiUrt = porsiUrt,
+                        idMakanananNewApi = idMakanananNewApi,
+                    )
+                } else {
+                    Log.d("FIKRI", "4828")
+                    reportingViewModel.editFromLocalDbToServer(
+                        roomId = reportId,
+                        date = date,
+                        time = time,
+                        percentage = percentage,
+                        mood = mood,
+                        preImageFile = preImageFile,
+                        postImageFile = postImageFile,
+                        foodName = foodName,
+                        calories = totalCalories.toString(),
+                        protein = totalProtein.toString(),
+                        fat = totalFat.toString(),
+                        carbs = totalCarbs.toString(),
+                        air = totalAir.toString(),
+                        gramTotalDikonsumsi = gramTotalDikonsumsi,
+                        isUsingUrt = isUsingUrt,
+                        gramPerUrt = gramPerUrt,
+                        porsiUrt = porsiUrt,
+                        idMakanananNewApi = idMakanananNewApi,
+                    )
+                }
             } else {
                 reportingViewModel.editReport(
                     reportId = reportId,
@@ -725,37 +796,39 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                     mood = mood,
                     preImageFile = preImageFile,
                     postImageFile = postImageFile,
-                    foodId = foodId,
-                    nilaigiziComFoodId = nilaigiziComFoodId,
-                    portionCount = realPortionCount,
                     foodName = foodName,
-                    portionSize = portionSize,
-                    merchantId = merchantId,
-                    calories = calories,
-                    protein = protein,
-                    fat = fat,
-                    carbs = carbs,
-                    isFromLocalDb = isFromLocalDb,
+                    calories = totalCalories.toString(),
+                    protein = totalProtein.toString(),
+                    fat = totalFat.toString(),
+                    carbs = totalCarbs.toString(),
+                    air = totalAir.toString(),
+                    gramTotalDikonsumsi = gramTotalDikonsumsi,
+                    isUsingUrt = isUsingUrt,
+                    gramPerUrt = gramPerUrt,
+                    porsiUrt = porsiUrt,
+                    idMakanananNewApi = idMakanananNewApi,
                 )
             }
         } else {
             reportingViewModel.addReport(
-                foodId = foodId,
                 date = date,
                 time = time,
                 percentage = percentage,
                 mood = mood,
                 preImageFile = preImageFile,
                 postImageFile = postImageFile,
-                nilaigiziComFoodId = nilaigiziComFoodId,
-                portionCount = realPortionCount,
                 foodName = foodName,
-                portionSize = portionSize,
-                merchantId = merchantId,
-                calories = calories,
-                protein = protein,
-                fat = fat,
-                carbs = carbs,
+                calories = totalCalories.toString(),
+                protein = totalProtein.toString(),
+                fat = totalFat.toString(),
+                carbs = totalCarbs.toString(),
+                air = totalAir.toString(),
+                gramTotalDikonsumsi = gramTotalDikonsumsi,
+                isUsingUrt = isUsingUrt,
+                gramPerUrt = gramPerUrt,
+                porsiUrt = porsiUrt,
+                idMakanananNewApi = idMakanananNewApi,
+                isSavetoLocalDb = strPercent.isEmpty()
             )
         }
     }
@@ -768,15 +841,13 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
                 reportingViewModel.deleteReportById(reportId).observe(this) { result ->
                     if (result != null) {
                         when (result) {
-                            is Resource.Loading -> {}
-                            
-                            is Resource.Success -> {
+                            ApiResponse.Empty -> {}
+                            is ApiResponse.Error -> {
+                                showToast(result.errorMessage)
+                            }
+                            is ApiResponse.Success -> {
                                 showToast("Laporan berhasil dihapus")
                                 onBackPressed()
-                            }
-                            
-                            is Resource.Error -> {
-                                showToast(result.message)
                             }
                         }
                     }
@@ -797,26 +868,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener,
         val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         binding.edtDate.setText(dateFormat.format(calendar.time))
     }
-    
-    private fun showTimePicker() {
-        val timePickerFragment = TimePickerFragment()
-        timePickerFragment.show(supportFragmentManager, TIME_PICKER_TAG)
-    }
-    
-    override fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        calendar.set(Calendar.MINUTE, minute)
-        val dateFormat = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        binding.edtTime.setText(dateFormat.format(calendar.time))
-    }
-    
-    private fun chooseImage(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, "Unggah foto"), requestCode)
-    }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         ReportingModule.unload()

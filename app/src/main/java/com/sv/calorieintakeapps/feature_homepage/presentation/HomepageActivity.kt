@@ -32,7 +32,10 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
     
     override fun onClick(view: View) {
         when (view.id) {
-            binding.btnReport.id -> startActivity(openReportingIntent(expectSearch = true))
+            binding.btnReport.id -> startActivity(openReportingIntent(
+                expectSearch = true,
+                writeFoodName = true
+            ))
         }
     }
     

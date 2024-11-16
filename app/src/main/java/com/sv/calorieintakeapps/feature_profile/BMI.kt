@@ -3,9 +3,7 @@ package com.sv.calorieintakeapps.feature_profile
 object BMI {
 
     fun calculate(weightKg: Float, heightM: Float): Float {
-        if (weightKg <= 0 || heightM <= 0) {
-            throw IllegalArgumentException("Height and weight must be greater than zero")
-        }
+        if (weightKg <= 0 || heightM <= 0) return 0f
         return weightKg / (heightM * heightM)
     }
 
