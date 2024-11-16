@@ -34,7 +34,7 @@ class HomepageActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedLi
         when (view.id) {
             binding.btnReport.id -> startActivity(openReportingIntent(
                 expectSearch = true,
-                writeFoodName = true
+                writeFoodName = false
             ))
         }
     }

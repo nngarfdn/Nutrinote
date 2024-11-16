@@ -40,6 +40,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_CO
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_URT_LIST
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
 import com.sv.calorieintakeapps.library_common.ui.dialog.DatePickerFragment
 import com.sv.calorieintakeapps.library_common.util.load
@@ -431,12 +432,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                     }
                     is ApiResponse.Success -> {
                         showToast("Berhasil mengirim laporan")
-                        startActivity(
-                            openHomepageIntent().setFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                                        Intent.FLAG_ACTIVITY_NEW_TASK
-                            )
-                        )
+                        showAlertDialog()
                     }
                 }
             }
@@ -832,7 +828,35 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             )
         }
     }
-    
+
+    private fun showAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Ada makanan lain?")
+//        builder.setMessage("Ada makanan lain?")
+
+        builder.setPositiveButton("Ya") { dialog, _ ->
+            finish()
+            startActivity(openReportingIntent(
+                expectSearch = true,
+                writeFoodName = false
+            ))
+            dialog.dismiss() // Dismiss the dialog when "OK" is clicked
+        }
+
+        builder.setNegativeButton("Tidak") { dialog, _ ->
+            startActivity(
+                openHomepageIntent().setFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            )
+            dialog.dismiss() // Dismiss the dialog when "Cancel" is clicked
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
     private fun deleteReport() {
         AlertDialog.Builder(this)
             .setTitle("Hapus laporan")
