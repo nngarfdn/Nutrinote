@@ -40,7 +40,7 @@ class HistoryViewModel(useCase: HomepageUseCase, localDataSource: LocalDataSourc
                 porsiUrt = item.porsiUrt,
                 idMakananNewApi = item.idMakanananNewApi
             )
-        }
+        }.reversed()
         emit(list)
     }
 }
