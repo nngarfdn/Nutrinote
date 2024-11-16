@@ -67,11 +67,16 @@ class ReportDetailsActivity : AppCompatActivity() {
                             tvGramTotal.text = "Gram total dikonsumsi: $gramTotal g"
                             tvConsumedNutrition.text = "Porsi dimakan: $porsiDimakan"
                             tvConsumedNutrition.text = "Gram tiap URT: $gramPerUrt"
-                            tvKarbo.text = "Karbohidrat: ${result.data?.carbs ?: 0} g"
-                            tvFat.text = "Lemak: ${result.data?.fat ?: 0} g"
-                            tvProtein.text = "Protein: ${result.data?.protein ?: 0} g"
-                            tvCalories.text = "Kalori: ${result.data?.calories ?: 0} g"
-                            tvAir.text = "Air: ${result.data?.air ?: 0} ml"
+                            val formattedKarbo = String.format("%.1f", result.data?.carbs?.toFloat())
+                            tvKarbo.text = "Karbohidrat: $formattedKarbo g"
+                            val formattedFat = String.format("%.1f", result.data?.fat?.toFloat())
+                            tvFat.text = "Lemak: $formattedFat g"
+                            val formattedProtein = String.format("%.1f", result.data?.protein?.toFloat())
+                            tvProtein.text = "Protein: $formattedProtein g"
+                            val formattedCal = String.format("%.1f", result.data?.calories?.toFloat())
+                            tvCalories.text = "Kalori: $formattedCal g"
+                            val formattedAir = String.format("%.1f", result.data?.air?.toFloat())
+                            tvAir.text = "Air: $formattedAir ml"
 
                             txtSisaHidangan.text = result.data?.percentage.toString() + "%"
                             
