@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalorieIntakeApps">
         <activity
+            android:name=".feature_add_new_food.AddNewFoodActivity"
+            android:exported="false" />
+        <activity
             android:name=".app.splash.TutorialActivity"
             android:exported="false" />
         <activity

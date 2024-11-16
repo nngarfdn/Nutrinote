@@ -51,4 +51,16 @@
         android:padding="24dp"
         tools:listitem="@layout/item_food_nutrition" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_new_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:background="@drawable/btn_primary"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Ajukan Makanan"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
 </LinearLayout>

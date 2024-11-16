@@ -8,6 +8,7 @@ package com.sv.calorieintakeapps.library_common.action
 import android.content.Context
 import android.content.Intent
 import com.sv.calorieintakeapps.app.splash.TutorialActivity
+import com.sv.calorieintakeapps.feature_add_new_food.AddNewFoodActivity
 import com.sv.calorieintakeapps.feature_auth.presentation.login.LoginActivity
 import com.sv.calorieintakeapps.feature_auth.presentation.register.RegisterActivity
 import com.sv.calorieintakeapps.feature_fooddetails.presentation.FoodDetailActivity
@@ -39,6 +40,7 @@ object Actions {
     const val EXTRA_EXPECT_SEARCH = "extra_expect_search"
     const val EXTRA_WRITE_FOOD_NAME = "extra_write_food_name"
     const val EXTRA_ON_CLICK_ITEM_MODE = "extra_on_click_item_mode"
+    const val EXTRA_IS_CLICK_ENABLED = "extra_is_click_enabled"
     const val EXTRA_IS_FROM_LOCAL_DB = "extra_is_from_local_db"
 
     const val EXTRA_NILAIGIZI_COM_PROTEIN = "extra_nilaigizi_com_protein" // 1
@@ -86,8 +88,11 @@ object Actions {
         return Intent(this?.applicationContext, TutorialActivity::class.java)
     }
 
-    fun Context?.openUrtFoodSearchIntent(): Intent {
+    fun Context?.openUrtFoodSearchIntent(
+        isItemClickEnabled: Boolean
+    ): Intent {
         return Intent(this?.applicationContext, UrtFoodSearchActivity::class.java)
+            .putExtra(EXTRA_IS_CLICK_ENABLED, isItemClickEnabled)
     }
     
     fun Context?.openHomepageIntent(): Intent {
@@ -124,6 +129,10 @@ object Actions {
     
     fun Context?.openRegisterIntent(): Intent {
         return Intent(this?.applicationContext, RegisterActivity::class.java)
+    }
+
+    fun Context?.openAddNewFoodIntent(): Intent {
+        return Intent(this?.applicationContext, AddNewFoodActivity::class.java)
     }
     
     fun Context?.openReportingIntent(

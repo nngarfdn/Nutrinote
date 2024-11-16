@@ -317,7 +317,7 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             if (expectSearch) {
                 edtFoodName.isClickable = true
                 edtFoodName.setOnClickListener {
-                    urtFoodActivityResultLauncher.launch(openUrtFoodSearchIntent())
+                    urtFoodActivityResultLauncher.launch(openUrtFoodSearchIntent(isItemClickEnabled = true))
                 }
             }
         }

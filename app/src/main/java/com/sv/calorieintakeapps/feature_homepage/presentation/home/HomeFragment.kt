@@ -20,6 +20,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openMacronutrientI
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -68,7 +69,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             
             binding.cvFoodNutrition.id -> {
-                startActivity(requireContext().openFoodNutritionSearchIntent(null))
+                startActivity(requireContext().openUrtFoodSearchIntent(isItemClickEnabled = false))
             }
         }
     }
