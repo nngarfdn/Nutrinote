@@ -3,6 +3,7 @@ package com.sv.calorieintakeapps.library_database.data.source.remote
 import android.util.Log
 import com.sv.calorieintakeapps.feature_add_new_food.AddNewFoodResponse
 import com.sv.calorieintakeapps.feature_add_new_food.NewFood
+import com.sv.calorieintakeapps.feature_add_new_food.NewUrt
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
@@ -187,9 +188,23 @@ class RemoteDataSource(
                     calories = newFood.calories,
                     protein = newFood.protein,
                     water = newFood.water,
+                    urtTersedia = newFood.urtTersedia,
                 )
                 emit(ApiResponse.Success(""))
             } catch (e: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(e)))
+            }
+        }
+    }
+
+    suspend fun addNewUrt(listNewUrt: List<NewUrt>): Flow<ApiResponse<List<String>>> {
+        return flow {
+            try {
+                val ids = listNewUrt.map { urtApiService.addNewUrt(it)?.createdId.toString() }
+                Log.d("ids424", ids.toString())
+                emit(ApiResponse.Success(ids))
+            } catch (e: Throwable) {
+                Log.d("ids424", parseErrorMessage(e))
                 emit(ApiResponse.Error(parseErrorMessage(e)))
             }
         }

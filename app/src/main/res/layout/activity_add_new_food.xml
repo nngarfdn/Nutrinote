@@ -152,6 +152,196 @@
                 android:paddingHorizontal="16dp"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/tv_urt_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="URT 1"
+                android:textColor="@color/grey"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_name_1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Sebutan URT"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_value_1"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Gram atau ml tiap URT"
+                android:inputType="number"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_urt_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="URT 2 (opsional)"
+                android:textColor="@color/grey"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_name_2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Sebutan URT"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_value_2"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Gram atau ml tiap URT"
+                android:inputType="number"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_urt_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="URT 3 (opsional)"
+                android:textColor="@color/grey"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_name_3"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Sebutan URT"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_value_3"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Gram atau ml tiap URT"
+                android:inputType="number"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_urt_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="URT 4 (opsional)"
+                android:textColor="@color/grey"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_name_4"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Sebutan URT"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_value_4"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Gram atau ml tiap URT"
+                android:inputType="number"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_urt_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="URT 5 (opsional)"
+                android:textColor="@color/grey"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_name_5"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Sebutan URT"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_urt_value_5"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/edt_primary"
+                android:drawableStart="@drawable/ic_food_19"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="Gram atau ml tiap URT"
+                android:inputType="number"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="16dp"
+                android:textSize="13sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_save"
                 android:layout_width="match_parent"

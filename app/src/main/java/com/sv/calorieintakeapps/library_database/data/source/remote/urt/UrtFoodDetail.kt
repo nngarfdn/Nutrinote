@@ -39,7 +39,7 @@ data class Urt(
     val id: Int,
     @Json(name = "nama_urt") val name: String? = null,
     @Json(name = "gram_ml_per_porsi") val gramMlPerPorsi: String? = null,
-    @Json(name = "gambar_makanan") val imageLink: String? = null
+//    @Json(name = "gambar_makanan") val imageLink: String? = null
 ) {
     override fun toString(): String {
         val str = StringBuilder().append(name)

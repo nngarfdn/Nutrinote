@@ -3,16 +3,12 @@ package com.sv.calorieintakeapps.feature_add_new_food
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import com.sv.calorieintakeapps.feature_foodnutrition.domain.usecase.FoodNutritionUseCase
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
-import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
-import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.collectLatest
 
 class AddNewFoodViewModel(
@@ -34,6 +30,22 @@ class AddNewFoodViewModel(
                 }
             }
         }
+
+    private val listNewUrt = MutableLiveData<List<NewUrt>>()
+
+    fun addNewUrt(listNewUrt: List<NewUrt>) {
+        this.listNewUrt.value = listNewUrt
+    }
+
+    val addNewUrtResult: LiveData<ApiResponse<List<String>>> =
+        listNewUrt.switchMap {
+            liveData {
+                val result = remoteDataSource.addNewUrt(it)
+                result.collectLatest {
+                    emit(it)
+                }
+            }
+        }
     
 }
 
@@ -44,4 +56,11 @@ data class NewFood(
     val protein: String,
     val fat: String,
     val water: String,
+    val urtTersedia: String,
+)
+
+@JsonClass(generateAdapter = true)
+data class NewUrt(
+    @Json(name = "nama_urt") val name: String,
+    @Json(name = "gram_ml_per_porsi") val gramOrMlPerPortion: String,
 )

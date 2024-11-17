@@ -1,6 +1,8 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote.urt
 
 import com.sv.calorieintakeapps.feature_add_new_food.AddNewFoodResponse
+import com.sv.calorieintakeapps.feature_add_new_food.AddNewUrtResponse
+import com.sv.calorieintakeapps.feature_add_new_food.NewUrt
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.request.NilaigiziComLoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionDetailsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom.response.FoodNutritionSearchResponse
@@ -38,5 +40,11 @@ interface UrtApiService {
         @Field("protein") protein: String,
         @Field("energi") calories: String,
         @Field("air") water: String,
+        @Field("urt_tersedia") urtTersedia: String,
     ): AddNewFoodResponse?
+
+    @POST("urt/update")
+    suspend fun addNewUrt(
+        @Body request: NewUrt,
+    ): AddNewUrtResponse?
 }
