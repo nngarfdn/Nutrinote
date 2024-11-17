@@ -862,16 +862,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             .setTitle("Hapus laporan")
             .setMessage("Apakah kamu yakin ingin menghapus laporan ini?")
             .setPositiveButton("Ya") { _, _ ->
-                reportingViewModel.deleteReportById(reportId).observe(this) { result ->
-                    if (result != null) {
-                        when (result) {
-                            ApiResponse.Empty -> {}
-                            is ApiResponse.Error -> {
-                                showToast(result.errorMessage)
-                            }
-                            is ApiResponse.Success -> {
-                                showToast("Laporan berhasil dihapus")
-                                onBackPressed()
+                if (isFromLocalDb) {
+                    reportingViewModel.deleteReportFromLocalDb(reportId)
+                    showToast("Laporan berhasil dihapus")
+                    onBackPressed()
+                } else {
+                    reportingViewModel.deleteReportById(reportId).observe(this) { result ->
+                        if (result != null) {
+                            when (result) {
+                                ApiResponse.Empty -> {}
+                                is ApiResponse.Error -> {
+                                    showToast(result.errorMessage)
+                                }
+                                is ApiResponse.Success -> {
+                                    showToast("Laporan berhasil dihapus")
+                                    onBackPressed()
+                                }
                             }
                         }
                     }

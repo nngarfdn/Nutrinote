@@ -383,6 +383,10 @@ class ReportingViewModel(
         )
     }
 
+    fun deleteReportFromLocalDb(roomId: Int) {
+        reportRoomIdDeletation.value = roomId
+    }
+
     private val dbToServerReport = MutableLiveData<Report>()
 
     private var reportRoomIdDeletation = MutableLiveData<Int>()
