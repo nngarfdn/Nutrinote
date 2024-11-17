@@ -1,6 +1,8 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote
 
 import android.util.Log
+import com.sv.calorieintakeapps.feature_add_new_food.AddNewFoodResponse
+import com.sv.calorieintakeapps.feature_add_new_food.NewFood
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.LoginRequest
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.request.RegisterRequest
@@ -34,6 +36,8 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
 import java.io.File
 import kotlin.random.Random
 
@@ -171,6 +175,24 @@ class RemoteDataSource(
                 emit(ApiResponse.Error(parseErrorMessage(throwable)))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun addNewFood(newFood: NewFood): Flow<ApiResponse<String>> {
+        return flow {
+            try {
+                urtApiService.addNewFood(
+                    foodName = newFood.name,
+                    carbs = newFood.carbs,
+                    fat = newFood.fat,
+                    calories = newFood.calories,
+                    protein = newFood.protein,
+                    water = newFood.water,
+                )
+                emit(ApiResponse.Success(""))
+            } catch (e: Throwable) {
+                emit(ApiResponse.Error(parseErrorMessage(e)))
+            }
+        }
     }
 
     suspend fun getFoodNutrientsByFoodIds(

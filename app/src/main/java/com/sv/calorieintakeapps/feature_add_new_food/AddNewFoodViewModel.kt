@@ -11,6 +11,7 @@ import androidx.paging.PagingData
 import com.sv.calorieintakeapps.feature_foodnutrition.domain.usecase.FoodNutritionUseCase
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
+import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.collectLatest
 
@@ -24,15 +25,15 @@ class AddNewFoodViewModel(
         this.newFood.value = newFood
     }
 
-//    val addNewFoodResult: LiveData<Resource<NewFood>> =
-//        newFood.switchMap {
-//            liveData {
-//                val result = remoteDataSource.addNewFood(it)
-//                result.collectLatest {
-//                    emit(it)
-//                }
-//            }
-//        }
+    val addNewFoodResult: LiveData<ApiResponse<String>> =
+        newFood.switchMap {
+            liveData {
+                val result = remoteDataSource.addNewFood(it)
+                result.collectLatest {
+                    emit(it)
+                }
+            }
+        }
     
 }
 
