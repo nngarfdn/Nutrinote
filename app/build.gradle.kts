@@ -112,31 +112,81 @@ android {
     
     buildTypes {
         getByName(BuildType.RELEASE) {
+            isDebuggable = false
+
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
+
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled
+                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled,
                 )
             )
         }
         
         getByName(BuildType.DEBUG) {
+            isDebuggable = true
+
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+
+            addManifestPlaceholders(
+                mapOf(
+                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
+                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
+                )
+            )
+
+            versionNameSuffix = "-dev"
+        }
+
+        create(BuildType.ALPHA) {
+            isDebuggable = true
+
+            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+
+            addManifestPlaceholders(
+                mapOf(
+                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
+                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
+                )
+            )
+
+            versionNameSuffix = "-alpha"
+
+            signingConfig = signingConfigs.getByName(BuildType.DEBUG)
+        }
+
+        create(BuildType.BETA) {
+            isDebuggable = false
+
+            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
             addManifestPlaceholders(
                 mapOf(
-                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled
+                    "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
+                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled,
                 )
             )
+
+            versionNameSuffix = "-beta"
+
+            signingConfig = signingConfigs.getByName(BuildType.DEBUG)
         }
     }
     
@@ -176,7 +226,7 @@ dependencies {
     implementation(platform(Dependencies.FIREBASE_BOM))
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
-    //debugImplementation(Dependencies.LEAKCANARY)
+    debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.PAGING)
     implementation(Dependencies.TIMBER)
     implementation(Dependencies.COIL)
@@ -192,6 +242,8 @@ dependencies {
     implementation(Dependencies.MOSHI_CONVERTER)
     debugImplementation(Dependencies.CHUCKER)
     releaseImplementation(Dependencies.CHUCKER_NO_OP)
+    alphaImplementation(Dependencies.CHUCKER_NO_OP)
+    betaImplementation(Dependencies.CHUCKER_NO_OP)
     implementation(Dependencies.COROUTINES_CORE)
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_ROOM)
@@ -203,3 +255,15 @@ dependencies {
     implementation(Dependencies.CURVE_BOTTOM_BAR)
     implementation(Dependencies.YOUTUBE_PLAYER)
 }
+
+fun DependencyHandler.alphaImplementation(dependencyNotation: Any): Dependency? =
+    add(
+        "alphaImplementation",
+        dependencyNotation,
+    )
+
+fun DependencyHandler.betaImplementation(dependencyNotation: Any): Dependency? =
+    add(
+        "betaImplementation",
+        dependencyNotation,
+    )
