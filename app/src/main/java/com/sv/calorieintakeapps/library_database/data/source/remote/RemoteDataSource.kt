@@ -96,7 +96,6 @@ class RemoteDataSource(
     suspend fun getReportsByUserId(userId: Int): Flow<ApiResponse<ReportsResponse>> {
         return flow {
             try {
-                Log.d("FIKRI4245", userId.toString())
                 val response = mainApiService.getReportsByUserId(userId).apply {
                     reports = reports?.map {
                         val bol = it?.isUsingUrtInt == 1
@@ -201,10 +200,8 @@ class RemoteDataSource(
         return flow {
             try {
                 val ids = listNewUrt.map { urtApiService.addNewUrt(it)?.createdId.toString() }
-                Log.d("ids424", ids.toString())
                 emit(ApiResponse.Success(ids))
             } catch (e: Throwable) {
-                Log.d("ids424", parseErrorMessage(e))
                 emit(ApiResponse.Error(parseErrorMessage(e)))
             }
         }
@@ -263,7 +260,6 @@ class RemoteDataSource(
                     "gram_total_dikonsumsi",
                     report.gramTotalDikonsumsi.toString()
                 )
-                Log.d("FIKRI4254", report.foodName)
                 multipartBuilder.addFormDataPart(
                     "nama_makanan",
                     report.foodName
@@ -357,7 +353,6 @@ class RemoteDataSource(
     suspend fun getReportById(userId: Int, reportId: Int): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
-                Log.d("FIKR9549", reportId.toString())
                 val response = mainApiService.getReportById(reportId)
                 val bol = response.report?.isUsingUrtInt == 1
                 response.report = response.report?.copy(isUsingUrt = bol)
@@ -600,7 +595,6 @@ class RemoteDataSource(
         return flow {
             try {
                 val responses = urtApiService.searchFood(foodName)
-                Log.d("FIKRI4857", responses.size.toString())
                 if (responses.isNotEmpty()) {
                     emit(ApiResponse.Success(responses))
                 } else {
@@ -616,7 +610,6 @@ class RemoteDataSource(
         foodId: Int,
     ): Flow<ApiResponse<UrtFoodDetail>> {
         return flow {
-                Log.d("FIKRI48357", foodId.toString())
             try {
                 val response = urtApiService.getFoodDetail(foodId)
                 if (response != null) {

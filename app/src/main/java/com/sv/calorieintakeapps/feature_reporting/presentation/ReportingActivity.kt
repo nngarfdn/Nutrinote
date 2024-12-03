@@ -558,7 +558,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
     }
 
     private fun observeGetReportById() {
-        Log.d("FIKRI42858", isFromLocalDb.toString())
         reportingViewModel.getReportById(reportId, isFromLocalDb).observe(this) { result ->
             if (result != null) {
                 when (result) {
@@ -702,9 +701,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             gramTotalDikonsumsi = binding.edtGramTotalDikonsumsi.text.toString().toFloatOrNull() ?: 0f
             val multiplier = gramTotalDikonsumsi / 100
             totalCalories = (caloriesBase?.toFloat() ?: 0f) * multiplier
-
-            Log.d("FIKRI424243 cal", totalCalories.toString())
-            Log.d("FIKRI424243 calbase", caloriesBase.toString())
             totalProtein = (proteinBase?.toFloat() ?: 0f) * multiplier
             totalFat = (fatBase?.toFloat() ?: 0f) * multiplier
             totalCarbs = (carbsBase?.toFloat() ?: 0f) * multiplier
@@ -712,30 +708,12 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
 
             if (strPercent.isNotEmpty()) {
                 totalCalories = totalCalories * (100 - percentage!!) / 100
-                Log.d("FIKRI424243 cal", totalCalories.toString())
                 totalProtein = totalProtein * (100 - percentage) / 100
                 totalFat = totalFat * (100 - percentage) / 100
                 totalCarbs = totalCarbs * (100 - percentage) / 100
                 totalAir = totalAir * (100 - percentage) / 100
             }
         }
-
-        Log.d("FIKRI4243 foodname", foodName)
-        Log.d("FIKRI4243 date", date)
-        Log.d("FIKRI4243 time", time)
-        Log.d("FIKRI4243 percent", percentage.toString())
-        Log.d("FIKRI4243 preimage", preImageFile?.path.toString())
-        Log.d("FIKRI4243 postimage", postImageFile?.path.toString())
-        Log.d("FIKRI4243 calories", totalCalories.toString())
-        Log.d("FIKRI4243 protein", totalProtein.toString())
-        Log.d("FIKRI4243 fat", totalFat.toString())
-        Log.d("FIKRI4243 carbs", totalCarbs.toString())
-        Log.d("FIKRI4243 air", totalAir.toString())
-        Log.d("FIKRI4243 gramtot", gramTotalDikonsumsi.toString())
-        Log.d("FIKRI4243 iusingurt", isUsingUrt.toString())
-        Log.d("FIKRI4243 gramperurt", gramPerUrt.toString())
-        Log.d("FIKRI4243 porsiurt", porsiUrt.toString())
-        Log.d("FIKRI4243 idmakananapi", idMakanananNewApi.toString())
 
         if (isUpdate) {
             if (isFromLocalDb) {
@@ -761,7 +739,6 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                         idMakanananNewApi = idMakanananNewApi,
                     )
                 } else {
-                    Log.d("FIKRI", "4828")
                     reportingViewModel.editFromLocalDbToServer(
                         roomId = reportId,
                         date = date,

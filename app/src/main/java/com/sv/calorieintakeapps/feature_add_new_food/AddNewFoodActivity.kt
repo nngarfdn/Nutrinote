@@ -39,7 +39,6 @@ class AddNewFoodActivity : AppCompatActivity() {
                 is ApiResponse.Error -> {}
                 is ApiResponse.Success -> {
                     val ids = result.data
-                    Log.d("FIKRI383", ids.toString())
                     submitNewFood(ids)
                 }
             }
@@ -54,7 +53,6 @@ class AddNewFoodActivity : AppCompatActivity() {
             val urtName4 = edtUrtName4.text.toString()
             val urtName5 = edtUrtName5.text.toString()
             val listUrtName = listOf(urtName1, urtName2, urtName3, urtName4, urtName5)
-            Log.d("FIKRI332", listUrtName.toString())
 
             val urtValue1 = edtUrtValue1.text.toString()
             val urtValue2 = edtUrtValue2.text.toString()
@@ -62,9 +60,7 @@ class AddNewFoodActivity : AppCompatActivity() {
             val urtValue4 = edtUrtValue4.text.toString()
             val urtValue5 = edtUrtValue5.text.toString()
             val listUrtValue = listOf(urtValue1, urtValue2, urtValue3, urtValue4, urtValue5)
-            Log.d("FIKRI3324", listUrtValue.toString())
             val listNewUrt = listUrtName.zip(listUrtValue) { name, value -> NewUrt(name, value) }.filter { it.name.isNotEmpty() || it.gramOrMlPerPortion.isNotEmpty() }
-            Log.d("FIKRI33243", listNewUrt.toString())
             viewModel.addNewUrt(listNewUrt)
         }
     }

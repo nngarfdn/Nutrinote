@@ -134,7 +134,6 @@ class ReportingViewModel(
         if (isFromLocalDb) {
             flow {
                 val resultFromDb = localDataSource.getReportById(reportId)
-                Log.d("FIKRI res db", reportId.toString())
                 if (resultFromDb == null) {
                     emit(ApiResponse.Error("Failed to get from db"))
                     return@flow
@@ -360,7 +359,6 @@ class ReportingViewModel(
         idMakanananNewApi: Int,
     ) {
         val userId = localDataSource.getUserId()
-        Log.d("FIKRI", "38263 $roomId")
         reportRoomIdDeletation.value = roomId
         dbToServerReport.value = Report(
             userId = userId,
