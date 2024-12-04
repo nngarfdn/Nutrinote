@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.databinding.ActivityMacronutrientIntakeResultsBinding
 import com.sv.calorieintakeapps.feature_homepage.presentation.history.AdapterHistory
 import com.sv.calorieintakeapps.feature_macronutrientintake.di.MacronurientIntakeModule
+import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.bottomsheet.FilterMakronutrienBottomSheet
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.vo.Resource
@@ -30,6 +31,11 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
         binding.apply {
             btnBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
+            }
+
+            btnFilter.setOnClickListener {
+                val filterMakronutrienBottomSheet = FilterMakronutrienBottomSheet()
+                filterMakronutrienBottomSheet.show(supportFragmentManager, filterMakronutrienBottomSheet.tag)
             }
             
             foodConsumedAdapter = AdapterHistory(this@MacronutrientIntakeResultsActivity, true)
