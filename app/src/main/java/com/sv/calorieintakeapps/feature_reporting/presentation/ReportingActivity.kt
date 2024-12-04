@@ -355,7 +355,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         preImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
         preImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", preImageFile!!)
-        cameraIntentLauncherPreImage.launch(preImageUri)
+        if (preImageUri != null) {
+            cameraIntentLauncherPreImage.launch(preImageUri!!)
+        }
     }
 
     private fun openGalleryPreImage() {
@@ -371,7 +373,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         postImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
         postImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", postImageFile!!)
-        cameraIntentLauncherPostImage.launch(postImageUri)
+        if (postImageUri != null) {
+            cameraIntentLauncherPostImage.launch(postImageUri!!)
+        }
     }
 
     private fun openGalleryPostImage() {

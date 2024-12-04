@@ -34,7 +34,11 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
             }
 
             btnFilter.setOnClickListener {
-                val filterMakronutrienBottomSheet = FilterMakronutrienBottomSheet()
+                val filterMakronutrienBottomSheet = FilterMakronutrienBottomSheet(
+                    onFilterSelected = { selectedItems ->
+                        println("selectedItems: $selectedItems")
+                    }
+                )
                 filterMakronutrienBottomSheet.show(supportFragmentManager, filterMakronutrienBottomSheet.tag)
             }
             

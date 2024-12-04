@@ -39,4 +39,9 @@ object Versions {
     const val FLEXBOX = "3.0.0"
 
     const val YOUTUBE_PLAYER = "12.1.1"
+
+    const val ACTIVITY_COMPOSE = "1.9.2"
+
+    const val COMPOSE_BOM = "2024.04.01"
+
 }

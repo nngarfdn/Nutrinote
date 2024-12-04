@@ -81,6 +81,16 @@ object Dependencies {
     val FLEXBOX by lazy { "com.google.android.flexbox:flexbox:${Versions.FLEXBOX}" }
 
     val YOUTUBE_PLAYER by lazy { "com.pierfrancescosoffritti.androidyoutubeplayer:core:${Versions.YOUTUBE_PLAYER}" }
+
+    val ACTIVITY_COMPOSE by lazy { "androidx.activity:activity-ktx:${Versions.ACTIVITY_COMPOSE}" }
+    val COMPOSE_BOM by lazy { "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}" }
+    val COMPOSE_UI by lazy { "androidx.compose.ui:ui" }
+    val COMPOSE_UI_GRAPHICS by lazy { "androidx.compose.ui:ui-graphics" }
+    val COMPOSE_UI_TOOLING_PREVIEW by lazy { "androidx.compose.ui:ui-tooling-preview" }
+    val COMPOSE_MATERIAL3 by lazy { "androidx.compose.material3:material3" }
+    val COMPOSE_RUNTIME by lazy { "androidx.compose.runtime:runtime" }
+    val COMPOSE_ACTIVITY by lazy { "androidx.activity:activity-compose" }
+
 }
 
 object TestDependencies {
