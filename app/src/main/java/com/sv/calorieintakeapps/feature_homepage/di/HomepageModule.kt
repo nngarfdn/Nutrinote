@@ -6,6 +6,8 @@ import com.sv.calorieintakeapps.feature_homepage.data.repository.HomepageReposit
 import com.sv.calorieintakeapps.feature_homepage.domain.repository.IHomepageRepository
 import com.sv.calorieintakeapps.feature_homepage.domain.usecase.HomepageInteractor
 import com.sv.calorieintakeapps.feature_homepage.domain.usecase.HomepageUseCase
+import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
+import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportDatabase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
@@ -24,7 +26,7 @@ private val useCaseModule = module {
 }
 
 private val viewModelModule = module {
-    viewModel { HistoryViewModel(useCase = get()) }
+    viewModel { HistoryViewModel(useCase = get(), localDataSource = get()) }
     viewModel { HomeViewModel(useCase = get()) }
 }
 

@@ -7,12 +7,14 @@ import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSour
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
+import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import java.io.File
 
 class ReportDetailsRepository(
     private val localDataSource: LocalDataSource,
@@ -40,6 +42,31 @@ class ReportDetailsRepository(
                 resultDB = mapResponseToDomain(data)
             }
         }.asFlow()
+    }
+
+    override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>> {
+        val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
+        val report = Report(
+            id = reportEntity.id ?: -1,
+            userId = -1,
+            foodName = reportEntity.foodName.orEmpty(),
+            date = reportEntity.date.orEmpty(),
+            percentage = reportEntity.percentage ?: 0,
+            mood = reportEntity.mood.orEmpty(),
+            preImageFile = File(reportEntity.preImageFilePath ?: ""),
+            postImageFile = File(reportEntity.postImageFilePath ?: ""),
+            air = reportEntity.air,
+            calories = reportEntity.calories,
+            carbs = reportEntity.carbs,
+            fat = reportEntity.fat,
+            protein = reportEntity.protein,
+            gramPerUrt = reportEntity.gramPerUrt,
+            gramTotalDikonsumsi = reportEntity.gramTotalDikonsumsi,
+            isUsingUrt = reportEntity.isUsingUrt,
+            porsiUrt = reportEntity.porsiUrt,
+            idMakananNewApi = reportEntity.idMakanananNewApi,
+        )
+        return flowOf(Resource.Success(report))
     }
 
     override fun getFoodNutrientsById(foodId: Int): Flow<Resource<List<FoodNutrient>>> {

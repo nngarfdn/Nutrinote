@@ -61,12 +61,13 @@ class FoodNutritionDetailsActivity : AppCompatActivity() {
                                         openReportingIntent(
                                             foodId = null,
                                             foodName = food.name,
-                                            nilaigiziComFoodId = food.foodId,
                                             merchantId = if (merchantId < 0) null else merchantId,
+                                            nilaigiziComFoodId = food.foodId,
                                             calories = food.calories.split(" ").first(),
                                             protein = food.protein.split(" ").first(),
                                             fat = food.fat.split(" ").first(),
                                             carbs = food.carbs.split(" ").first(),
+                                            writeFoodName = true,
                                         )
                                     )
                                 }

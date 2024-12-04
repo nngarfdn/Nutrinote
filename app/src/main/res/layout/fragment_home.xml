@@ -63,72 +63,16 @@
             app:layout_constraintTop_toBottomOf="@id/imgIlustrasi" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_merchant_menu"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_btn_merchant_menu_117_100" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_reporting"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_btn_reporting_117_100" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/cv_macronutrient_intake"
             android:layout_width="0dp"
             android:layout_height="160dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="12dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_merchant_menu">
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,17 +90,29 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Persentase Asupan Makronutrien"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/cv_macronutrient_intake"
+            app:layout_constraintEnd_toEndOf="@id/cv_macronutrient_intake"
+            app:layout_constraintStart_toStartOf="@id/cv_macronutrient_intake"
+            app:layout_constraintTop_toTopOf="@id/cv_macronutrient_intake"
+            app:layout_constraintVertical_bias="0.78" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_food_nutrition"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/cv_reporting">
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,6 +129,18 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ajukan Makanan\nBaru"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/cv_food_nutrition"
+            app:layout_constraintEnd_toEndOf="@id/cv_food_nutrition"
+            app:layout_constraintStart_toStartOf="@id/cv_food_nutrition"
+            app:layout_constraintTop_toTopOf="@id/cv_food_nutrition"
+            app:layout_constraintVertical_bias="0.78" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

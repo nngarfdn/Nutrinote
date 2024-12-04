@@ -92,6 +92,10 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
                                     "${macronutrientIntakePercentage.carbsPercentage}%"
                                 tvCarbsValue.text =
                                     "${macronutrientIntakePercentage.carbsIntake} / ${macronutrientIntakePercentage.carbsNeeds} g"
+                                tvAirPercentage.text =
+                                    "${macronutrientIntakePercentage.waterPercentage}%"
+                                tvAirValue.text =
+                                    "${macronutrientIntakePercentage.waterIntake} / ${macronutrientIntakePercentage.waterNeeds} ml"
                             }
                         }
                     }

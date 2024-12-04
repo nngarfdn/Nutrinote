@@ -72,6 +72,7 @@
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/poppins_medium"
                     android:hint="Masukkan nama makanan"
+                    android:focusable="false"
                     android:inputType="textCapWords"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />
@@ -87,33 +88,25 @@
                     android:textColor="@color/grey"
                     android:textSize="13sp" />
 
-                <EditText
-                    android:id="@+id/edt_portion_size"
+                <CheckBox
+                    android:id="@+id/cb_use_urt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menggunakan porsi URT?"
+                    />
+
+                <Spinner
+                    android:id="@+id/urt_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:layout_marginVertical="8dp"
                     android:background="@drawable/edt_primary"
-                    android:drawableStart="@drawable/ic_portion_size_24"
-                    android:drawablePadding="8dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:hint="Masukkan ukuran satu porsi"
-                    android:inputType="textCapSentences"
-                    android:paddingHorizontal="16dp"
-                    android:textSize="13sp"
-                    tools:ignore="TextFields" />
-
-                <TextView
-                    android:id="@+id/tv_portion_size_helper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Masukkan dalam gram atau ukuran rumah tangga.\nContoh 1: 100 g/\porsi\nContoh 2: 1 mangkuk"
-                    android:textSize="12sp" />
+                    android:paddingHorizontal="16dp" />
 
                 <EditText
                     android:id="@+id/edt_portion_count"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_marginTop="16dp"
                     android:background="@drawable/edt_primary"
                     android:drawableStart="@drawable/ic_portion_count_24"
                     android:drawablePadding="8dp"
@@ -123,6 +116,30 @@
                     android:maxLength="5"
                     android:paddingHorizontal="16dp"
                     android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/edt_gram_total_dikonsumsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_portion_size_24"
+                    android:drawablePadding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="Masukkan gram"
+                    android:inputType="textCapSentences"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp"
+                    tools:ignore="TextFields" />
+
+                <TextView
+                    android:id="@+id/tv_portion_size_helper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Masukkan dalam gram atau ukuran rumah tangga.\nContoh 1: 100 g/\porsi\nContoh 2: 1 mangkuk"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,20 +151,12 @@
                     android:textColor="@color/grey"
                     android:textSize="13sp" />
 
-                <EditText
-                    android:id="@+id/edt_time"
+                <Spinner
+                    android:id="@+id/sesi_makan_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/edt_primary"
-                    android:cursorVisible="false"
-                    android:drawableStart="@drawable/ic_time_18"
-                    android:drawablePadding="8dp"
-                    android:focusable="false"
-                    android:fontFamily="@font/poppins_medium"
-                    android:hint="Masukkan jam"
-                    android:inputType="none"
-                    android:paddingHorizontal="16dp"
-                    android:textSize="13sp" />
+                    android:paddingHorizontal="16dp" />
 
                 <EditText
                     android:id="@+id/edt_date"
@@ -180,6 +189,8 @@
                     android:id="@+id/edt_percent"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:background="@drawable/edt_primary"
                     android:drawableStart="@drawable/ic_leftovers_24"
                     android:drawablePadding="8dp"
@@ -201,6 +212,7 @@
                     android:textSize="13sp" />
 
                 <LinearLayout
+                    android:id="@+id/btn_0_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -223,6 +235,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_25_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -245,6 +258,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_50_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -267,6 +281,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_75_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -289,6 +304,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_95_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
@@ -311,6 +327,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btn_100_percent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"

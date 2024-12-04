@@ -240,6 +240,33 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_medium"
+                android:text="Indeks Massa Tubuh (IMT)"
+                android:textColor="@color/grey" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_imt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edt_primary"
+                    android:drawableStart="@drawable/ic_person_18"
+                    android:drawablePadding="7dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:inputType="number"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Jenis Kelamin"
                 android:textColor="@color/grey" />
 

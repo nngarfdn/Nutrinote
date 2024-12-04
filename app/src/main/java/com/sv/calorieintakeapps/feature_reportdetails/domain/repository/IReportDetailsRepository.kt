@@ -9,5 +9,7 @@ interface IReportDetailsRepository {
 
     fun getReportById(reportId: Int): Flow<Resource<Report>>
 
+    suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>>
+
     fun getFoodNutrientsById(foodId: Int): Flow<Resource<List<FoodNutrient>>>
 }

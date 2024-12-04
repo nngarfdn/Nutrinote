@@ -37,25 +37,15 @@ class PendingReportsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.userPendingReports.observe(viewLifecycleOwner) { result ->
             if (result != null) {
-                when (result) {
-                    is Resource.Loading -> {
-
-                    }
-                    is Resource.Success -> {
-                        adapterHistory = AdapterHistory(requireActivity(), false)
-                        binding.apply {
-                            rvProsesRiwayat.apply {
-                                val lm = LinearLayoutManager(context)
-                                layoutManager = lm
-                                setHasFixedSize(true)
-                                adapterHistory.data = result.data
-                                adapter = adapterHistory
-                                adapter?.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                    is Resource.Error -> {
-                        activity?.showToast(result.message)
+                adapterHistory = AdapterHistory(requireActivity(), false)
+                binding.apply {
+                    rvProsesRiwayat.apply {
+                        val lm = LinearLayoutManager(context)
+                        layoutManager = lm
+//                        setHasFixedSize(true)
+                        adapterHistory.data = result
+                        adapter = adapterHistory
+                        adapter?.notifyDataSetChanged()
                     }
                 }
             }

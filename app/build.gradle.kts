@@ -98,18 +98,28 @@ android {
             "NILAIGIZI_COM_PASSWORD",
             getKeyProperty("NILAIGIZI_COM_PASSWORD")
         )
+        buildConfigField(
+            "String",
+            "URT_BASE_URL",
+            getKeyProperty("URT_BASE_URL")
+        )
+        buildConfigField(
+            "String",
+            "URT_PUBLIC_KEY",
+            getKeyProperty("URT_PUBLIC_KEY")
+        )
     }
     
     buildTypes {
         getByName(BuildType.RELEASE) {
             isDebuggable = false
-            
+
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            
+
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
@@ -120,62 +130,62 @@ android {
         
         getByName(BuildType.DEBUG) {
             isDebuggable = true
-            
+
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            
+
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
                     "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
                 )
             )
-            
+
             versionNameSuffix = "-dev"
         }
-        
+
         create(BuildType.ALPHA) {
             isDebuggable = true
-            
+
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            
+
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
                     "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
                 )
             )
-            
+
             versionNameSuffix = "-alpha"
-            
+
             signingConfig = signingConfigs.getByName(BuildType.DEBUG)
         }
-        
+
         create(BuildType.BETA) {
             isDebuggable = false
-            
+
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            
+
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
                     "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled,
                 )
             )
-            
+
             versionNameSuffix = "-beta"
-            
+
             signingConfig = signingConfigs.getByName(BuildType.DEBUG)
         }
     }
@@ -243,6 +253,7 @@ dependencies {
     implementation(Dependencies.BALLOON)
     implementation(Dependencies.CODE_SCANNER)
     implementation(Dependencies.CURVE_BOTTOM_BAR)
+    implementation(Dependencies.YOUTUBE_PLAYER)
 }
 
 fun DependencyHandler.alphaImplementation(dependencyNotation: Any): Dependency? =

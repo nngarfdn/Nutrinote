@@ -72,16 +72,22 @@ fun mapResponseToDomain(input: ReportResponse): Report {
         return Report(
             id = this?.id ?: -1,
             userId = this?.userId ?: -1,
-            foodId = this?.foodId ?: -1,
             foodName = this?.foodName.orEmpty(),
-            postImage = this?.postImage.orEmpty(),
-            preImage = this?.preImage.orEmpty(),
             date = this?.date.orEmpty(),
-            status = ReportStatus.new(this?.status.orEmpty()),
             percentage = this?.percentage ?: 0,
             mood = this?.mood.orEmpty(),
-            nilaigiziComFoodId = this?.nilaigiziComFoodId,
-            portionCount = this?.portionCount,
+            preImageUrl = this?.preImage.orEmpty(),
+            postImageUrl = this?.postImage.orEmpty(),
+            air = this?.totalAir.toString(),
+            calories = this?.totalEnergi.toString(),
+            carbs = this?.totalKarbo.toString(),
+            fat = this?.totalLemak.toString(),
+            protein = this?.totalProtein.toString(),
+            gramPerUrt = this?.gramPerUrt ?: 0f,
+            gramTotalDikonsumsi = this?.gramTotalDikonsumsi ?: 0f,
+            isUsingUrt = this?.isUsingUrt ?: false,
+            porsiUrt = this?.porsiUrt?.toInt() ?: 0,
+            idMakananNewApi = this?.idMakananNewApi ?: -1
         )
     }
 }
@@ -91,16 +97,22 @@ fun mapResponseToDomain(input: ReportsResponse): List<Report> {
         Report(
             id = item?.id ?: -1,
             userId = item?.userId ?: -1,
-            foodId = item?.foodId ?: -1,
             foodName = item?.foodName.orEmpty(),
-            postImage = item?.postImage.orEmpty(),
-            preImage = item?.preImage.orEmpty(),
             date = item?.date.orEmpty(),
-            status = ReportStatus.new(item?.status.orEmpty()),
             percentage = item?.percentage ?: 0,
             mood = item?.mood.orEmpty(),
-            nilaigiziComFoodId = item?.nilaigiziComFoodId,
-            portionCount = item?.portionCount,
+            preImageUrl = item?.preImage.orEmpty(),
+            postImageUrl = item?.postImage.orEmpty(),
+            air = item?.totalAir.toString(),
+            calories = item?.totalEnergi.toString(),
+            carbs = item?.totalKarbo.toString(),
+            fat = item?.totalLemak.toString(),
+            protein = item?.totalProtein.toString(),
+            gramPerUrt = item?.gramPerUrt ?: 0f,
+            gramTotalDikonsumsi = item?.gramTotalDikonsumsi ?: 0f,
+            isUsingUrt = item?.isUsingUrt ?: false,
+            porsiUrt = item?.porsiUrt?.toInt() ?: 0,
+            idMakananNewApi = item?.idMakananNewApi ?: -1
         )
     } ?: listOf()
 }

@@ -79,6 +79,7 @@ class FoodDetailActivity : AppCompatActivity() {
                         foodName,
                         if (merchantId < 0) null else merchantId,
                         null,
+                        writeFoodName = true,
                     )
                 )
             }

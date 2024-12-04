@@ -18,7 +18,7 @@ import java.util.*
 
 class AdapterHistory(
     private val activity: Activity,
-    private val isCompleteReport: Boolean,
+    private val isCompletedReport: Boolean,
 ) :
     RecyclerView.Adapter<AdapterHistory.ViewHolder>(),
     Filterable {
@@ -55,7 +55,7 @@ class AdapterHistory(
         return ViewHolder(
             binding.root,
             binding,
-            isCompleteReport
+            isCompletedReport
         )
     }
     
@@ -66,11 +66,13 @@ class AdapterHistory(
         val item = countryFilterList[position]
         holder.bind(item)
         holder.itemView.setOnClickListener {
+            val isFromLocalDb = !isCompletedReport
+            val reportId = if (isCompletedReport) item.id else item.roomId
             activity.startActivity(
                 holder.itemView.context.openReportDetailsIntent(
-                    item.id,
-                    item.foodId ?: -1,
-                    item.foodName
+                    reportId!!,
+                    item.foodName,
+                    isFromLocalDb
                 )
             )
         }
@@ -83,13 +85,15 @@ class AdapterHistory(
     class ViewHolder(
         itemView: View,
         private val binding: ItemHistoryBinding,
-        private val isPendingReport: Boolean,
+        private val isCompletedReport: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         
         fun bind(item: Report) {
             binding.apply {
-                if (!item.preImage.isEmpty()) {
-                    imgItemRiwayat.load(item.preImage)
+                if (item.preImageFile != null) {
+                    imgItemRiwayat.load(item.preImageFile)
+                } else if (item.preImageUrl.isNotEmpty()) {
+                    imgItemRiwayat.load(item.preImageUrl)
                 } else {
                     imgItemRiwayat.setImageResource(R.drawable.ic_placeholder_24)
                 }
@@ -97,10 +101,17 @@ class AdapterHistory(
                 txtLocationRiwayat.text = item.date
                 
                 imgEditRiwayat.setOnClickListener {
+                    val isFromLocalDb = !isCompletedReport
+                    val reportId = if (isCompletedReport) item.id else item.roomId
                     it.context.startActivity(
                         itemView.context.openReportEditingIntent(
-                            item.id,
-                            item.foodName
+                            reportId!!,
+                            item.foodName,
+                            isFromLocalDb,
+                            calories = item.calories.split(" ").first(),
+                            protein = item.protein.split(" ").first(),
+                            fat = item.fat.split(" ").first(),
+                            carbs = item.carbs.split(" ").first(),
                         )
                     )
                 }
@@ -117,8 +128,7 @@ class AdapterHistory(
                 } else {
                     val resultList = ArrayList<Report>()
                     for (row in data!!) {
-                        if (row.postImage.lowercase(Locale.ROOT)
-                                .contains(charSearch.lowercase(Locale.ROOT))
+                        if (row.postImageUrl.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))
                         ) {
                             resultList.add(row)
                         }

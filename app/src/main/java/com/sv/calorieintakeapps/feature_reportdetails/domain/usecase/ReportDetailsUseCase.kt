@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ReportDetailsUseCase {
 
-    fun getReportById(reportId: Int): Flow<Resource<Report>>
+    suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>>
 
     fun getFoodNutrientsById(foodId: Int): Flow<Resource<List<FoodNutrient>>>
 }

@@ -6,9 +6,15 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
         android:name=".app.base.BaseApplication"
@@ -20,6 +26,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalorieIntakeApps">
         <activity
+            android:name=".feature_add_new_food.AddNewFoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app.splash.TutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature_macronutrientintake.presentation.results.MacronutrientIntakeResultsActivity"
             android:exported="false" />
         <activity
@@ -30,6 +42,9 @@
             android:exported="false" />
         <activity
             android:name=".feature_foodnutrition.presentation.search.FoodNutritionSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature_reporting.presentation.UrtFoodSearchActivity"
             android:exported="false" />
 
         <meta-data
@@ -54,7 +69,14 @@
         <activity
             android:name=".feature_reporting.presentation.ReportingActivity"
             android:exported="true"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true">
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".feature_reportdetails.presentation.ReportDetailsActivity"
             android:exported="true" />
@@ -80,6 +102,19 @@
         <activity
             android:name=".feature_auth.presentation.login.LoginActivity"
             android:exported="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sv.calorieintakeapps.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                >
+            </meta-data>
+        </provider>
     </application>
 
 </manifest>

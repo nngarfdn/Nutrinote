@@ -19,6 +19,8 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openLoginIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openMacronutrientIntakeInput
 import com.sv.calorieintakeapps.library_common.action.Actions.openMerchantListIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openProfileIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
+import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -42,8 +44,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         
         binding.apply {
             imgProfile.setOnClickListener(this@HomeFragment)
-            cvMerchantMenu.setOnClickListener(this@HomeFragment)
-            cvReporting.setOnClickListener(this@HomeFragment)
             cvMacronutrientIntake.setOnClickListener(this@HomeFragment)
             cvFoodNutrition.setOnClickListener(this@HomeFragment)
         }
@@ -64,20 +64,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 balloonProfile.showAlignBottom(binding.imgProfile)
             }
             
-            binding.cvMerchantMenu.id -> {
-                startActivity(requireContext().openMerchantListIntent())
-            }
-            
-            binding.cvReporting.id -> {
-                startActivity(requireContext().openMerchantListIntent())
-            }
-            
             binding.cvMacronutrientIntake.id -> {
                 startActivity(requireContext().openMacronutrientIntakeInput())
             }
             
             binding.cvFoodNutrition.id -> {
-                startActivity(requireContext().openFoodNutritionSearchIntent(null))
+                startActivity(requireContext().openUrtFoodSearchIntent(isItemClickEnabled = false))
             }
         }
     }
