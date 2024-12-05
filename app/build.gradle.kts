@@ -22,7 +22,11 @@ fun getKeyProperty(key: String): String {
 android {
     namespace = Configs.APPLICATION_ID
     compileSdk = Configs.COMPILE_SDK
-    
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.4"
+    }
+
     defaultConfig {
         applicationId = Configs.APPLICATION_ID
         minSdk = Configs.MIN_SDK
@@ -112,81 +116,31 @@ android {
     
     buildTypes {
         getByName(BuildType.RELEASE) {
-            isDebuggable = false
-
-            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-
-            addManifestPlaceholders(
-                mapOf(
-                    "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled,
-                )
-            )
-        }
-        
-        getByName(BuildType.DEBUG) {
-            isDebuggable = true
-
-            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-
-            addManifestPlaceholders(
-                mapOf(
-                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
-                )
-            )
-
-            versionNameSuffix = "-dev"
-        }
-
-        create(BuildType.ALPHA) {
-            isDebuggable = true
-
-            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-
-            addManifestPlaceholders(
-                mapOf(
-                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled,
-                )
-            )
-
-            versionNameSuffix = "-alpha"
-
-            signingConfig = signingConfigs.getByName(BuildType.DEBUG)
-        }
-
-        create(BuildType.BETA) {
-            isDebuggable = false
-
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
             addManifestPlaceholders(
                 mapOf(
                     "isAnalyticsEnabled" to BuildTypeRelease.isAnalyticsEnabled,
-                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled,
+                    "isCrashlyticsEnabled" to BuildTypeRelease.isCrashlyticsEnabled
                 )
             )
-
-            versionNameSuffix = "-beta"
-
-            signingConfig = signingConfigs.getByName(BuildType.DEBUG)
+        }
+        
+        getByName(BuildType.DEBUG) {
+            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            addManifestPlaceholders(
+                mapOf(
+                    "isAnalyticsEnabled" to BuildTypeDebug.isAnalyticsEnabled,
+                    "isCrashlyticsEnabled" to BuildTypeDebug.isCrashlyticsEnabled
+                )
+            )
         }
     }
     
@@ -202,6 +156,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        compose = true
     }
     
     packaging {
@@ -226,7 +181,7 @@ dependencies {
     implementation(platform(Dependencies.FIREBASE_BOM))
     implementation(Dependencies.FIREBASE_ANALYTICS)
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
-    debugImplementation(Dependencies.LEAKCANARY)
+    //debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.PAGING)
     implementation(Dependencies.TIMBER)
     implementation(Dependencies.COIL)
@@ -242,8 +197,6 @@ dependencies {
     implementation(Dependencies.MOSHI_CONVERTER)
     debugImplementation(Dependencies.CHUCKER)
     releaseImplementation(Dependencies.CHUCKER_NO_OP)
-    alphaImplementation(Dependencies.CHUCKER_NO_OP)
-    betaImplementation(Dependencies.CHUCKER_NO_OP)
     implementation(Dependencies.COROUTINES_CORE)
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_ROOM)
@@ -254,16 +207,12 @@ dependencies {
     implementation(Dependencies.CODE_SCANNER)
     implementation(Dependencies.CURVE_BOTTOM_BAR)
     implementation(Dependencies.YOUTUBE_PLAYER)
+    implementation(Dependencies.ACTIVITY_COMPOSE)
+    implementation(platform(Dependencies.COMPOSE_BOM))
+    implementation(Dependencies.COMPOSE_UI)
+    implementation(Dependencies.COMPOSE_UI_GRAPHICS)
+    implementation(Dependencies.COMPOSE_UI_TOOLING_PREVIEW)
+    implementation(Dependencies.COMPOSE_MATERIAL3)
+    implementation(Dependencies.COMPOSE_RUNTIME)
+    implementation(Dependencies.COMPOSE_ACTIVITY)
 }
-
-fun DependencyHandler.alphaImplementation(dependencyNotation: Any): Dependency? =
-    add(
-        "alphaImplementation",
-        dependencyNotation,
-    )
-
-fun DependencyHandler.betaImplementation(dependencyNotation: Any): Dependency? =
-    add(
-        "betaImplementation",
-        dependencyNotation,
-    )

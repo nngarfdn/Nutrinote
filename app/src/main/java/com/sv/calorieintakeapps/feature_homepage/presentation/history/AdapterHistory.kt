@@ -13,7 +13,7 @@ import com.sv.calorieintakeapps.databinding.ItemHistoryBinding
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportDetailsIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportEditingIntent
 import com.sv.calorieintakeapps.library_common.util.load
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import java.util.*
 
 class AdapterHistory(
@@ -23,10 +23,10 @@ class AdapterHistory(
     RecyclerView.Adapter<AdapterHistory.ViewHolder>(),
     Filterable {
     
-    private val listItem = ArrayList<Report>()
-    private val listItemFiltered = ArrayList<Report>()
+    private val listItem = ArrayList<ReportDomainModel>()
+    private val listItemFiltered = ArrayList<ReportDomainModel>()
     
-    var data: List<Report>?
+    var data: List<ReportDomainModel>?
         get() = listItem
         @SuppressLint("NotifyDataSetChanged")
         set(listItem) {
@@ -37,7 +37,7 @@ class AdapterHistory(
             notifyDataSetChanged()
         }
     
-    var countryFilterList = listOf<Report>()
+    var countryFilterList = listOf<ReportDomainModel>()
     
     init {
         countryFilterList = data!!
@@ -88,7 +88,7 @@ class AdapterHistory(
         private val isCompletedReport: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         
-        fun bind(item: Report) {
+        fun bind(item: ReportDomainModel) {
             binding.apply {
                 if (item.preImageFile != null) {
                     imgItemRiwayat.load(item.preImageFile)
@@ -126,7 +126,7 @@ class AdapterHistory(
                 countryFilterList = if (charSearch.isEmpty()) {
                     data!!
                 } else {
-                    val resultList = ArrayList<Report>()
+                    val resultList = ArrayList<ReportDomainModel>()
                     for (row in data!!) {
                         if (row.postImageUrl.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))
                         ) {
@@ -145,7 +145,7 @@ class AdapterHistory(
                 constraint: CharSequence?,
                 results: FilterResults?,
             ) {
-                countryFilterList = results?.values as ArrayList<Report>
+                countryFilterList = results?.values as ArrayList<ReportDomainModel>
                 notifyDataSetChanged()
             }
         }
@@ -155,5 +155,5 @@ class AdapterHistory(
 
 interface HistoryAdapterListener {
     
-    fun onEditClicked(item: Report)
+    fun onEditClicked(item: ReportDomainModel)
 }

@@ -16,6 +16,7 @@ data class ReportEntity(
     val fat: String,
     val carbs: String,
     val air: String,
+    val calcium: Float? = null,
     val gramTotalDikonsumsi: Float,
     val isUsingUrt: Boolean,
     val gramPerUrt: Float,

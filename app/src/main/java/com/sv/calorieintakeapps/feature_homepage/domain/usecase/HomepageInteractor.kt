@@ -2,7 +2,7 @@ package com.sv.calorieintakeapps.feature_homepage.domain.usecase
 
 import com.sv.calorieintakeapps.feature_homepage.domain.repository.IHomepageRepository
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -16,11 +16,11 @@ class HomepageInteractor(private val homepageRepository: IHomepageRepository) : 
         return homepageRepository.getUserName()
     }
 
-    override fun getUserCompletedReports(): Flow<Resource<List<Report>>> {
+    override fun getUserCompletedReports(): Flow<Resource<List<ReportDomainModel>>> {
         return homepageRepository.getUserReports(ReportStatus.COMPLETE)
     }
 
-    override fun getUserPendingReports(): Flow<Resource<List<Report>>> {
+    override fun getUserPendingReports(): Flow<Resource<List<ReportDomainModel>>> {
         return homepageRepository.getUserReports(ReportStatus.PENDING)
     }
 

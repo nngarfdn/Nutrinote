@@ -14,7 +14,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -31,14 +30,27 @@ import com.sv.calorieintakeapps.databinding.ActivityReportingBinding
 import com.sv.calorieintakeapps.feature_reporting.di.ReportingModule
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_EXPECT_SEARCH
-import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_ID
-import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_NAME
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_ABU
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_AIR
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_BESI
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_BETA_KAROTEN
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALCIUM
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CARBS
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FAT
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FOSFOR
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_KALIUM
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_KAROTEN_TOTAL
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_NATRIUM
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_NIASIN
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
-import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_URT_LIST
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_RETINOL
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_RIFOBLA
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_SENG
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_SERAT
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_TEMBAGA
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_THIAMIN
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_VITAMIN_C
 import com.sv.calorieintakeapps.library_common.action.Actions.openHomepageIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openReportingIntent
 import com.sv.calorieintakeapps.library_common.action.Actions.openUrtFoodSearchIntent
@@ -96,6 +108,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
     private var fatBase: String? = null
     private var carbsBase: String? = null
     private var airBase: String? = null
+    private var calciumBase: String? = null
+    private var seratBase: String? = null
+    private var abuBase: String? = null
+    private var fosforBase: String? = null
+    private var besiBase: String? = null
+    private var natriumBase: String? = null
+    private var kaliumBase: String? = null
+    private var tembagaBase: String? = null
+    private var sengBase: String? = null
+    private var retinolBase: String? = null
+    private var betaKarotenBase: String? = null
+    private var karotenTotalBase: String? = null
+    private var thiaminBase: String? = null
+    private var rifoblaBase: String? = null
+    private var niasinBase: String? = null
+    private var vitaminCBase: String? = null
 
     private val itemMood = arrayOf("Senang/Semangat", "Sedih/Sakit", "Biasa Saja")
 
@@ -202,6 +230,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                 carbsBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CARBS)
                 fatBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_FAT)
                 airBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_AIR)
+                calciumBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_CALCIUM)
+                seratBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_SERAT)
+                abuBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_ABU)
+                fosforBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_FOSFOR)
+                besiBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_BESI)
+                natriumBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_NATRIUM)
+                kaliumBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_KALIUM)
+                tembagaBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_TEMBAGA)
+                sengBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_SENG)
+                retinolBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_RETINOL)
+                betaKarotenBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_BETA_KAROTEN)
+                karotenTotalBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_KAROTEN_TOTAL)
+                thiaminBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_THIAMIN)
+                rifoblaBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_RIFOBLA)
+                niasinBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_NIASIN)
+                vitaminCBase = result.data!!.getStringExtra(EXTRA_NILAIGIZI_COM_VITAMIN_C)
+
                 binding.apply {
                     val adapter = ArrayAdapter(this@ReportingActivity, R.layout.simple_dropdown_item_1line, urtList)
                     urtDropdown.setAdapter(adapter)
@@ -355,7 +400,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         preImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
         preImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", preImageFile!!)
-        cameraIntentLauncherPreImage.launch(preImageUri)
+        if (preImageUri != null) {
+            cameraIntentLauncherPreImage.launch(preImageUri!!)
+        }
     }
 
     private fun openGalleryPreImage() {
@@ -371,7 +418,9 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         postImageFile = File.createTempFile("IMG_${System.currentTimeMillis()}", ".jpg", storageDir)
         postImageUri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", postImageFile!!)
-        cameraIntentLauncherPostImage.launch(postImageUri)
+        if (postImageUri != null) {
+            cameraIntentLauncherPostImage.launch(postImageUri!!)
+        }
     }
 
     private fun openGalleryPostImage() {
@@ -550,6 +599,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                             fatBase = food.lemak
                             carbsBase = food.karbohidrat
                             airBase = food.air
+                            calciumBase = food.kalsium
+                            seratBase = food.serat
+                            abuBase = food.abu
+                            fosforBase = food.fosfor
+                            besiBase = food.besi
+                            natriumBase = food.natrium
+                            kaliumBase = food.kalium
+                            tembagaBase = food.tembaga
+                            sengBase = food.seng
+                            retinolBase = food.retinol
+                            betaKarotenBase = food.bKar
+                            karotenTotalBase = food.karTot
+                            thiaminBase = food.thiamin
+                            rifoblaBase = food.rifobla
+                            niasinBase = food.niasin
+                            vitaminCBase = food.vitC
                         }
                     }
                 }
@@ -675,11 +740,29 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
         val gramPerUrt = (binding.urtDropdown.selectedItem as? Urt)?.gramMlPerPorsi?.toFloat() ?: 0f
         val porsiUrt = binding.edtPortionCount.text.toString().toIntOrNull() ?: 0
 
+        val selectedUrtName = (binding.urtDropdown.selectedItem as? Urt)?.name.orEmpty()
+        println("Selected URT: $selectedUrtName")
         var totalCalories = 0f
         var totalProtein = 0f
         var totalFat = 0f
         var totalCarbs = 0f
         var totalAir = 0f
+        var totalCalcium = 0f
+        var totalSerat = 0f
+        var totalAbu = 0f
+        var totalFosfor = 0f
+        var totalBesi = 0f
+        var totalNatrium = 0f
+        var totalKalium = 0f
+        var totalTembaga = 0f
+        var totalSeng = 0f
+        var totalRetinol = 0f
+        var totalBetaKaroten = 0f
+        var totalKarotenTotal = 0f
+        var totalThiamin = 0f
+        var totalRifobla = 0f
+        var totalNiasin = 0f
+        var totalVitaminC = 0f
 
         if (isUsingUrt) {
             gramTotalDikonsumsi = gramPerUrt * porsiUrt
@@ -689,6 +772,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             totalFat = (fatBase?.toFloat() ?: 0f) * multiplier
             totalCarbs = (carbsBase?.toFloat() ?: 0f) * multiplier
             totalAir = (airBase?.toFloat() ?: 0f) * multiplier
+            totalCalcium = (calciumBase?.toFloat() ?: 0f) * multiplier
+            totalSerat = (seratBase?.toFloat() ?: 0f) * multiplier
+            totalAbu = (abuBase?.toFloat() ?: 0f) * multiplier
+            totalFosfor = (fosforBase?.toFloat() ?: 0f) * multiplier
+            totalBesi = (besiBase?.toFloat() ?: 0f) * multiplier
+            totalNatrium = (natriumBase?.toFloat() ?: 0f) * multiplier
+            totalKalium = (kaliumBase?.toFloat() ?: 0f) * multiplier
+            totalTembaga = (tembagaBase?.toFloat() ?: 0f) * multiplier
+            totalSeng = (sengBase?.toFloat() ?: 0f) * multiplier
+            totalRetinol = (retinolBase?.toFloat() ?: 0f) * multiplier
+            totalBetaKaroten = (betaKarotenBase?.toFloat() ?: 0f) * multiplier
+            totalKarotenTotal = (karotenTotalBase?.toFloat() ?: 0f) * multiplier
+            totalThiamin = (thiaminBase?.toFloat() ?: 0f) * multiplier
+            totalRifobla = (rifoblaBase?.toFloat() ?: 0f) * multiplier
+            totalNiasin = (niasinBase?.toFloat() ?: 0f) * multiplier
+            totalVitaminC = (vitaminCBase?.toFloat() ?: 0f) * multiplier
 
             if (strPercent.isNotEmpty()) {
                 totalCalories = totalCalories * (100 - percentage!!) / 100
@@ -696,6 +795,22 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                 totalFat = totalFat * (100 - percentage) / 100
                 totalCarbs = totalCarbs * (100 - percentage) / 100
                 totalAir = totalAir * (100 - percentage) / 100
+                totalCalcium = totalCalcium * (100 - percentage) / 100
+                totalSerat = totalSerat * (100 - percentage) / 100
+                totalAbu = totalAbu * (100 - percentage) / 100
+                totalFosfor = totalFosfor * (100 - percentage) / 100
+                totalBesi = totalBesi * (100 - percentage) / 100
+                totalNatrium = totalNatrium * (100 - percentage) / 100
+                totalKalium = totalKalium * (100 - percentage) / 100
+                totalTembaga = totalTembaga * (100 - percentage) / 100
+                totalSeng = totalSeng * (100 - percentage) / 100
+                totalRetinol = totalRetinol * (100 - percentage) / 100
+                totalBetaKaroten = totalBetaKaroten * (100 - percentage) / 100
+                totalKarotenTotal = totalKarotenTotal * (100 - percentage) / 100
+                totalThiamin = totalThiamin * (100 - percentage) / 100
+                totalRifobla = totalRifobla * (100 - percentage) / 100
+                totalNiasin = totalNiasin * (100 - percentage) / 100
+                totalVitaminC = totalVitaminC * (100 - percentage) / 100
             }
         } else {
             gramTotalDikonsumsi = binding.edtGramTotalDikonsumsi.text.toString().toFloatOrNull() ?: 0f
@@ -705,13 +820,44 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
             totalFat = (fatBase?.toFloat() ?: 0f) * multiplier
             totalCarbs = (carbsBase?.toFloat() ?: 0f) * multiplier
             totalAir = (airBase?.toFloat() ?: 0f) * multiplier
-
+            totalCalcium = (calciumBase?.toFloat() ?: 0f) * multiplier
+            totalSerat = (seratBase?.toFloat() ?: 0f) * multiplier
+            totalAbu = (abuBase?.toFloat() ?: 0f) * multiplier
+            totalFosfor = (fosforBase?.toFloat() ?: 0f) * multiplier
+            totalBesi = (besiBase?.toFloat() ?: 0f) * multiplier
+            totalNatrium = (natriumBase?.toFloat() ?: 0f) * multiplier
+            totalKalium = (kaliumBase?.toFloat() ?: 0f) * multiplier
+            totalTembaga = (tembagaBase?.toFloat() ?: 0f) * multiplier
+            totalSeng = (sengBase?.toFloat() ?: 0f) * multiplier
+            totalRetinol = (retinolBase?.toFloat() ?: 0f) * multiplier
+            totalBetaKaroten = (betaKarotenBase?.toFloat() ?: 0f) * multiplier
+            totalKarotenTotal = (karotenTotalBase?.toFloat() ?: 0f) * multiplier
+            totalThiamin = (thiaminBase?.toFloat() ?: 0f) * multiplier
+            totalRifobla = (rifoblaBase?.toFloat() ?: 0f) * multiplier
+            totalNiasin = (niasinBase?.toFloat() ?: 0f) * multiplier
+            totalVitaminC = (vitaminCBase?.toFloat() ?: 0f) * multiplier
             if (strPercent.isNotEmpty()) {
                 totalCalories = totalCalories * (100 - percentage!!) / 100
                 totalProtein = totalProtein * (100 - percentage) / 100
                 totalFat = totalFat * (100 - percentage) / 100
                 totalCarbs = totalCarbs * (100 - percentage) / 100
                 totalAir = totalAir * (100 - percentage) / 100
+                totalCalcium = totalCalcium * (100 - percentage) / 100
+                totalSerat = totalSerat * (100 - percentage) / 100
+                totalAbu = totalAbu * (100 - percentage) / 100
+                totalFosfor = totalFosfor * (100 - percentage) / 100
+                totalBesi = totalBesi * (100 - percentage) / 100
+                totalNatrium = totalNatrium * (100 - percentage) / 100
+                totalKalium = totalKalium * (100 - percentage) / 100
+                totalTembaga = totalTembaga * (100 - percentage) / 100
+                totalSeng = totalSeng * (100 - percentage) / 100
+                totalRetinol = totalRetinol * (100 - percentage) / 100
+                totalBetaKaroten = totalBetaKaroten * (100 - percentage) / 100
+                totalKarotenTotal = totalKarotenTotal * (100 - percentage) / 100
+                totalThiamin = totalThiamin * (100 - percentage) / 100
+                totalRifobla = totalRifobla * (100 - percentage) / 100
+                totalNiasin = totalNiasin * (100 - percentage) / 100
+                totalVitaminC = totalVitaminC * (100 - percentage) / 100
             }
         }
 
@@ -737,6 +883,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                         gramPerUrt = gramPerUrt,
                         porsiUrt = porsiUrt,
                         idMakanananNewApi = idMakanananNewApi,
+                        calcium = totalCalcium,
+                        serat = totalSerat,
+                        abu = totalAbu,
+                        fosfor = totalFosfor,
+                        besi = totalBesi,
+                        natrium = totalNatrium,
+                        kalium = totalKalium,
+                        tembaga = totalTembaga,
+                        seng = totalSeng,
+                        retinol = totalRetinol,
+                        betaKaroten = totalBetaKaroten,
+                        karotenTotal = totalKarotenTotal,
+                        thiamin = totalThiamin,
+                        rifobla = totalRifobla,
+                        niasin = totalNiasin,
+                        vitaminC = totalVitaminC,
+                        urtName = selectedUrtName
                     )
                 } else {
                     reportingViewModel.editFromLocalDbToServer(
@@ -758,6 +921,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                         gramPerUrt = gramPerUrt,
                         porsiUrt = porsiUrt,
                         idMakanananNewApi = idMakanananNewApi,
+                        calcium = totalCalcium,
+                        serat = totalSerat,
+                        abu = totalAbu,
+                        fosfor = totalFosfor,
+                        besi = totalBesi,
+                        natrium = totalNatrium,
+                        kalium = totalKalium,
+                        tembaga = totalTembaga,
+                        seng = totalSeng,
+                        retinol = totalRetinol,
+                        betaKaroten = totalBetaKaroten,
+                        karotenTotal = totalKarotenTotal,
+                        thiamin = totalThiamin,
+                        rifobla = totalRifobla,
+                        niasin = totalNiasin,
+                        vitaminC = totalVitaminC,
+                        urtName = selectedUrtName
                     )
                 }
             } else {
@@ -780,6 +960,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                     gramPerUrt = gramPerUrt,
                     porsiUrt = porsiUrt,
                     idMakanananNewApi = idMakanananNewApi,
+                    calcium = totalCalcium,
+                    serat = totalSerat,
+                    abu = totalAbu,
+                    fosfor = totalFosfor,
+                    besi = totalBesi,
+                    natrium = totalNatrium,
+                    kalium = totalKalium,
+                    tembaga = totalTembaga,
+                    seng = totalSeng,
+                    retinol = totalRetinol,
+                    betaKaroten = totalBetaKaroten,
+                    karotenTotal = totalKarotenTotal,
+                    thiamin = totalThiamin,
+                    rifobla = totalRifobla,
+                    niasin = totalNiasin,
+                    vitaminC = totalVitaminC,
+                    urtName = selectedUrtName
                 )
             }
         } else {
@@ -801,7 +998,24 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                 gramPerUrt = gramPerUrt,
                 porsiUrt = porsiUrt,
                 idMakanananNewApi = idMakanananNewApi,
-                isSavetoLocalDb = strPercent.isEmpty()
+                isSavetoLocalDb = strPercent.isEmpty(),
+                calcium = totalCalcium,
+                serat = totalSerat,
+                abu = totalAbu,
+                fosfor = totalFosfor,
+                besi = totalBesi,
+                natrium = totalNatrium,
+                kalium = totalKalium,
+                tembaga = totalTembaga,
+                seng = totalSeng,
+                retinol = totalRetinol,
+                betaKaroten = totalBetaKaroten,
+                karotenTotal = totalKarotenTotal,
+                thiamin = totalThiamin,
+                rifobla = totalRifobla,
+                niasin = totalNiasin,
+                vitaminC = totalVitaminC,
+                urtName = selectedUrtName
             )
         }
     }

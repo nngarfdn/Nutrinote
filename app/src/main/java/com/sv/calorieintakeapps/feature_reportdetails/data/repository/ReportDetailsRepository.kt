@@ -7,9 +7,8 @@ import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSour
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.FoodNutrientsResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
-import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
@@ -21,15 +20,15 @@ class ReportDetailsRepository(
     private val remoteDataSource: RemoteDataSource
 ) : IReportDetailsRepository {
 
-    override fun getReportById(reportId: Int): Flow<Resource<Report>> {
-        return object : NetworkBoundResource<Report, ReportResponse>() {
-            private var resultDB = Report()
+    override fun getReportById(reportId: Int): Flow<Resource<ReportDomainModel>> {
+        return object : NetworkBoundResource<ReportDomainModel, ReportResponse>() {
+            private var resultDB = ReportDomainModel()
 
-            override fun loadFromDB(): Flow<Report> {
+            override fun loadFromDB(): Flow<ReportDomainModel> {
                 return flowOf(resultDB)
             }
 
-            override fun shouldFetch(data: Report?): Boolean {
+            override fun shouldFetch(data: ReportDomainModel?): Boolean {
                 return true
             }
 
@@ -44,9 +43,9 @@ class ReportDetailsRepository(
         }.asFlow()
     }
 
-    override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>> {
+    override suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<ReportDomainModel>> {
         val reportEntity = localDataSource.getReportById(reportId) ?: return flowOf(Resource.Error("Report not found", null))
-        val report = Report(
+        val report = ReportDomainModel(
             id = reportEntity.id ?: -1,
             userId = -1,
             foodName = reportEntity.foodName.orEmpty(),

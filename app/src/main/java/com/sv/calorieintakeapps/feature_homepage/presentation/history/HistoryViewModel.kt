@@ -5,22 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.sv.calorieintakeapps.feature_homepage.domain.usecase.HomepageUseCase
-import com.sv.calorieintakeapps.feature_reporting.domain.usecase.ReportingUseCase
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
-import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
-import kotlinx.coroutines.flow.asFlow
 import java.io.File
 
 class HistoryViewModel(useCase: HomepageUseCase, localDataSource: LocalDataSource) : ViewModel() {
 
-    val userCompletedReports: LiveData<Resource<List<Report>>> =
+    val userCompletedReports: LiveData<Resource<List<ReportDomainModel>>> =
         useCase.getUserCompletedReports().asLiveData()
 
-    val userPendingReports: LiveData<List<Report>> = liveData {
+    val userPendingReports: LiveData<List<ReportDomainModel>> = liveData {
         val list = localDataSource.getAllReports().map { item ->
-            Report(
+            ReportDomainModel(
                 id = item.id ?: -1,
                 foodName = item.foodName,
                 date = item.date,

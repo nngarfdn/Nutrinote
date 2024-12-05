@@ -1,12 +1,9 @@
 package com.sv.calorieintakeapps.library_database.helper
 
-import com.sv.calorieintakeapps.library_database.data.source.local.room.ReportEntity
 import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
 import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
-import com.sv.calorieintakeapps.library_database.domain.model.Report
 import com.sv.calorieintakeapps.library_database.domain.model.User
-import java.io.File
 
 
 object UserBuilder {

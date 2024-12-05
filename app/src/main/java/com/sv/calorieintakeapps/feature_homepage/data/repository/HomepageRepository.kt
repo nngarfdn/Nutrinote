@@ -5,7 +5,7 @@ import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSour
 import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSource
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportsResponse
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.helper.NetworkBoundResource
 import com.sv.calorieintakeapps.library_database.helper.mapResponseToDomain
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
@@ -26,15 +26,15 @@ class HomepageRepository(
         return flowOf(localDataSource.getUserName())
     }
 
-    override fun getUserReports(reportStatus: ReportStatus): Flow<Resource<List<Report>>> {
-        return object : NetworkBoundResource<List<Report>, ReportsResponse>() {
-            private var resultDB = listOf<Report>()
+    override fun getUserReports(reportStatus: ReportStatus): Flow<Resource<List<ReportDomainModel>>> {
+        return object : NetworkBoundResource<List<ReportDomainModel>, ReportsResponse>() {
+            private var resultDB = listOf<ReportDomainModel>()
 
-            override fun loadFromDB(): Flow<List<Report>> {
+            override fun loadFromDB(): Flow<List<ReportDomainModel>> {
                 return flowOf(resultDB)
             }
 
-            override fun shouldFetch(data: List<Report>?): Boolean {
+            override fun shouldFetch(data: List<ReportDomainModel>?): Boolean {
                 return true
             }
 

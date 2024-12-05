@@ -1,10 +1,8 @@
 package com.sv.calorieintakeapps.feature_reporting.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.sv.calorieintakeapps.library_database.data.source.local.LocalDataSource
@@ -13,8 +11,7 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.RemoteDataSo
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.ReportResponse
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.response.Response
 import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFoodDetail
-import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +25,7 @@ class ReportingViewModel(
     private val remoteDataSource: RemoteDataSource,
 ) : ViewModel() {
 
-    private val report = MutableLiveData<Report>()
+    private val report = MutableLiveData<ReportDomainModel>()
     private var foodName: String = ""
     private var isSaveToLocalDb: Boolean = false
 
@@ -65,10 +62,27 @@ class ReportingViewModel(
         porsiUrt: Int,
         idMakanananNewApi: Int,
         isSavetoLocalDb: Boolean,
+        calcium: Float,
+        serat: Float,
+        abu: Float,
+        fosfor: Float,
+        besi: Float,
+        natrium: Float,
+        kalium: Float,
+        tembaga: Float,
+        seng: Float,
+        retinol: Float,
+        betaKaroten: Float,
+        karotenTotal: Float,
+        thiamin: Float,
+        rifobla: Float,
+        niasin: Float,
+        vitaminC: Float,
+        urtName: String,
     ) {
         val userId = localDataSource.getUserId()
         isSaveToLocalDb = isSavetoLocalDb
-        report.value = Report(
+        report.value = ReportDomainModel(
             userId = userId,
             date = "$date $time",
             foodName = foodName,
@@ -86,6 +100,23 @@ class ReportingViewModel(
             fat = fat,
             air = air,
             idMakananNewApi = idMakanananNewApi,
+            calcium = calcium,
+            serat = serat,
+            abu = abu,
+            fosfor = fosfor,
+            besi = besi,
+            natrium = natrium,
+            kalium = kalium,
+            tembaga = tembaga,
+            seng = seng,
+            retinol = retinol,
+            betaKaroten = betaKaroten,
+            karotenTotal = karotenTotal,
+            thiamin = thiamin,
+            rifobla = rifobla,
+            niasin = niasin,
+            vitaminC = vitaminC,
+            urtName = urtName,
         )
     }
 
@@ -109,6 +140,7 @@ class ReportingViewModel(
                     idMakanananNewApi = report.idMakananNewApi,
                     preImageFilePath = report.preImageFile?.path ?: "",
                     postImageFilePath = report.postImageFile?.path ?: "",
+                    calcium = report.calcium,
                 )
                 flow {
                     val resultFromDb = localDataSource.insertReport(reportEntity)
@@ -130,7 +162,7 @@ class ReportingViewModel(
         }
     }
 
-    fun getReportById(reportId: Int, isFromLocalDb: Boolean): LiveData<ApiResponse<Report>> = liveData {
+    fun getReportById(reportId: Int, isFromLocalDb: Boolean): LiveData<ApiResponse<ReportDomainModel>> = liveData {
         if (isFromLocalDb) {
             flow {
                 val resultFromDb = localDataSource.getReportById(reportId)
@@ -140,7 +172,7 @@ class ReportingViewModel(
                 }
                 val preImageFile = if (!resultFromDb.preImageFilePath.isNullOrEmpty()) File(resultFromDb.preImageFilePath) else null
                 val postImageFile = if (!resultFromDb.postImageFilePath.isNullOrEmpty()) File(resultFromDb.postImageFilePath) else null
-                val report = Report(
+                val report = ReportDomainModel(
                     roomId = resultFromDb.roomId,
                     date = resultFromDb.date,
                     percentage = resultFromDb.percentage,
@@ -171,7 +203,7 @@ class ReportingViewModel(
                     is ApiResponse.Error -> {}
                     is ApiResponse.Success -> {
                         val reportResponse = response.data.report
-                        val report = Report(
+                        val report = ReportDomainModel(
                             id = reportResponse?.id ?: -1,
                             userId = reportResponse?.userId ?: -1,
                             foodName = reportResponse?.foodName ?: "",
@@ -217,9 +249,26 @@ class ReportingViewModel(
         gramPerUrt: Float,
         porsiUrt: Int,
         idMakanananNewApi: Int,
+        calcium: Float,
+        serat: Float,
+        abu: Float,
+        fosfor: Float,
+        besi: Float,
+        natrium: Float,
+        kalium: Float,
+        tembaga: Float,
+        seng: Float,
+        retinol: Float,
+        betaKaroten: Float,
+        karotenTotal: Float,
+        thiamin: Float,
+        rifobla: Float,
+        niasin: Float,
+        vitaminC: Float,
+        urtName: String,
     ) {
         val userId = localDataSource.getUserId()
-        editReport.value = Report(
+        editReport.value = ReportDomainModel(
             userId = userId,
             id = reportId,
             date = "$date $time",
@@ -237,11 +286,28 @@ class ReportingViewModel(
             carbs = carbs,
             fat = fat,
             air = air,
-            idMakananNewApi = idMakanananNewApi
+            idMakananNewApi = idMakanananNewApi,
+            calcium = calcium,
+            serat = serat,
+            abu = abu,
+            fosfor = fosfor,
+            besi = besi,
+            natrium = natrium,
+            kalium = kalium,
+            tembaga = tembaga,
+            seng = seng,
+            retinol = retinol,
+            betaKaroten = betaKaroten,
+            karotenTotal = karotenTotal,
+            thiamin = thiamin,
+            rifobla = rifobla,
+            niasin = niasin,
+            vitaminC = vitaminC,
+            urtName = urtName,
         )
     }
 
-    private val editReport = MutableLiveData<Report>()
+    private val editReport = MutableLiveData<ReportDomainModel>()
 
     private var isFromLocalDb: Boolean = false
 
@@ -261,7 +327,7 @@ class ReportingViewModel(
         }
     }
 
-    private val dbToDbReport = MutableLiveData<Report>()
+    private val dbToDbReport = MutableLiveData<ReportDomainModel>()
 
     val dbToDbResult: LiveData<ApiResponse<ReportResponse>> = dbToDbReport.switchMap {
         liveData {
@@ -316,8 +382,25 @@ class ReportingViewModel(
         gramPerUrt: Float,
         porsiUrt: Int,
         idMakanananNewApi: Int,
+        calcium: Float,
+        serat: Float,
+        abu: Float,
+        fosfor: Float,
+        besi: Float,
+        natrium: Float,
+        kalium: Float,
+        tembaga: Float,
+        seng: Float,
+        retinol: Float,
+        betaKaroten: Float,
+        karotenTotal: Float,
+        thiamin: Float,
+        rifobla: Float,
+        niasin: Float,
+        vitaminC: Float,
+        urtName: String,
     ) {
-        dbToDbReport.value = Report(
+        dbToDbReport.value = ReportDomainModel(
             roomId = roomId,
             date = "$date $time",
             foodName = foodName,
@@ -334,7 +417,24 @@ class ReportingViewModel(
             carbs = carbs,
             fat = fat,
             air = air,
-            idMakananNewApi = idMakanananNewApi
+            idMakananNewApi = idMakanananNewApi,
+            calcium = calcium,
+            serat = serat,
+            abu = abu,
+            fosfor = fosfor,
+            besi = besi,
+            natrium = natrium,
+            kalium = kalium,
+            tembaga = tembaga,
+            seng = seng,
+            retinol = retinol,
+            betaKaroten = betaKaroten,
+            karotenTotal = karotenTotal,
+            thiamin = thiamin,
+            rifobla = rifobla,
+            niasin = niasin,
+            vitaminC = vitaminC,
+            urtName = urtName,
         )
     }
 
@@ -357,10 +457,27 @@ class ReportingViewModel(
         gramPerUrt: Float,
         porsiUrt: Int,
         idMakanananNewApi: Int,
+        calcium: Float,
+        serat: Float,
+        abu: Float,
+        fosfor: Float,
+        besi: Float,
+        natrium: Float,
+        kalium: Float,
+        tembaga: Float,
+        seng: Float,
+        retinol: Float,
+        betaKaroten: Float,
+        karotenTotal: Float,
+        thiamin: Float,
+        rifobla: Float,
+        niasin: Float,
+        vitaminC: Float,
+        urtName: String,
     ) {
         val userId = localDataSource.getUserId()
         reportRoomIdDeletation.value = roomId
-        dbToServerReport.value = Report(
+        dbToServerReport.value = ReportDomainModel(
             userId = userId,
             date = "$date $time",
             foodName = foodName,
@@ -377,7 +494,24 @@ class ReportingViewModel(
             carbs = carbs,
             fat = fat,
             air = air,
-            idMakananNewApi = idMakanananNewApi
+            idMakananNewApi = idMakanananNewApi,
+            calcium = calcium,
+            serat = serat,
+            abu = abu,
+            fosfor = fosfor,
+            besi = besi,
+            natrium = natrium,
+            kalium = kalium,
+            tembaga = tembaga,
+            seng = seng,
+            retinol = retinol,
+            betaKaroten = betaKaroten,
+            karotenTotal = karotenTotal,
+            thiamin = thiamin,
+            rifobla = rifobla,
+            niasin = niasin,
+            vitaminC = vitaminC,
+            urtName = urtName,
         )
     }
 
@@ -385,7 +519,7 @@ class ReportingViewModel(
         reportRoomIdDeletation.value = roomId
     }
 
-    private val dbToServerReport = MutableLiveData<Report>()
+    private val dbToServerReport = MutableLiveData<ReportDomainModel>()
 
     private var reportRoomIdDeletation = MutableLiveData<Int>()
 

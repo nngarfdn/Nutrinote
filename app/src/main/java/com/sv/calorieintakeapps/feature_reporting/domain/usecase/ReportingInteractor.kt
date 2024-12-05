@@ -1,7 +1,7 @@
 package com.sv.calorieintakeapps.feature_reporting.domain.usecase
 
 import com.sv.calorieintakeapps.feature_reporting.domain.repository.IReportingRepository
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import java.io.File
@@ -76,7 +76,7 @@ class ReportingInteractor(private val reportingRepository: IReportingRepository)
         }
     }
 
-    override suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>> {
+    override suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<ReportDomainModel>> {
         return if (isFromLocalDb) {
             reportingRepository.getReportByIdFromLocalDb(reportId)
         } else {

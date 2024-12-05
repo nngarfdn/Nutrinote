@@ -11,13 +11,12 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.nilaigizicom
 import com.sv.calorieintakeapps.library_database.domain.enum.ActivityLevel
 import com.sv.calorieintakeapps.library_database.domain.enum.FoodLabel
 import com.sv.calorieintakeapps.library_database.domain.enum.Gender
-import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
 import com.sv.calorieintakeapps.library_database.domain.enum.StressLevel
 import com.sv.calorieintakeapps.library_database.domain.model.Food
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrition
 import com.sv.calorieintakeapps.library_database.domain.model.Merchant
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.domain.model.User
 
 fun mapResponseToDomain(input: FoodNutrientsResponse): List<FoodNutrient> {
@@ -67,9 +66,9 @@ fun mapResponseToDomain(input: MerchantsResponse): List<Merchant> {
     } ?: listOf()
 }
 
-fun mapResponseToDomain(input: ReportResponse): Report {
+fun mapResponseToDomain(input: ReportResponse): ReportDomainModel {
     with(input.report) {
-        return Report(
+        return ReportDomainModel(
             id = this?.id ?: -1,
             userId = this?.userId ?: -1,
             foodName = this?.foodName.orEmpty(),
@@ -92,9 +91,9 @@ fun mapResponseToDomain(input: ReportResponse): Report {
     }
 }
 
-fun mapResponseToDomain(input: ReportsResponse): List<Report> {
+fun mapResponseToDomain(input: ReportsResponse): List<ReportDomainModel> {
     return input.reports?.map { item ->
-        Report(
+        ReportDomainModel(
             id = item?.id ?: -1,
             userId = item?.userId ?: -1,
             foodName = item?.foodName.orEmpty(),
@@ -112,7 +111,23 @@ fun mapResponseToDomain(input: ReportsResponse): List<Report> {
             gramTotalDikonsumsi = item?.gramTotalDikonsumsi ?: 0f,
             isUsingUrt = item?.isUsingUrt ?: false,
             porsiUrt = item?.porsiUrt?.toInt() ?: 0,
-            idMakananNewApi = item?.idMakananNewApi ?: -1
+            idMakananNewApi = item?.idMakananNewApi ?: -1,
+            calcium = item?.totalKalsium,
+            serat = item?.totalSerat,
+            abu = item?.totalAbu,
+            fosfor = item?.totalFosfor,
+            besi = item?.totalBesi,
+            natrium = item?.totalNatrium,
+            kalium = item?.totalKalium,
+            tembaga = item?.totalTembaga,
+            seng = item?.totalSeng,
+            retinol = item?.totalRetinol,
+            betaKaroten = item?.totalBetaKaroten,
+            karotenTotal = item?.totalKaroten,
+            thiamin = item?.totalThiamin,
+            rifobla = item?.totalRifobla,
+            niasin = item?.totalNiasin,
+            vitaminC = item?.totalVitaminC
         )
     } ?: listOf()
 }

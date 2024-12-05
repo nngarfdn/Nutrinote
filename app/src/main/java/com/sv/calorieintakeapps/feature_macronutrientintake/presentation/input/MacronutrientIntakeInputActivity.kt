@@ -12,6 +12,7 @@ import com.sv.calorieintakeapps.library_common.action.Actions.openMacronutrientI
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.helper.toReadableDate
 import com.sv.calorieintakeapps.library_database.vo.Resource
+import com.sv.calorieintakeapps.nutridesign.dialog.LoadingDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -48,7 +49,9 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
         viewModel.inputDate.observe(this) { result ->
             if (result != null) {
                 when (result) {
-                    is Resource.Loading -> {}
+                    is Resource.Loading -> {
+                        LoadingDialog.show(this@MacronutrientIntakeInputActivity)
+                    }
                     
                     is Resource.Success -> {
                         val inputDateArray = result.data?.toTypedArray().orEmpty()
@@ -84,10 +87,12 @@ class MacronutrientIntakeInputActivity : AppCompatActivity() {
                                 showToast("Belum ada riwayat makanan yang dikonsumsi")
                             }
                         }
+                        LoadingDialog.dismiss()
                     }
                     
                     is Resource.Error -> {
                         showToast(result.message)
+                        LoadingDialog.dismiss()
                     }
                 }
             }
