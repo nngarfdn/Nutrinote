@@ -154,97 +154,97 @@ data class MacronutrientIntakePercentage(
         ),
         ItemMakronutrien(
             TITLE_KALSIUM,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             calciumPercentage,
             "$calciumIntake / $calciumNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_SERAT,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             seratPercentage,
-            "$seratIntake / $seratNeeds mg"
+            "$seratIntake / $seratNeeds g"
         ),
         ItemMakronutrien(
             TITLE_ABU,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             abuPercentage,
-            "$abuIntake / $abuNeeds mg"
+            "$abuIntake / $abuNeeds g"
         ),
         ItemMakronutrien(
             TITLE_FOSFOR,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             fosforPercentage,
             "$fosforIntake / $fosforNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_BESI,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             besiPercentage,
             "$besiIntake / $besiNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_NATRIUM,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             natriumPercentage,
             "$natriumIntake / $natriumNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_KALIUM,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             kaliumPercentage,
             "$kaliumIntake / $kaliumNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_TEMBAGA,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             tembagaPercentage,
-            "$tembagaIntake / $tembagaNeeds mg"
+            "$tembagaIntake / $tembagaNeeds µg"
         ),
         ItemMakronutrien(
             TITLE_SENG,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             sengPercentage,
             "$sengIntake / $sengNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_RETINOL,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             retinolPercentage,
             "$retinolIntake / $retinolNeeds µg"
         ),
         ItemMakronutrien(
             TITLE_BETA_KAROTEN,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             betaKarotenPercentage,
             "$betaKarotenIntake / $betaKarotenNeeds µg"
         ),
         ItemMakronutrien(
             TITLE_KAROTEN_TOTAL,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             karotenTotalPercentage,
             "$karotenTotalIntake / $karotenTotalNeeds µg"
         ),
         ItemMakronutrien(
             TITLE_THIAMIN,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             thiaminPercentage,
             "$thiaminIntake / $thiaminNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_RIFOBLA,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             rifoblaPercentage,
             "$rifoblaIntake / $rifoblaNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_NIASIN,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             niasinPercentage,
             "$niasinIntake / $niasinNeeds mg"
         ),
         ItemMakronutrien(
             TITLE_VITAMIN_C,
-            R.drawable.img_no_image_24,
+            R.drawable.ic_fat_24,
             vitaminCPercentage,
             "$vitaminCIntake / $vitaminCNeeds mg"
         )

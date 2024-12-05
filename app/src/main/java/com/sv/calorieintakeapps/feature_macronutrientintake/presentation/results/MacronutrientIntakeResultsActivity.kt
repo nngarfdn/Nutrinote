@@ -72,16 +72,12 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
         }
 
         viewModel.setInput(date = date)
-
-        observeFoodConsumed()
-        observeMacronutrientIntakePercentage()
     }
 
     private fun observeMacronutrientLists() {
         viewModel.filteredMakronutrien.observe(this@MacronutrientIntakeResultsActivity) { list ->
             displayMacronutrientList(list)
         }
-
         viewModel.listMakronutrien.observe(this@MacronutrientIntakeResultsActivity) { list ->
             if (viewModel.filteredMakronutrien.value.isNullOrEmpty()) {
                 displayMacronutrientList(list)
@@ -139,6 +135,12 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         MacronurientIntakeModule.unload()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeFoodConsumed()
+        observeMacronutrientIntakePercentage()
     }
 
 }

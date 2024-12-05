@@ -62,10 +62,10 @@ class MacronutrientIntakeInteractor(
         reports: List<ReportDomainModel>,
     ): Flow<Resource<MacronutrientIntakePercentage>> {
         return macronutrientIntakeRepository.getUserProfile().map { userProfileResource ->
+            var totalCarbs = 0.0
             var totalCalories = 0.0
             var totalProtein = 0.0
             var totalFat = 0.0
-            var totalCarbs = 0.0
             var totalWater = 0.0
             var totalCalcium = 0.0
             var totalSerat = 0.0
@@ -115,7 +115,7 @@ class MacronutrientIntakeInteractor(
             var fatNeeds = 0.0
             var carbsNeeds = 0.0
             var waterNeeds = 2000
-            var calciumNeeds = 10.0
+            var calciumNeeds = 0.0
             var seratNeeds = 10.0
             var abuNeeds = 10.0
             var fosforNeeds = 10.0
@@ -126,7 +126,7 @@ class MacronutrientIntakeInteractor(
             var sengNeeds = 10.0
             var retinolNeeds = 10.0
             var betaKarotenNeeds = 10.0
-            var karotenTotalNeeds = 10.0
+            var karotenNeeds = 10.0
             var thiaminNeeds = 10.0
             var rifoblaNeeds = 10.0
             var niasinNeeds = 10.0
@@ -146,22 +146,22 @@ class MacronutrientIntakeInteractor(
                 proteinNeeds = caloriesNeeds * 0.15 / 4
                 fatNeeds = caloriesNeeds * 0.25 / 9
                 carbsNeeds = caloriesNeeds * 0.6 / 4
-                calciumNeeds = calciumNeeds * 16 / 4
-                seratNeeds = seratNeeds * 0.6 / 4
-                abuNeeds = abuNeeds * 0.6 / 4
-                fosforNeeds = fosforNeeds * 0.6 / 4
-                besiNeeds = besiNeeds * 0.6 / 4
-                natriumNeeds = natriumNeeds * 0.6 / 4
-                kaliumNeeds = kaliumNeeds * 0.6 / 4
-                tembagaNeeds = tembagaNeeds * 0.6 / 4
-                sengNeeds = sengNeeds * 0.6 / 4
-                retinolNeeds = retinolNeeds * 0.6 / 4
-                betaKarotenNeeds = betaKarotenNeeds * 0.6 / 4
-                karotenTotalNeeds = karotenTotalNeeds * 0.6 / 4
-                thiaminNeeds = thiaminNeeds * 0.6 / 4
-                rifoblaNeeds = rifoblaNeeds * 0.6 / 4
-                niasinNeeds = niasinNeeds * 0.6 / 4
-                vitaminCNeeds = vitaminCNeeds * 0.6 / 4
+                calciumNeeds = NeedsCounter.calculateCalciumNeeds(user.age, user.gender)
+                seratNeeds = NeedsCounter.calculateSeratNeeds(user.age, user.gender)
+                abuNeeds = NeedsCounter.calculateAbuNeeds(user.weight.toDouble())
+                fosforNeeds = NeedsCounter.calculateFosforNeeds(user.age, user.gender)
+                besiNeeds = NeedsCounter.calculateBesiNeeds(user.age, user.gender)
+                natriumNeeds = NeedsCounter.calculateNatriumNeeds(user.age)
+                kaliumNeeds = NeedsCounter.calculateKaliumNeeds(user.age)
+                tembagaNeeds = NeedsCounter.calculateTembagaNeeds(user.age)
+                sengNeeds = NeedsCounter.calculateSengNeeds(user.age, user.gender)
+                retinolNeeds = NeedsCounter.calculateRetinolNeeds(user.age, user.gender)
+                betaKarotenNeeds = NeedsCounter.calculateBetaKarotenNeeds(user.age, user.gender)
+                karotenNeeds = NeedsCounter.calculateKarotenNeeds(user.age, user.gender)
+                thiaminNeeds = NeedsCounter.calculateThiaminNeeds(user.age, user.gender)
+                rifoblaNeeds = NeedsCounter.calculateRifoblaNeeds(user.age, user.gender)
+                niasinNeeds = NeedsCounter.calculateNiasinNeeds(user.age, user.gender)
+                vitaminCNeeds = NeedsCounter.calculateVitaminCNeeds(user.age, user.gender)
             }
 
             Resource.Success(
@@ -199,7 +199,7 @@ class MacronutrientIntakeInteractor(
                     betaKarotenIntake = totalBetaKaroten.roundOff(),
                     betaKarotenNeeds = betaKarotenNeeds.roundOff(),
                     karotenTotalIntake = totalKarotenTotal.roundOff(),
-                    karotenTotalNeeds = karotenTotalNeeds.roundOff(),
+                    karotenTotalNeeds = karotenNeeds.roundOff(),
                     thiaminIntake = totalThiamin.roundOff(),
                     thiaminNeeds = thiaminNeeds.roundOff(),
                     rifoblaIntake = totalRifobla.roundOff(),
