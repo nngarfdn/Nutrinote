@@ -481,6 +481,76 @@ class RemoteDataSource(
                     "total_air",
                     report.air
                 )
+                multipartBuilder.addFormDataPart(
+                    "kalsium_total",
+                    report.calcium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "serat_total",
+                    report.serat.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "abu_total",
+                    report.abu.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "fosfor_total",
+                    report.fosfor.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "besi_total",
+                    report.besi.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "natrium_total",
+                    report.natrium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "kalium_total",
+                    report.kalium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "tembaga_total",
+                    report.tembaga.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "seng_total",
+                    report.seng.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "retinol_total",
+                    report.retinol.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "beta_karoten_total",
+                    report.betaKaroten.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "karoten_total_total",
+                    report.karotenTotal.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "thiamin_total",
+                    report.thiamin.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "rifobla_total",
+                    report.rifobla.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "niasin_total",
+                    report.niasin.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "vit_c_total",
+                    report.vitaminC.toString()
+                )
+                if (report.isUsingUrt){
+                    multipartBuilder.addFormDataPart(
+                        "nama_urt",
+                        report.urtName
+                    )
+                }
                 if (report.preImageFile != null) {
                     val requestPreImage = report.preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(

@@ -883,6 +883,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                         gramPerUrt = gramPerUrt,
                         porsiUrt = porsiUrt,
                         idMakanananNewApi = idMakanananNewApi,
+                        calcium = totalCalcium,
+                        serat = totalSerat,
+                        abu = totalAbu,
+                        fosfor = totalFosfor,
+                        besi = totalBesi,
+                        natrium = totalNatrium,
+                        kalium = totalKalium,
+                        tembaga = totalTembaga,
+                        seng = totalSeng,
+                        retinol = totalRetinol,
+                        betaKaroten = totalBetaKaroten,
+                        karotenTotal = totalKarotenTotal,
+                        thiamin = totalThiamin,
+                        rifobla = totalRifobla,
+                        niasin = totalNiasin,
+                        vitaminC = totalVitaminC,
+                        urtName = selectedUrtName
                     )
                 } else {
                     reportingViewModel.editFromLocalDbToServer(
@@ -904,6 +921,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                         gramPerUrt = gramPerUrt,
                         porsiUrt = porsiUrt,
                         idMakanananNewApi = idMakanananNewApi,
+                        calcium = totalCalcium,
+                        serat = totalSerat,
+                        abu = totalAbu,
+                        fosfor = totalFosfor,
+                        besi = totalBesi,
+                        natrium = totalNatrium,
+                        kalium = totalKalium,
+                        tembaga = totalTembaga,
+                        seng = totalSeng,
+                        retinol = totalRetinol,
+                        betaKaroten = totalBetaKaroten,
+                        karotenTotal = totalKarotenTotal,
+                        thiamin = totalThiamin,
+                        rifobla = totalRifobla,
+                        niasin = totalNiasin,
+                        vitaminC = totalVitaminC,
+                        urtName = selectedUrtName
                     )
                 }
             } else {
@@ -926,6 +960,23 @@ class ReportingActivity : AppCompatActivity(), View.OnClickListener, DatePickerF
                     gramPerUrt = gramPerUrt,
                     porsiUrt = porsiUrt,
                     idMakanananNewApi = idMakanananNewApi,
+                    calcium = totalCalcium,
+                    serat = totalSerat,
+                    abu = totalAbu,
+                    fosfor = totalFosfor,
+                    besi = totalBesi,
+                    natrium = totalNatrium,
+                    kalium = totalKalium,
+                    tembaga = totalTembaga,
+                    seng = totalSeng,
+                    retinol = totalRetinol,
+                    betaKaroten = totalBetaKaroten,
+                    karotenTotal = totalKarotenTotal,
+                    thiamin = totalThiamin,
+                    rifobla = totalRifobla,
+                    niasin = totalNiasin,
+                    vitaminC = totalVitaminC,
+                    urtName = selectedUrtName
                 )
             }
         } else {
