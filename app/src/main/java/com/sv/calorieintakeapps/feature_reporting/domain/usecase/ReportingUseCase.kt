@@ -1,6 +1,6 @@
 package com.sv.calorieintakeapps.feature_reporting.domain.usecase
 
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import java.io.File
@@ -30,7 +30,7 @@ interface ReportingUseCase {
         porsiUrt: Int,
     ): Flow<Resource<Boolean>>
     
-    suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<Report>>
+    suspend fun getReportById(reportId: Int, isFromLocalDb: Boolean): Flow<Resource<ReportDomainModel>>
     
     suspend fun editReportById(
         reportId: Int,

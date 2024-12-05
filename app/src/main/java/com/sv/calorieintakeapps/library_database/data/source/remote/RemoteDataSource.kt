@@ -1,7 +1,5 @@
 package com.sv.calorieintakeapps.library_database.data.source.remote
 
-import android.util.Log
-import com.sv.calorieintakeapps.feature_add_new_food.AddNewFoodResponse
 import com.sv.calorieintakeapps.feature_add_new_food.NewFood
 import com.sv.calorieintakeapps.feature_add_new_food.NewUrt
 import com.sv.calorieintakeapps.library_database.data.source.remote.main.MainApiService
@@ -25,7 +23,7 @@ import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtApiSe
 import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
 import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFoodDetail
 import com.sv.calorieintakeapps.library_database.domain.enum.ReportStatus
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.domain.model.User
 import com.sv.calorieintakeapps.library_database.helper.parseErrorMessage
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
@@ -37,10 +35,7 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.Call
-import retrofit2.Callback
 import java.io.File
-import kotlin.random.Random
 
 class RemoteDataSource(
     private val mainApiService: MainApiService,
@@ -243,7 +238,7 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun addReport(report: Report): Flow<ApiResponse<ReportResponse>> {
+    fun addReport(report: ReportDomainModel): Flow<ApiResponse<ReportResponse>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()
@@ -300,6 +295,76 @@ class RemoteDataSource(
                     "id_makanan_new_api",
                     report.idMakananNewApi.toString()
                 )
+                multipartBuilder.addFormDataPart(
+                    "kalsium_total",
+                    report.calcium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "serat_total",
+                    report.serat.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "abu_total",
+                    report.abu.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "fosfor_total",
+                    report.fosfor.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "besi_total",
+                    report.besi.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "natrium_total",
+                    report.natrium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "kalium_total",
+                    report.kalium.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "tembaga_total",
+                    report.tembaga.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "seng_total",
+                    report.seng.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "retinol_total",
+                    report.retinol.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "beta_karoten_total",
+                    report.betaKaroten.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "karoten_total_total",
+                    report.karotenTotal.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "thiamin_total",
+                    report.thiamin.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "rifobla_total",
+                    report.rifobla.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "niasin_total",
+                    report.niasin.toString()
+                )
+                multipartBuilder.addFormDataPart(
+                    "vit_c_total",
+                    report.vitaminC.toString()
+                )
+                if (report.isUsingUrt){
+                    multipartBuilder.addFormDataPart(
+                        "nama_urt",
+                        report.urtName
+                    )
+                }
                 if (report.preImageFile != null) {
                     val requestPreImage = report.preImageFile.asRequestBody(contentType)
                     multipartBuilder.addFormDataPart(
@@ -368,7 +433,7 @@ class RemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun editReportById(report: Report): Flow<ApiResponse<Response>> {
+    suspend fun editReportById(report: ReportDomainModel): Flow<ApiResponse<Response>> {
         return flow {
             try {
                 val contentType = "multipart".toMediaTypeOrNull()

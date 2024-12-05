@@ -22,6 +22,10 @@ fun getKeyProperty(key: String): String {
 android {
     namespace = Configs.APPLICATION_ID
     compileSdk = Configs.COMPILE_SDK
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.4"
+    }
     
     defaultConfig {
         applicationId = Configs.APPLICATION_ID
@@ -152,6 +156,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        compose = true
     }
     
     packaging {
@@ -202,4 +207,12 @@ dependencies {
     implementation(Dependencies.CODE_SCANNER)
     implementation(Dependencies.CURVE_BOTTOM_BAR)
     implementation(Dependencies.YOUTUBE_PLAYER)
+    implementation(Dependencies.ACTIVITY_COMPOSE)
+    implementation(platform(Dependencies.COMPOSE_BOM))
+    implementation(Dependencies.COMPOSE_UI)
+    implementation(Dependencies.COMPOSE_UI_GRAPHICS)
+    implementation(Dependencies.COMPOSE_UI_TOOLING_PREVIEW)
+    implementation(Dependencies.COMPOSE_MATERIAL3)
+    implementation(Dependencies.COMPOSE_RUNTIME)
+    implementation(Dependencies.COMPOSE_ACTIVITY)
 }

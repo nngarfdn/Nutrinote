@@ -6,15 +6,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.sv.calorieintakeapps.feature_reportdetails.domain.usecase.ReportDetailsUseCase
 import com.sv.calorieintakeapps.library_database.domain.model.FoodNutrient
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.single
 
 class ReportDetailViewModel(val useCase: ReportDetailsUseCase) : ViewModel() {
 
-    fun getReportById(reportId: Int, isFromLocalDb: Boolean): LiveData<Resource<Report>> = liveData {
+    fun getReportById(reportId: Int, isFromLocalDb: Boolean): LiveData<Resource<ReportDomainModel>> = liveData {
         useCase.getReportById(reportId, isFromLocalDb).collectLatest {
             emit(it)
         }

@@ -48,6 +48,22 @@ object Actions {
     const val EXTRA_NILAIGIZI_COM_CALORIES = "extra_nilaigizi_com_calories" // 3
     const val EXTRA_NILAIGIZI_COM_FAT = "extra_nilaigizi_com_fat" // 4
     const val EXTRA_NILAIGIZI_COM_AIR = "extra_nilaigizi_com_air" // 4
+    const val EXTRA_NILAIGIZI_COM_CALCIUM = "extra_nilaigizi_com_calcium"
+    const val EXTRA_NILAIGIZI_COM_SERAT = "extra_nilaigizi_com_serat"
+    const val EXTRA_NILAIGIZI_COM_ABU = "extra_nilaigizi_com_abu"
+    const val EXTRA_NILAIGIZI_COM_FOSFOR = "extra_nilaigizi_com_fosfor"
+    const val EXTRA_NILAIGIZI_COM_BESI = "extra_nilaigizi_com_besi"
+    const val EXTRA_NILAIGIZI_COM_NATRIUM = "extra_nilaigizi_com_natrium"
+    const val EXTRA_NILAIGIZI_COM_KALIUM = "extra_nilaigizi_com_kalium"
+    const val EXTRA_NILAIGIZI_COM_TEMBAGA = "extra_nilaigizi_com_tembaga"
+    const val EXTRA_NILAIGIZI_COM_SENG = "extra_nilaigizi_com_seng"
+    const val EXTRA_NILAIGIZI_COM_RETINOL = "extra_nilaigizi_com_retinol"
+    const val EXTRA_NILAIGIZI_COM_BETA_KAROTEN = "extra_nilaigizi_com_beta_karoten"
+    const val EXTRA_NILAIGIZI_COM_KAROTEN_TOTAL = "extra_nilaigizi_com_karoten_total"
+    const val EXTRA_NILAIGIZI_COM_THIAMIN = "extra_nilaigizi_com_thiamin"
+    const val EXTRA_NILAIGIZI_COM_RIFOBLA = "extra_nilaigizi_com_rifobla"
+    const val EXTRA_NILAIGIZI_COM_NIASIN = "extra_nilaigizi_com_niasin"
+    const val EXTRA_NILAIGIZI_COM_VITAMIN_C = "extra_nilaigizi_com_vitamin_c"
 
     const val EXTRA_URT_LIST = "extra_urt_list"
     

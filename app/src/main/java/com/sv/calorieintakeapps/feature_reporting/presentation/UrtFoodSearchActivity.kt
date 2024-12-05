@@ -2,7 +2,6 @@ package com.sv.calorieintakeapps.feature_reporting.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,20 +15,33 @@ import com.sv.calorieintakeapps.feature_reporting.di.UrtFoodModule
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_ID
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_FOOD_NAME
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_IS_CLICK_ENABLED
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_ABU
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_AIR
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_BESI
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_BETA_KAROTEN
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALCIUM
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CALORIES
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_CARBS
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FAT
-import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FOOD_ID
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_FOSFOR
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_KALIUM
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_KAROTEN_TOTAL
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_NATRIUM
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_NIASIN
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_PROTEIN
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_RETINOL
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_RIFOBLA
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_SENG
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_SERAT
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_TEMBAGA
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_THIAMIN
+import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_NILAIGIZI_COM_VITAMIN_C
 import com.sv.calorieintakeapps.library_common.action.Actions.EXTRA_URT_LIST
 import com.sv.calorieintakeapps.library_common.action.Actions.openAddNewFoodIntent
 import com.sv.calorieintakeapps.library_common.util.hideKeyboard
 import com.sv.calorieintakeapps.library_common.util.showKeyboard
 import com.sv.calorieintakeapps.library_common.util.showToast
 import com.sv.calorieintakeapps.library_database.data.source.remote.urt.Urt
-import com.sv.calorieintakeapps.library_database.data.source.remote.urt.UrtFood
-import com.sv.calorieintakeapps.library_database.ui.adapter.FoodNutritionAdapter
 import com.sv.calorieintakeapps.library_database.vo.ApiResponse
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -135,6 +147,22 @@ class UrtFoodSearchActivity : AppCompatActivity() {
                             returnIntent.putExtra(EXTRA_NILAIGIZI_COM_FAT, food.lemak)
                             returnIntent.putExtra(EXTRA_NILAIGIZI_COM_CARBS, food.karbohidrat)
                             returnIntent.putExtra(EXTRA_NILAIGIZI_COM_AIR, food.air)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_CALCIUM, food.kalsium)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_SERAT, food.serat)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_ABU, food.abu)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_FOSFOR, food.fosfor)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_BESI, food.besi)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_NATRIUM, food.natrium)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_KALIUM, food.kalium)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_TEMBAGA, food.tembaga)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_SENG, food.seng)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_RETINOL, food.retinol)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_BETA_KAROTEN, food.bKar)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_KAROTEN_TOTAL, food.karTot)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_THIAMIN, food.thiamin)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_RIFOBLA, food.rifobla)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_NIASIN, food.niasin)
+                            returnIntent.putExtra(EXTRA_NILAIGIZI_COM_VITAMIN_C, food.vitC)
                         }
                         setResult(RESULT_OK, returnIntent)
                         finish()

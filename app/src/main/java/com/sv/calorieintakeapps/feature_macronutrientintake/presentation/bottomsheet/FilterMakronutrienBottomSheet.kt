@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,12 +26,15 @@ import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.compose
 import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.model.FilterMakrotrienUiModel
 import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.model.listFilterMakrotrien
 import com.sv.calorieintakeapps.nutridesign.bottomsheet.BottomSheetHandle
+import com.sv.calorieintakeapps.nutridesign.button.NutriOutlineButton
 import com.sv.calorieintakeapps.nutridesign.button.NutriSelectorButton
 import com.sv.calorieintakeapps.nutridesign.text.NutriText
 
 
 class FilterMakronutrienBottomSheet(
-    private val onFilterSelected: (List<FilterMakrotrienUiModel>) -> Unit
+    private val onFilterSelected: (List<FilterMakrotrienUiModel>) -> Unit,
+    private val onClearClicked: () -> Unit,
+    private val selectedItems: List<FilterMakrotrienUiModel>
 ) : BottomSheetDialogFragment() {
 
     private var _binding: FilterMakronutrienBottomSheetBinding? = null
@@ -47,7 +53,7 @@ class FilterMakronutrienBottomSheet(
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                var selectedItems by remember { mutableStateOf<List<FilterMakrotrienUiModel>>(emptyList()) }
+                var selectedItems by remember { mutableStateOf<List<FilterMakrotrienUiModel>>(selectedItems) }
                 Column {
                     BottomSheetHandle(modifier = Modifier.align(Alignment.CenterHorizontally))
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -62,14 +68,30 @@ class FilterMakronutrienBottomSheet(
                         selectedItems = selectedItems,
                         onSelectionChanged = { selectedItems = it },
                     )
-                    NutriSelectorButton(
-                        text = "Terapkan",
-                        onClick = {
-                            println("selectedItems: $selectedItems")
-                            onFilterSelected(selectedItems)
-                            dismiss()
-                        }
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        NutriOutlineButton(
+                            text = "Bersihkan",
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                onClearClicked()
+                                dismiss()
+                            }
+                        )
+
+                        NutriSelectorButton(
+                            text = "Terapkan",
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                onFilterSelected(selectedItems)
+                                dismiss()
+                            }
+                        )
+                    }
                 }
             }
         }

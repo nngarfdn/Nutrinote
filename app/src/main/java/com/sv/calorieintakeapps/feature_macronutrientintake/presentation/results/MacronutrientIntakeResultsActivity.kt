@@ -2,32 +2,38 @@ package com.sv.calorieintakeapps.feature_macronutrientintake.presentation.result
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Column
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sv.calorieintakeapps.databinding.ActivityMacronutrientIntakeResultsBinding
 import com.sv.calorieintakeapps.feature_homepage.presentation.history.AdapterHistory
 import com.sv.calorieintakeapps.feature_macronutrientintake.di.MacronurientIntakeModule
 import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.bottomsheet.FilterMakronutrienBottomSheet
+import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.compose.ItemMacronutrient
+import com.sv.calorieintakeapps.feature_macronutrientintake.presentation.model.listFilterMakrotrien
 import com.sv.calorieintakeapps.library_common.action.Actions
 import com.sv.calorieintakeapps.library_common.util.showToast
-import com.sv.calorieintakeapps.library_database.vo.Resource
+import com.sv.calorieintakeapps.library_database.domain.model.ItemMakronutrien
+import com.sv.calorieintakeapps.library_database.helper.onError
+import com.sv.calorieintakeapps.library_database.helper.onLoading
+import com.sv.calorieintakeapps.library_database.helper.onSuccess
+import com.sv.calorieintakeapps.nutridesign.dialog.LoadingDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MacronutrientIntakeResultsActivity : AppCompatActivity() {
-    
+
     private lateinit var binding: ActivityMacronutrientIntakeResultsBinding
     private val viewModel: MacronutrientIntakeResultViewModel by viewModel()
-    
     private lateinit var foodConsumedAdapter: AdapterHistory
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMacronutrientIntakeResultsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         MacronurientIntakeModule.load()
-        
+
         val date = intent.getStringExtra(Actions.EXTRA_DATE).orEmpty()
-        
+
         binding.apply {
             btnBack.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
@@ -36,91 +42,103 @@ class MacronutrientIntakeResultsActivity : AppCompatActivity() {
             btnFilter.setOnClickListener {
                 val filterMakronutrienBottomSheet = FilterMakronutrienBottomSheet(
                     onFilterSelected = { selectedItems ->
-                        println("selectedItems: $selectedItems")
-                    }
+                        viewModel.setSelectedMakronutrienName(selectedItems)
+                    },
+                    onClearClicked = {
+                        viewModel.setSelectedMakronutrienName(listFilterMakrotrien)
+                    },
+                    selectedItems = viewModel.selectedMakronutrienName.value ?: listFilterMakrotrien
                 )
-                filterMakronutrienBottomSheet.show(supportFragmentManager, filterMakronutrienBottomSheet.tag)
+                filterMakronutrienBottomSheet.show(
+                    supportFragmentManager,
+                    filterMakronutrienBottomSheet.tag
+                )
             }
-            
+
+            viewModel.selectedMakronutrienName.observe(this@MacronutrientIntakeResultsActivity) { selectedItems ->
+                val filteredList = viewModel.listMakronutrien.value?.filter { item ->
+                    selectedItems?.any { filter -> filter.title == item.name } == true
+                }
+                viewModel.setFilteredMakronutrien(filteredList)
+            }
+
             foodConsumedAdapter = AdapterHistory(this@MacronutrientIntakeResultsActivity, true)
             rvFoodConsumed.layoutManager = LinearLayoutManager(
                 this@MacronutrientIntakeResultsActivity
             )
             rvFoodConsumed.adapter = foodConsumedAdapter
+
+            observeMacronutrientLists()
         }
-        
-        
-        viewModel.setInput(
-            date = date,
-        )
-        
+
+        viewModel.setInput(date = date)
+
         observeFoodConsumed()
         observeMacronutrientIntakePercentage()
     }
-    
+
+    private fun observeMacronutrientLists() {
+        viewModel.filteredMakronutrien.observe(this@MacronutrientIntakeResultsActivity) { list ->
+            displayMacronutrientList(list)
+        }
+
+        viewModel.listMakronutrien.observe(this@MacronutrientIntakeResultsActivity) { list ->
+            if (viewModel.filteredMakronutrien.value.isNullOrEmpty()) {
+                displayMacronutrientList(list)
+            }
+        }
+    }
+
+    private fun displayMacronutrientList(list: List<ItemMakronutrien>?) {
+        list?.let { listItem ->
+            binding.composeView.setContent {
+                Column {
+                    listItem.forEach {
+                        ItemMacronutrient(
+                            imageRes = it.image,
+                            title = it.name,
+                            percentage = "${it.percentage}%",
+                            value = it.value
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     private fun observeFoodConsumed() {
-        viewModel.reports.observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Resource.Loading -> {}
-                    
-                    is Resource.Success -> {
-                        val foodConsumed = result.data.orEmpty()
-                        foodConsumedAdapter.data = foodConsumed
-                    }
-                    
-                    is Resource.Error -> {
-                        showToast(result.message.orEmpty())
-                    }
-                }
+        viewModel.reports
+            .onLoading {
+                LoadingDialog.show(this@MacronutrientIntakeResultsActivity)
             }
-        }
+            .onSuccess {
+                foodConsumedAdapter.data = it
+                LoadingDialog.dismiss()
+            }
+            .onError { message ->
+                showToast(message)
+                LoadingDialog.dismiss()
+            }
     }
-    
+
     private fun observeMacronutrientIntakePercentage() {
-        viewModel.macronutrientIntakePercentage.observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Resource.Loading -> {}
-                    
-                    is Resource.Success -> {
-                        result.data?.let { macronutrientIntakePercentage ->
-                            binding.apply {
-                                tvCaloriesPercentage.text =
-                                    "${macronutrientIntakePercentage.caloriesPercentage}%"
-                                tvCaloriesValue.text =
-                                    "${macronutrientIntakePercentage.caloriesIntake} / ${macronutrientIntakePercentage.caloriesNeeds} kkal"
-                                tvProteinPercentage.text =
-                                    "${macronutrientIntakePercentage.proteinPercentage}%"
-                                tvProteinValue.text =
-                                    "${macronutrientIntakePercentage.proteinIntake} / ${macronutrientIntakePercentage.proteinNeeds} g"
-                                tvFatPercentage.text =
-                                    "${macronutrientIntakePercentage.fatPercentage}%"
-                                tvFatValue.text =
-                                    "${macronutrientIntakePercentage.fatIntake} / ${macronutrientIntakePercentage.fatNeeds} g"
-                                tvCarbsPercentage.text =
-                                    "${macronutrientIntakePercentage.carbsPercentage}%"
-                                tvCarbsValue.text =
-                                    "${macronutrientIntakePercentage.carbsIntake} / ${macronutrientIntakePercentage.carbsNeeds} g"
-                                tvAirPercentage.text =
-                                    "${macronutrientIntakePercentage.waterPercentage}%"
-                                tvAirValue.text =
-                                    "${macronutrientIntakePercentage.waterIntake} / ${macronutrientIntakePercentage.waterNeeds} ml"
-                            }
-                        }
-                    }
-                    
-                    is Resource.Error -> {
-                        showToast(result.message.orEmpty())
-                    }
-                }
+        viewModel.macronutrientIntakePercentage
+            .onLoading {
+                LoadingDialog.show(this@MacronutrientIntakeResultsActivity)
             }
-        }
+            .onSuccess { macronutrientIntakePercentage ->
+                viewModel.setListMakronutrien(macronutrientIntakePercentage.listMakronutrien)
+                LoadingDialog.dismiss()
+            }
+            .onError { message ->
+                LoadingDialog.dismiss()
+                showToast(message)
+            }
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         MacronurientIntakeModule.unload()
     }
-    
+
 }

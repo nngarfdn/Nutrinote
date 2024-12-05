@@ -1,6 +1,7 @@
 package com.sv.calorieintakeapps.nutridesign.button
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
@@ -92,6 +93,53 @@ fun NutriSelectorButton(
             text = text,
             fontSize = 16.sp,
             color = if (enabled) Color.White else Color.Gray,
+            fontFamily = FontFamily(
+                Font(R.font.poppins_semibold, FontWeight.SemiBold)
+            ),
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+}
+
+@Composable
+fun NutriOutlineButton(
+    text: String,
+    enabled: Boolean = true,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    val outlineColor = Color(0xFFA91005) // Red outline color
+    val disabledColor = Color(0xFFD3D3D3)
+    val textColor = if (enabled) outlineColor else Color.Gray
+
+    // Interaction state to handle press events
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .border(
+                width = 2.dp,
+                color = if (enabled) outlineColor else disabledColor,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .background(
+                color = if (enabled) Color.Transparent else disabledColor,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .clickable(
+                enabled = enabled,
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            color = textColor,
             fontFamily = FontFamily(
                 Font(R.font.poppins_semibold, FontWeight.SemiBold)
             ),

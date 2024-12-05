@@ -1,6 +1,6 @@
 package com.sv.calorieintakeapps.feature_reporting.domain.repository
 
-import com.sv.calorieintakeapps.library_database.domain.model.Report
+import com.sv.calorieintakeapps.library_database.domain.model.ReportDomainModel
 import com.sv.calorieintakeapps.library_database.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import java.io.File
@@ -30,7 +30,7 @@ interface IReportingRepository {
         porsiUrt: Int,
     ): Flow<Resource<Boolean>>
     
-    fun getReportById(reportId: Int): Flow<Resource<Report>>
+    fun getReportById(reportId: Int): Flow<Resource<ReportDomainModel>>
     
     fun editReportById(
         reportId: Int,
@@ -66,7 +66,7 @@ interface IReportingRepository {
         carbs: String?
     ): Flow<Resource<Boolean>>
 
-    suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<Report>>
+    suspend fun getReportByIdFromLocalDb(reportId: Int): Flow<Resource<ReportDomainModel>>
 
     suspend fun editReportToDb(
         roomId: Int,
