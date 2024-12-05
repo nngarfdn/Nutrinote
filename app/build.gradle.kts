@@ -26,7 +26,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.4"
     }
-    
+
     defaultConfig {
         applicationId = Configs.APPLICATION_ID
         minSdk = Configs.MIN_SDK
